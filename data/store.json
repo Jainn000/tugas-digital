@@ -1,0 +1,385 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Director Kinetik EO",
+      "email": "admin@entrepreneur.id",
+      "password": "$2a$10$d2ApRcVTmkNcFSEXU3GkW.6imbdJgtvibSCiwoKRzq14Bam3vEUiq",
+      "role": "admin",
+      "phone": "081234567890",
+      "address": "Warehouse Kinetik Creative Studio, Kemang Raya No. 45, Jakarta Selatan"
+    },
+    {
+      "id": 2,
+      "name": "Budi Pratama (PT Sinar Mandiri)",
+      "email": "user@entrepreneur.id",
+      "password": "$2a$10$tptk0.UdollrK7qY9XXc/.4TLH74wSbdHyDHMY0FTFyRIYVJLnLaS",
+      "role": "user",
+      "phone": "085712349988",
+      "address": "Gedung Wisma Nusantara Lt. 8, Jl. MH Thamrin, Jakarta Pusat"
+    },
+    {
+      "id": 3,
+      "name": "Nabila Anindita",
+      "email": "nabila@gmail.com",
+      "password": "$2a$10$tptk0.UdollrK7qY9XXc/.4TLH74wSbdHyDHMY0FTFyRIYVJLnLaS",
+      "role": "user",
+      "phone": "081900112233",
+      "address": "Jl. Bintaro Sektor 9 Blok H2 No. 11, Tangerang Selatan"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Paket Acara & Organizer",
+      "slug": "paket-acara",
+      "description": "Layanan full-service penyelenggaraan acara korporat, gathering komunitas, hingga pernikahan intimate."
+    },
+    {
+      "id": 2,
+      "name": "Tiket Event & Festival",
+      "slug": "tiket-event",
+      "description": "Akses tiket resmi konser musik independen, seminar creator summit, dan workshop kreatif."
+    },
+    {
+      "id": 3,
+      "name": "Sewa Alat & Produksi",
+      "slug": "sewa-alat",
+      "description": "Penyewaan sound system line array, stage lighting moving head, dan peralatan audio visual broadcast."
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "category_id": 1,
+      "name": "Paket Corporate Gathering & Outbound",
+      "slug": "paket-corporate-gathering-outbound",
+      "description": "Manajemen acara perusahaan hingga 100 pax: fasilitator outbound bersertifikat, perlengkapan fun games, sound system 3000W, dokumentasi video cinematic, dan koordinasi lokasi.",
+      "price": 7500000,
+      "cost_price": 4200000,
+      "stock": 11,
+      "image_url": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 2,
+      "category_id": 1,
+      "name": "Paket Intimate Wedding Organizer",
+      "slug": "paket-intimate-wedding-organizer",
+      "description": "Koordinasi pernikahan sakral 100-200 pax: tim rundown 8 personil profesional, koordinasi vendor dekorasi/katering/MUA, panduan gladi resik, dan pendampingan keluarga.",
+      "price": 12800000,
+      "cost_price": 7500000,
+      "stock": 6,
+      "image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 3,
+      "category_id": 1,
+      "name": "Paket Seminar & Konferensi Hybrid",
+      "slug": "paket-seminar-konferensi-hybrid",
+      "description": "Produksi seminar kampus atau korporasi: setup live streaming multicam 4K, audio engineer, LED screen panggung, backdrop custom, dan sistem absensi QR code peserta.",
+      "price": 5600000,
+      "cost_price": 3100000,
+      "stock": 8,
+      "image_url": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 4,
+      "category_id": 2,
+      "name": "Tiket VIP Youth Creator Summit 2026",
+      "slug": "tiket-vip-youth-creator-summit-2026",
+      "description": "Akses kursi baris terdepan, lounge eksklusif ber-AC, sesi networking khusus bersama pembicara industri, ID pass lanyard akrilik, dan merchandise package.",
+      "price": 350000,
+      "cost_price": 140000,
+      "stock": 45,
+      "image_url": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 5,
+      "category_id": 2,
+      "name": "Tiket Reguler Youth Creator Summit 2026",
+      "slug": "tiket-reguler-youth-creator-summit-2026",
+      "description": "Tiket masuk seluruh sesi panel diskusi, sertifikat digital berbobot SKPI, lunch box, dan e-book materi presentasi lengkap.",
+      "price": 150000,
+      "cost_price": 60000,
+      "stock": 180,
+      "image_url": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 6,
+      "category_id": 2,
+      "name": "Tiket Presale Indie Wave Music Fest",
+      "slug": "tiket-presale-indie-wave-music-fest",
+      "description": "Pass masuk festival musik indie outdoor (1 hari), gelang barcode waterproof anti-rusak, gratis minuman selamat datang, dan akses area festival food court.",
+      "price": 125000,
+      "cost_price": 45000,
+      "stock": 120,
+      "image_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 7,
+      "category_id": 3,
+      "name": "Sewa Sound System 5000W + Mixer Digital",
+      "slug": "sewa-sound-system-5000w-mixer-digital",
+      "description": "Konfigurasi 4 speaker line array + 2 subwoofer 18 inch, mixer digital 16 channel, 4 unit wireless microphone UHF, kabel audio, serta 1 soundman standby 8 jam.",
+      "price": 2500000,
+      "cost_price": 950000,
+      "stock": 4,
+      "image_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": 8,
+      "category_id": 3,
+      "name": "Paket Panggung Lighting & Special FX",
+      "slug": "paket-panggung-lighting-special-fx",
+      "description": "8 unit moving head beam 230W, 12 unit par LED RGBW full colour, 2 unit smoke hazzer machine, DMX controller, dan operator lighting profesional.",
+      "price": 3200000,
+      "cost_price": 1200000,
+      "stock": 3,
+      "image_url": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop&q=80"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "order_number": "INV-20261012-001",
+      "user_id": 2,
+      "customer_name": "Budi Pratama (PT Sinar Mandiri)",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "085712349988",
+      "customer_address": "Puncak Resort Highland, Bogor (Venue Outbound)",
+      "subtotal": 7500000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 7500000,
+      "total_cost": 4200000,
+      "payment_method": "BCA_VA",
+      "payment_status": "paid",
+      "order_status": "completed",
+      "payment_reference": "BCA-88901234001",
+      "paid_at": "2026-10-12 14:32:00",
+      "created_at": "2026-10-12 14:28:10"
+    },
+    {
+      "id": 2,
+      "order_number": "INV-20261020-002",
+      "user_id": 3,
+      "customer_name": "Farhan & Nabila",
+      "customer_email": "nabila@gmail.com",
+      "customer_phone": "081900112233",
+      "customer_address": "Gedung Arsip Nasional RI, Jl. Gajah Mada No. 111, Jakarta Barat",
+      "subtotal": 12800000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 12800000,
+      "total_cost": 7500000,
+      "payment_method": "MANDIRI_VA",
+      "payment_status": "paid",
+      "order_status": "completed",
+      "payment_reference": "MDR-77889922001",
+      "paid_at": "2026-10-20 09:15:20",
+      "created_at": "2026-10-20 09:10:00"
+    },
+    {
+      "id": 3,
+      "order_number": "INV-20261027-003",
+      "user_id": 2,
+      "customer_name": "BEM FEB Universitas Indonesia",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "085712349988",
+      "customer_address": "Auditorium Gd. Prof. Sumitro Djojohadikusumo, Kampus UI Depok",
+      "subtotal": 3200000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 3200000,
+      "total_cost": 1230000,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "completed",
+      "payment_reference": "QRIS-REF-998127",
+      "paid_at": "2026-10-27 16:45:00",
+      "created_at": "2026-10-27 16:40:00"
+    },
+    {
+      "id": 4,
+      "order_number": "INV-20261101-004",
+      "user_id": 3,
+      "customer_name": "Danu Prasetyo",
+      "customer_email": "danu@gmail.com",
+      "customer_phone": "081822334455",
+      "customer_address": "Jl. Tebet Timur Dalam No. 12, Jakarta Selatan",
+      "subtotal": 600000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 600000,
+      "total_cost": 240000,
+      "payment_method": "GOPAY",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "GOPAY-SETTLED-882",
+      "paid_at": "2026-11-01 11:20:00",
+      "created_at": "2026-11-01 11:12:00"
+    },
+    {
+      "id": 5,
+      "order_number": "INV-20261102-005",
+      "user_id": 2,
+      "customer_name": "Komunitas Desain Kreatif",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "085712349988",
+      "customer_address": "Creative Hub Block M, Jakarta Selatan",
+      "subtotal": 5600000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 5600000,
+      "total_cost": 3100000,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "QRIS-PENDING-441",
+      "paid_at": "2026-11-02 17:42:27",
+      "created_at": "2026-11-02 20:10:00"
+    },
+    {
+      "order_number": "INV-20261102-1693",
+      "user_id": 1,
+      "customer_name": "Director Kinetik EO",
+      "customer_email": "admin@entrepreneur.id",
+      "customer_phone": "081234567890",
+      "customer_address": "Warehouse Kinetik Creative Studio, Kemang Raya No. 45, Jakarta Selatan",
+      "subtotal": 7500000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 7500000,
+      "total_cost": 4200000,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "NMD-QRIS-20261102-1693",
+      "paid_at": "2026-11-02 18:12:44",
+      "id": 6,
+      "created_at": "2026-11-02 18:11:54"
+    }
+  ],
+  "order_items": [
+    {
+      "id": 1,
+      "order_id": 1,
+      "product_id": 1,
+      "product_name": "Paket Corporate Gathering & Outbound",
+      "price": 7500000,
+      "cost_price": 4200000,
+      "quantity": 1,
+      "subtotal": 7500000
+    },
+    {
+      "id": 2,
+      "order_id": 2,
+      "product_id": 2,
+      "product_name": "Paket Intimate Wedding Organizer",
+      "price": 12800000,
+      "cost_price": 7500000,
+      "quantity": 1,
+      "subtotal": 12800000
+    },
+    {
+      "id": 3,
+      "order_id": 3,
+      "product_id": 7,
+      "product_name": "Sewa Sound System 5000W + Mixer Digital",
+      "price": 2500000,
+      "cost_price": 950000,
+      "quantity": 1,
+      "subtotal": 2500000
+    },
+    {
+      "id": 4,
+      "order_id": 3,
+      "product_id": 4,
+      "product_name": "Tiket VIP Youth Creator Summit 2026",
+      "price": 350000,
+      "cost_price": 140000,
+      "quantity": 2,
+      "subtotal": 700000
+    },
+    {
+      "id": 5,
+      "order_id": 4,
+      "product_id": 5,
+      "product_name": "Tiket Reguler Youth Creator Summit 2026",
+      "price": 150000,
+      "cost_price": 60000,
+      "quantity": 4,
+      "subtotal": 600000
+    },
+    {
+      "id": 6,
+      "order_id": 5,
+      "product_id": 3,
+      "product_name": "Paket Seminar & Konferensi Hybrid",
+      "price": 5600000,
+      "cost_price": 3100000,
+      "quantity": 1,
+      "subtotal": 5600000
+    },
+    {
+      "id": 7,
+      "order_id": 6,
+      "product_id": 1,
+      "product_name": "Paket Corporate Gathering & Outbound",
+      "price": 7500000,
+      "cost_price": 4200000,
+      "quantity": 1,
+      "subtotal": 7500000
+    }
+  ],
+  "expenses": [
+    {
+      "id": 1,
+      "expense_title": "Honor 6 Kru Lapangan & Soundman (Event PT Sinar Mandiri)",
+      "category": "Honor Kru & SDM",
+      "amount": 1800000,
+      "expense_date": "2026-10-12",
+      "notes": "Honor kerja 2 hari 1 malam di lokasi outbound Puncak"
+    },
+    {
+      "id": 2,
+      "expense_title": "Sewa Genset Silent 40 KVA + Solar 50 Liter",
+      "category": "Sewa Alat & Genset",
+      "amount": 1250000,
+      "expense_date": "2026-10-19",
+      "notes": "Genset cadangan listrik venue outdoor Gedung Arsip"
+    },
+    {
+      "id": 3,
+      "expense_title": "Cetak 300 Gelang Barcode & ID Card Panitia",
+      "category": "Produksi & Perlengkapan",
+      "amount": 450000,
+      "expense_date": "2026-10-25",
+      "notes": "Gelang synthetic anti-sobek untuk gate masuk tiket"
+    },
+    {
+      "id": 4,
+      "expense_title": "Biaya Perizinan Keramaian Polsek & Satpol PP",
+      "category": "Perizinan & Administrasi",
+      "amount": 500000,
+      "expense_date": "2026-10-28",
+      "notes": "Surat izin izin keramaian konser musik festival"
+    },
+    {
+      "id": 5,
+      "expense_title": "Promosi Iklan Instagram Ads Tiket Youth Summit",
+      "category": "Pemasaran & Promosi",
+      "amount": 350000,
+      "expense_date": "2026-11-01",
+      "notes": "Iklan bersponsor 7 hari penargetan mahasiswa Jabodetabek"
+    },
+    {
+      "id": 6,
+      "expense_title": "Fee Transaksi Payment Gateway Sandbox Periode Okt",
+      "category": "Finansial & Biaya Admin",
+      "amount": 65000,
+      "expense_date": "2026-11-01",
+      "notes": "Biaya administrasi MDR QRIS dan Virtual Account"
+    }
+  ]
+}

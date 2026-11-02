@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 72" width="380" height="72" fill="none">
+  <!-- Hard Shadow for Emblem -->
+  <rect x="6" y="6" width="56" height="56" fill="#121212" />
+  
+  <!-- Emblem Badge -->
+  <rect x="2" y="2" width="56" height="56" fill="#FFE600" stroke="#121212" stroke-width="3" />
+  
+  <!-- Mini Corner Decor -->
+  <rect x="2" y="2" width="10" height="10" fill="#121212" />
+  <rect x="48" y="48" width="10" height="10" fill="#FF5C00" stroke="#121212" stroke-width="1.5" />
+
+  <!-- Monogram K inside Emblem -->
+  <rect x="13" y="13" width="9" height="34" fill="#121212" />
+  <polygon points="22,28 36,13 46,13 30,30" fill="#38BDF8" stroke="#121212" stroke-width="2" stroke-linejoin="round" />
+  <polygon points="26,28 46,47 35,47 20,32" fill="#A3E635" stroke="#121212" stroke-width="2" stroke-linejoin="round" />
+  <polygon points="25,24 31,18 28,25 34,25 23,38 26,29 21,29" fill="#FF5C00" stroke="#121212" stroke-width="1.5" stroke-linejoin="round" />
+
+  <!-- Brand Typography -->
+  <text x="74" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" letter-spacing="-1.5" fill="#121212">
+    KINETIK
+  </text>
+  
+  <!-- Subtitle Badge -->
+  <rect x="74" y="45" width="220" height="18" fill="#121212" />
+  <text x="82" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="800" letter-spacing="1" fill="#FFE600">
+    EVENT PRODUCTION &amp; ORGANIZER
+  </text>
+  
+  <rect x="298" y="45" width="28" height="18" fill="#A3E635" stroke="#121212" stroke-width="1.5" />
+  <text x="303" y="57" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="900" fill="#121212">
+    PRO
+  </text>
+</svg>
