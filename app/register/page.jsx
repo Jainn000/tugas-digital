@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useToast } from '@/components/ToastContext';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const toast = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,13 +22,70 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!name.trim()) {
+      const msg = 'Nama lengkap tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Nama Kosong');
+      return;
+    }
+
+    if (!email.trim()) {
+      const msg = 'Alamat email wajib diisi.';
+      setError(msg);
+      toast.error(msg, 'Email Kosong');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      const msg = 'Format email tidak valid (contoh: nama@perusahaan.com).';
+      setError(msg);
+      toast.error(msg, 'Format Email Salah');
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      const msg = 'Kata sandi minimal 6 karakter.';
+      setError(msg);
+      toast.error(msg, 'Kata Sandi Terlalu Pendek');
+      return;
+    }
+
+    if (!phone.trim()) {
+      const msg = 'Nomor telepon / WhatsApp tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Nomor Telepon Kosong');
+      return;
+    }
+
+    const digitsOnly = phone.replace(/\D/g, '');
+    if (digitsOnly.length < 9) {
+      const msg = 'Nomor telepon minimal 9 digit angka.';
+      setError(msg);
+      toast.error(msg, 'Nomor Telepon Tidak Lengkap');
+      return;
+    }
+
+    if (!address.trim()) {
+      const msg = 'Alamat domisili atau instansi tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Alamat Kosong');
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone, address }),
+        body: JSON.stringify({ 
+          name: name.trim(), 
+          email: email.trim(), 
+          password, 
+          phone: phone.trim(), 
+          address: address.trim() 
+        }),
       });
 
       const data = await res.json();
@@ -35,12 +94,15 @@ export default function RegisterPage() {
       }
 
       setSuccess('Akun berhasil dibuat. Mengalihkan ke halaman utama...');
+      toast.success('Pendaftaran akun baru berhasil! Selamat bergabung.', 'Pendaftaran Sukses');
       setTimeout(() => {
         router.push('/');
         router.refresh();
       }, 700);
     } catch (err) {
-      setError(err.message || 'Terjadi kesalahan.');
+      const msg = err.message || 'Terjadi kesalahan saat mendaftar.';
+      setError(msg);
+      toast.error(msg, 'Pendaftaran Gagal');
     } finally {
       setLoading(false);
     }

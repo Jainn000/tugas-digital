@@ -10,10 +10,12 @@ import {
   ShieldCheck, AlertCircle, Ticket, Calendar, MapPin, Check,
   Lock, LogIn, UserPlus, Zap, User
 } from 'lucide-react';
+import { useToast } from '@/components/ToastContext';
 
 function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const toast = useToast();
   const queryProductId = searchParams.get('product_id');
   const queryQty = parseInt(searchParams.get('qty') || '1', 10);
 
@@ -92,9 +94,12 @@ function CheckoutContent() {
         setCustomerEmail(data.user.email || 'user@entrepreneur.id');
         setCustomerPhone(data.user.phone || '085712349988');
         setCustomerAddress(data.user.address || 'Gedung Pertemuan Jakarta');
+        toast.success('Berhasil masuk dengan Akun Klien Demo!', 'Autentikasi Sukses');
       }
     } catch (err) {
-      setError(err.message || 'Gagal masuk akun demo.');
+      const msg = err.message || 'Gagal masuk akun demo.';
+      setError(msg);
+      toast.error(msg, 'Gagal Masuk');
     } finally {
       setLoading(false);
     }
@@ -108,20 +113,87 @@ function CheckoutContent() {
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (!selectedProduct) {
-      setError('Silakan pilih paket acara atau tiket yang ingin direservasi.');
+      const msg = 'Silakan pilih paket acara atau tiket yang ingin direservasi.';
+      setError(msg);
+      toast.error(msg, 'Paket Belum Dipilih');
       return;
     }
 
-    setError('');
+    if (!customerName || !customerName.trim()) {
+      const msg = 'Nama lengkap PIC atau instansi pemesan tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Nama PIC Kosong');
+      return;
+    }
+
+    if (!customerEmail || !customerEmail.trim()) {
+      const msg = 'Alamat email pemesan tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Email Kosong');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim())) {
+      const msg = 'Format alamat email tidak valid (contoh: nama@perusahaan.com).';
+      setError(msg);
+      toast.error(msg, 'Format Email Salah');
+      return;
+    }
+
+    if (!customerPhone || !customerPhone.trim()) {
+      const msg = 'Nomor telepon / WhatsApp PIC tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Nomor Telepon Kosong');
+      return;
+    }
+
+    const digitsOnly = customerPhone.replace(/\D/g, '');
+    if (digitsOnly.length < 9) {
+      const msg = 'Nomor telepon terlalu pendek (minimal 9 digit angka).';
+      setError(msg);
+      toast.error(msg, 'Nomor Telepon Tidak Lengkap');
+      return;
+    }
+
+    if (!customerAddress || !customerAddress.trim()) {
+      const msg = 'Alamat venue / lokasi pelaksanaan acara tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Alamat Venue Kosong');
+      return;
+    }
+
+    if (!eventDate) {
+      const msg = 'Tanggal pelaksanaan acara wajib ditentukan.';
+      setError(msg);
+      toast.error(msg, 'Jadwal Acara Kosong');
+      return;
+    }
+
+    if (quantity < 1) {
+      const msg = 'Kuantitas paket atau tiket minimal 1 unit.';
+      setError(msg);
+      toast.error(msg, 'Kuantitas Tidak Valid');
+      return;
+    }
+
+    if (selectedProduct.stock < quantity) {
+      const msg = `Slot ketersediaan tidak mencukupi (sisa kuota: ${selectedProduct.stock} unit).`;
+      setError(msg);
+      toast.error(msg, 'Slot Penuh');
+      return;
+    }
+
     setLoading(true);
 
     try {
       const payload = {
-        customer_name: customerName,
-        customer_email: customerEmail,
-        customer_phone: customerPhone,
-        customer_address: `${customerAddress} (Jadwal: ${eventDate})`,
+        customer_name: customerName.trim(),
+        customer_email: customerEmail.trim(),
+        customer_phone: customerPhone.trim(),
+        customer_address: `${customerAddress.trim()} (Jadwal: ${eventDate})`,
         payment_method: paymentMethod,
         shipping_cost: shippingCost,
         items: [{
@@ -141,9 +213,12 @@ function CheckoutContent() {
         throw new Error(data.error || 'Gagal memproses reservasi.');
       }
 
+      toast.success(`Faktur ${data.order.order_number} berhasil diterbitkan!`, 'Reservasi Berhasil');
       router.push(`/orders/${data.order.order_number}`);
     } catch (err) {
-      setError(err.message || 'Terjadi kesalahan sistem.');
+      const msg = err.message || 'Terjadi kesalahan sistem.';
+      setError(msg);
+      toast.error(msg, 'Gagal Menerbitkan Faktur');
       setLoading(false);
     }
   };

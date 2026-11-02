@@ -9,10 +9,12 @@ import {
   Printer, CheckCircle2, Building2, Smartphone, 
   ArrowLeft, Copy, Check, FileText, Receipt, RefreshCw, AlertCircle 
 } from 'lucide-react';
+import { useToast } from '@/components/ToastContext';
 
 export default function OrderDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const toast = useToast();
   const orderNumber = params.orderNumber;
 
   const [order, setOrder] = useState(null);
@@ -28,9 +30,11 @@ export default function OrderDetailPage() {
       const data = await res.json();
       if (data.order) {
         setOrder(data.order);
+      } else {
+        toast.error('Pesanan dengan nomor tersebut tidak ditemukan di sistem.', 'Data Tidak Ditemukan');
       }
     } catch (err) {
-      // ignore
+      toast.error('Gagal mengambil data pesanan dari server.', 'Koneksi Bermasalah');
     } finally {
       setLoading(false);
     }
@@ -56,11 +60,16 @@ export default function OrderDetailPage() {
       if (data.success && data.order) {
         setOrder(data.order);
         setMsg('Pembayaran berhasil diverifikasi secara instan via Payment Gateway Sandbox!');
+        toast.success('Pembayaran berhasil diverifikasi secara instan! Status resmi LUNAS.', 'Pembayaran Sukses');
       } else {
-        setMsg('Simulasi pembayaran gagal.');
+        const errorMsg = data.message || 'Simulasi pembayaran dibatalkan atau ditolak sistem.';
+        setMsg(errorMsg);
+        toast.error(errorMsg, 'Pembayaran Belum Berhasil');
       }
     } catch (err) {
-      setMsg(err.message || 'Gagal memproses simulasi.');
+      const errorMsg = err.message || 'Gagal memproses simulasi pembayaran.';
+      setMsg(errorMsg);
+      toast.error(errorMsg, 'Kesalahan Gateway');
     } finally {
       setSimulating(false);
     }
@@ -69,6 +78,7 @@ export default function OrderDetailPage() {
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
+    toast.success('Nomor Virtual Account disalin ke clipboard.', 'Berhasil Disalin');
     setTimeout(() => setCopied(false), 2000);
   };
 

@@ -4,10 +4,12 @@ import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ShieldAlert, User, LogIn, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useToast } from '@/components/ToastContext';
 
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const toast = useToast();
   const redirectUrl = searchParams.get('redirect');
 
   const [email, setEmail] = useState('');
@@ -20,21 +22,37 @@ function LoginContent() {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!email.trim()) {
+      const msg = 'Kolom alamat email tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Email Kosong');
+      return;
+    }
+
+    if (!password) {
+      const msg = 'Kolom kata sandi / password tidak boleh kosong.';
+      setError(msg);
+      toast.error(msg, 'Password Kosong');
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: email.trim(), password }),
       });
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || 'Login gagal.');
+        throw new Error(data.error || 'Email atau kata sandi tidak cocok.');
       }
 
       setSuccess(`Selamat datang kembali, ${data.user.name}!`);
+      toast.success(`Selamat datang, ${data.user.name}! Akses berhasil diverifikasi.`, 'Login Berhasil');
       setTimeout(() => {
         if (redirectUrl) {
           router.push(redirectUrl);
@@ -46,7 +64,9 @@ function LoginContent() {
         router.refresh();
       }, 500);
     } catch (err) {
-      setError(err.message || 'Terjadi kesalahan saat masuk.');
+      const msg = err.message || 'Email atau kata sandi salah.';
+      setError(msg);
+      toast.error(msg, 'Autentikasi Gagal');
     } finally {
       setLoading(false);
     }

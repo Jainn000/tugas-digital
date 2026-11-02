@@ -57,7 +57,7 @@
       "description": "Manajemen acara perusahaan hingga 100 pax: fasilitator outbound bersertifikat, perlengkapan fun games, sound system 3000W, dokumentasi video cinematic, dan koordinasi lokasi.",
       "price": 7500000,
       "cost_price": 4200000,
-      "stock": 10,
+      "stock": 9,
       "image_url": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80"
     },
     {
@@ -278,6 +278,26 @@
       "paid_at": "2026-11-02 19:28:31",
       "id": 7,
       "created_at": "2026-11-02 19:28:26"
+    },
+    {
+      "order_number": "INV-20261102-8252",
+      "user_id": 2,
+      "customer_name": "Budi Pratama (PT Maju Event)",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "085712349988",
+      "customer_address": "Creative Hub Jakarta (Jadwal: 2026-11-20)",
+      "subtotal": 7500000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 7500000,
+      "total_cost": 4200000,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "NMD-QRIS-20261102-8252",
+      "paid_at": "2026-11-02 19:33:28",
+      "id": 8,
+      "created_at": "2026-11-02 19:33:28"
     }
   ],
   "order_items": [
@@ -354,6 +374,16 @@
     {
       "id": 8,
       "order_id": 7,
+      "product_id": 1,
+      "product_name": "Paket Corporate Gathering & Outbound",
+      "price": 7500000,
+      "cost_price": 4200000,
+      "quantity": 1,
+      "subtotal": 7500000
+    },
+    {
+      "id": 9,
+      "order_id": 8,
       "product_id": 1,
       "product_name": "Paket Corporate Gathering & Outbound",
       "price": 7500000,
