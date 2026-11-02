@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
-import { Database, ShieldCheck, CreditCard, Printer, FileText } from 'lucide-react';
+import { ShieldCheck, CreditCard, Printer, FileText, Ticket } from 'lucide-react';
 
 export default function Footer() {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="md:col-span-2 space-y-4">
             <Logo variant="full" />
             <p className="text-sm font-medium text-neutral-800 leading-relaxed max-w-md">
-              Manajemen acara, promotor festival musik, dan penyewaan alat panggung profesional: integrasi database MySQL, multi-aktor login, payment gateway sandbox, cetak invoice/e-ticket, dan laporan keuangan SAK EMKM.
+              Manajemen acara, promotor festival musik, dan penyewaan alat panggung profesional dengan sistem reservasi terpadu, e-ticket digital ber-barcode unik, faktur resmi A4 standar institusi, serta laporan keuangan akurat.
             </p>
             <div className="flex flex-wrap gap-2 pt-2">
               <span className="nb-tag bg-white font-bold">Event Organizer</span>
@@ -53,31 +53,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Fitur Terverifikasi */}
+          {/* Layanan & Kapabilitas */}
           <div>
             <h3 className="font-bold text-base mb-4 border-b-2 border-black pb-1">
-              Kriteria Terpenuhi
+              Kapabilitas Layanan
             </h3>
             <ul className="space-y-2.5 text-xs font-bold text-neutral-800">
               <li className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-emerald-800 flex-shrink-0" />
-                <span>Database MySQL (phpMyAdmin)</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-800 flex-shrink-0" />
+                <span>Tata Suara Line-Array & Rigging Panggung</span>
               </li>
               <li className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-800 flex-shrink-0" />
-                <span>Multi-Aktor Login (Admin dan User)</span>
+                <Ticket className="w-4 h-4 text-emerald-800 flex-shrink-0" />
+                <span>E-Ticket Barcode & Gate Scanner Gate Venue</span>
               </li>
               <li className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4 text-emerald-800 flex-shrink-0" />
-                <span>Payment Gateway Sandbox (QRIS & VA)</span>
+                <span>Pembayaran Instan QRIS & Virtual Account</span>
               </li>
               <li className="flex items-center gap-2">
                 <Printer className="w-4 h-4 text-emerald-800 flex-shrink-0" />
-                <span>Cetak Invoice dan Struk Kasir</span>
+                <span>Faktur Resmi A4 & Pass E-Ticket Masuk</span>
               </li>
               <li className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-emerald-800 flex-shrink-0" />
-                <span>Laporan Omzet dan Laba Rugi PDF</span>
+                <span>Dokumentasi SPJ & Rekonsiliasi Acara</span>
               </li>
             </ul>
           </div>
@@ -85,10 +85,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t-2 border-black flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-neutral-800">
-          <p>© 2026 KINETIK Event Production & Organizer. Proyek Digital Entrepreneurship.</p>
-          <p className="flex items-center gap-1">
-            <span>Dijalankan di</span>
-            <code className="px-1.5 py-0.5 bg-white border-2 border-black">http://localhost:3000</code>
+          <p>© 2026 KINETIK Event Production & Creative Organizer.</p>
+          <p className="text-neutral-700">
+            Jakarta & Bandung Service Hub • Melayani Acara Skala Nasional
           </p>
         </div>
       </div>

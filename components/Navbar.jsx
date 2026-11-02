@@ -4,23 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import Logo from './Logo';
-import { User as UserIcon, ShieldAlert, LogOut, Database, Menu, X, Ticket, CalendarCheck } from 'lucide-react';
+import { User as UserIcon, ShieldAlert, LogOut, Menu, X, Ticket, CalendarCheck, PhoneCall } from 'lucide-react';
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState(null);
-  const [dbStatus, setDbStatus] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -28,11 +18,6 @@ export default function Navbar() {
       .then(data => {
         if (data.user) setUser(data.user);
       })
-      .catch(() => {});
-
-    fetch('/api/status')
-      .then(res => res.json())
-      .then(data => setDbStatus(data))
       .catch(() => {});
   }, [pathname]);
 
@@ -53,22 +38,13 @@ export default function Navbar() {
       {/* Top Utility Bar */}
       <div className="bg-black text-white px-4 py-1.5 text-xs flex justify-between items-center font-bold">
         <div className="flex items-center gap-2">
-          <span>Kewirausahaan Digital</span>
-          <span className="hidden sm:inline text-neutral-400">/</span>
-          <span className="hidden sm:inline text-neutral-300">KINETIK Event Production & Creative Organizer</span>
+          <span>KINETIK Event Production & Creative Organizer</span>
+          <span className="hidden sm:inline text-neutral-400">•</span>
+          <span className="hidden sm:inline text-neutral-300">Jakarta & Bandung Production Hub</span>
         </div>
         <div className="flex items-center gap-2">
-          <Database className="w-3.5 h-3.5" />
-          <span>Status Sistem:</span>
-          {dbStatus?.connected ? (
-            <span className="text-[#A3E635] flex items-center gap-1 font-bold">
-              MySQL Aktif
-            </span>
-          ) : (
-            <span className="text-[#FFE600] flex items-center gap-1 font-bold" title="Data berjalan otomatis via store lokal. Import database.sql ke phpMyAdmin untuk MySQL">
-              Local DB Engine
-            </span>
-          )}
+          <span className="text-neutral-300 hidden sm:inline">Hotline Reservasi:</span>
+          <span className="text-[#FFE600] font-black">+62 812-8899-0011</span>
         </div>
       </div>
 

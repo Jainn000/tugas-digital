@@ -1,8 +1,10 @@
-# NUSANTARA CRAFT LAB — Proyek Kewirausahaan Digital
+# KINETIK Event Production & Creative Organizer — Proyek Kewirausahaan Digital
 
-Aplikasi website e-commerce & laboratorium bisnis rintisan digital karya mahasiswa untuk memenuhi seluruh indikator penilaian mata kuliah **Kewirausahaan Digital / Digital Entrepreneurship**.
+Aplikasi website manajemen acara, promotor festival musik, dan penyewaan alat panggung profesional untuk memenuhi seluruh indikator penilaian mata kuliah **Kewirausahaan Digital / Digital Entrepreneurship**.
 
-Aplikasi dibangun dengan gaya desain **Neubrutalism** berkarakter tegas (kontras tinggi, shadow hard 4px/6px hitam, tipografi bold, bebas AI slop dan gradien ungu generik) serta mematuhi seluruh *Taste Skill*, *Impeccable*, *Anti-Slop*, dan *Humanizer Writing rules*.
+Aplikasi dibangun dengan gaya desain **Neubrutalism** berkarakter tegas (kontras tinggi, tipografi bold, solid ink, bebas AI slop dan gradien ungu generik) serta mematuhi seluruh standar *Taste Skill*, *Impeccable*, *Anti-Slop*, dan *Humanizer Writing*.
+
+Dokumentasi arsitektur database, multi-aktor auth, dan webhook dapat dibaca di [`SYSTEM_SPEC.md`](./SYSTEM_SPEC.md).
 
 ---
 
@@ -10,15 +12,15 @@ Aplikasi dibangun dengan gaya desain **Neubrutalism** berkarakter tegas (kontras
 
 | Ketentuan Proyek | Status | Penjelasan Implementasi |
 | :--- | :---: | :--- |
-| **Bentuk Website / Mobile** | ✅ Selesai | Responsif desktop dan mobile menggunakan Next.js 14 App Router & Tailwind CSS. |
-| **Wajib Menggunakan Database** | ✅ Selesai | File `database.sql` lengkap siap di-import ke **phpMyAdmin (MySQL/MariaDB)** dengan relasi tabel, constraints, dan data awal. Dilengkapi sistem *zero-failure fallback data store*. |
-| **Login Min. 2 Peran (Admin & User)** | ✅ Selesai | Multi-role authentication berbasis JWT & HTTP-Only cookies. Akun Admin (`admin@entrepreneur.id`) dan User (`user@entrepreneur.id`) dengan hak akses ketat. |
-| **Fitur Payment Gateway** | ✅ Selesai | Sandbox payment gateway simulator interaktif: **QRIS Dinamis (Barcode SVG)**, **Virtual Account (BCA, Mandiri)**, dan **E-Wallet (GoPay)** dengan simulasi status lunas instan. |
-| **Transaksi & Cetak Invoice/Struk** | ✅ Selesai | Otomatisasi penerbitan nomor faktur unik (`INV-YYYYMMDD-XXXX`), fitur cetak langsung via tombol **Cetak Struk/PDF** dalam 2 pilihan format: **Invoice Resmi A4** dan **Struk Thermal Kasir 80mm**. |
-| **Laporan Penjualan (Omzet)** | ✅ Selesai | Halaman laporan penjualan dengan indikator Total Omzet, Total HPP, Laba Kotor, dan tabel transaksi detail yang dapat diekspor/dicetak ke PDF. |
-| **Laporan Keuangan (Laba Rugi)** | ✅ Selesai | Laporan Laba Rugi Komprehensif standar SAK EMKM: Pendapatan Usaha, HPP, Laba Kotor, Beban Operasional (Kemasan, IT, Admin Gateway), dan Laba Bersih Usaha siap cetak PDF. |
-| **Filter Berdasarkan Tanggal** | ✅ Selesai | Kedua laporan dilengkapi date picker `Dari Tanggal` s/d `Sampai Tanggal` serta shortcut preset bulan untuk melihat omzet pada periode tertentu. |
-| **Dijalankan di Localhost** | ✅ Selesai | Siap dijalankan langsung di `http://localhost:3000` tanpa perlu hosting berbayar. |
+| **Bentuk Website / Mobile** | ✅ Selesai | Responsif desktop dan mobile menggunakan Next.js 14 App Router, pure JavaScript, dan Tailwind CSS. |
+| **Wajib Menggunakan Database** | ✅ Selesai | File `database.sql` lengkap siap di-import ke **phpMyAdmin (MySQL/MariaDB)** dengan 6 tabel relasional dan data awal. Dilengkapi sistem *zero-failure fallback data store*. |
+| **Login Min. 2 Peran (Admin & User)** | ✅ Selesai | Multi-role authentication terpisah antara portal publik klien (`/`) dan portal pengelola (`/admin`) menggunakan JWT stateles cookies. |
+| **Fitur Payment Gateway** | ✅ Selesai | Terintegrasi AkuQRIS sandbox (`/api/payment/webhook`) dengan verifikasi HMAC-SHA256 signature, QRIS dinamis, Virtual Account BCA/Mandiri, dan GoPay. |
+| **Transaksi & Cetak Invoice/Struk** | ✅ Selesai | Alur reservasi langsung tanpa keranjang (`/checkout`), otomatisasi invoice resmi A4 untuk SPJ dan e-ticket thermal 80mm ber-barcode unik. |
+| **Laporan Penjualan (Omzet)** | ✅ Selesai | Halaman laporan penjualan tiket dan paket acara dengan metrik omzet, laba kotor, dan ekspor cetak PDF. |
+| **Laporan Keuangan (Laba Rugi)** | ✅ Selesai | Laporan laba rugi standar SAK EMKM: menghitung pendapatan kotor dikurangi beban operasional panggung (rigging, lighting, kru, sound engineer). |
+| **Filter Berdasarkan Tanggal** | ✅ Selesai | Kedua laporan dilengkapi date picker `Dari Tanggal` s/d `Sampai Tanggal` serta shortcut preset periode. |
+| **Dijalankan di Localhost & Vercel** | ✅ Selesai | Berjalan di `http://localhost:3000` dan live di `https://digital-entrepreneurship-five.vercel.app`. |
 
 ---
 

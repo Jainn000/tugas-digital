@@ -15,7 +15,8 @@ import {
   Sparkles, 
   Music, 
   Radio, 
-  CheckCircle2
+  CheckCircle2,
+  FileText
 } from 'lucide-react';
 
 const fadeInUp = {
@@ -100,7 +101,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="text-base sm:text-lg font-bold text-neutral-900 max-w-xl leading-relaxed"
             >
-              Event organizer dan creative production house untuk acara korporat, gathering komunitas, festival musik, dan intimate wedding. Sistem terintegrasi database MySQL, payment gateway sandbox, cetak invoice resmi, dan laporan laba rugi.
+              Event organizer dan creative production house untuk acara korporat, gathering komunitas, festival musik, dan intimate wedding. Layanan terpadu mencakup produksi panggung, sistem tiket konser ber-barcode, faktur resmi institusi, serta laporan rekonsiliasi keuangan lengkap.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-2">
@@ -125,7 +126,7 @@ export default function HomePage() {
             </motion.div>
           </motion.div>
 
-          {/* Hero Right Column: Spec Card with Spring Entrance */}
+          {/* Hero Right Column: Event Capabilities Card */}
           <motion.div 
             initial={{ opacity: 0, x: 30, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -137,8 +138,8 @@ export default function HomePage() {
               data-ui="hero-spec"
             >
               <div className="border-b-2 border-black pb-3 flex justify-between items-center">
-                <span className="font-bold text-sm">Spesifikasi Sistem EO</span>
-                <span className="nb-tag bg-[#A3E635] text-black">Verifikasi Penuh</span>
+                <span className="font-bold text-sm">Standar Produksi & Layanan</span>
+                <span className="nb-tag bg-[#A3E635] text-black">Siap Acara 2026</span>
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm font-bold">
@@ -147,10 +148,10 @@ export default function HomePage() {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
                 >
-                  <PackageCheck className="w-5 h-5 text-emerald-800 flex-shrink-0 mt-0.5" />
+                  <Music className="w-5 h-5 text-emerald-800 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold">Database MySQL dan phpMyAdmin</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Skema tabel terstruktur untuk paket event, tiket festival, dan pencatatan beban panggung.</p>
+                    <p className="font-bold">Audio Line-Array & Rigging Panggung</p>
+                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Tata suara 5.000W s/d 20.000W, lighting DMX beam bergerak, dan konstruksi rigging panggung aman.</p>
                   </div>
                 </motion.div>
 
@@ -159,10 +160,10 @@ export default function HomePage() {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
                 >
-                  <ShieldCheck className="w-5 h-5 text-blue-800 flex-shrink-0 mt-0.5" />
+                  <Ticket className="w-5 h-5 text-blue-800 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold">Multi-Aktor Login (Admin dan Klien)</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Akses terpisah antara tim event director dan klien pemesan tiket/layanan.</p>
+                    <p className="font-bold">E-Ticket Barcode & Gate Scanner</p>
+                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Penerbitan pass masuk digital dengan QR unik anti-duplikasi untuk verifikasi gerbang cepat.</p>
                   </div>
                 </motion.div>
 
@@ -171,16 +172,16 @@ export default function HomePage() {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
                 >
-                  <Zap className="w-5 h-5 text-orange-700 flex-shrink-0 mt-0.5" />
+                  <FileText className="w-5 h-5 text-orange-700 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold">Payment Gateway Simulator</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Mendukung QRIS nasional, Virtual Account BCA/Mandiri, dan GoPay dengan settlement instan.</p>
+                    <p className="font-bold">Faktur & Kwitansi Resmi Standar SPJ</p>
+                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Dokumen reservasi resmi berformat cetak A4 lengkap rincian termin pembayaran untuk instansi/korporat.</p>
                   </div>
                 </motion.div>
               </div>
 
               <div className="p-2.5 bg-neutral-100 border-2 border-black text-center text-xs font-bold">
-                Platform Terverifikasi Siap Produksi
+                Melayani Produksi Acara Skala 100 s.d. 10.000 Audiens
               </div>
             </div>
           </motion.div>
