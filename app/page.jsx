@@ -71,40 +71,25 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
           
           {/* Hero Left Column */}
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="lg:col-span-7 space-y-6"
-          >
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 bg-white border-2 border-black font-black text-xs uppercase">
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border-2 border-black font-black text-xs uppercase">
               <Sparkles className="w-4 h-4 text-[#FF5C00]" />
               <span>KINETIK Event Production House & Creative Organizer</span>
-            </motion.div>
+            </div>
 
-            <motion.h1 
-              variants={fadeInUp}
-              className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-black leading-none"
-            >
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-black leading-none">
               Eksekusi Panggung. <br />
-              <motion.span 
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="bg-white px-2 py-0.5 border-2 border-black inline-block my-1"
-              >
+              <span className="bg-white px-2 py-0.5 border-2 border-black inline-block my-1">
                 Produksi Acara.
-              </motion.span><br />
+              </span><br />
               Tiket Konser.
-            </motion.h1>
+            </h1>
 
-            <motion.p 
-              variants={fadeInUp}
-              className="text-base sm:text-lg font-bold text-neutral-900 max-w-xl leading-relaxed"
-            >
+            <p className="text-base sm:text-lg font-bold text-neutral-900 max-w-xl leading-relaxed">
               Event organizer dan creative production house untuk acara korporat, gathering komunitas, festival musik, dan intimate wedding. Layanan terpadu mencakup produksi panggung, sistem tiket konser ber-barcode, faktur resmi institusi, serta laporan rekonsiliasi keuangan lengkap.
-            </motion.p>
+            </p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-wrap gap-4 pt-2">
               <motion.a
                 href="#katalog"
                 whileHover={{ scale: 1.03, y: -2 }}
@@ -123,16 +108,11 @@ export default function HomePage() {
                   Masuk Akun Demo
                 </Link>
               </motion.div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Hero Right Column: Event Capabilities Card */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5"
-          >
+          <div className="lg:col-span-5">
             <div 
               className="nb-card bg-white p-6 space-y-4" 
               data-ui="hero-spec"
@@ -143,48 +123,36 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm font-bold">
-                <motion.div 
-                  whileHover={{ x: 4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
-                >
+                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
                   <Music className="w-5 h-5 text-emerald-800 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold">Audio Line-Array & Rigging Panggung</p>
                     <p className="text-neutral-700 font-medium text-xs mt-0.5">Tata suara 5.000W s/d 20.000W, lighting DMX beam bergerak, dan konstruksi rigging panggung aman.</p>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                  whileHover={{ x: 4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
-                >
+                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
                   <Ticket className="w-5 h-5 text-blue-800 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold">E-Ticket Barcode & Gate Scanner</p>
                     <p className="text-neutral-700 font-medium text-xs mt-0.5">Penerbitan pass masuk digital dengan QR unik anti-duplikasi untuk verifikasi gerbang cepat.</p>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                  whileHover={{ x: 4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black"
-                >
+                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
                   <FileText className="w-5 h-5 text-orange-700 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold">Faktur & Kwitansi Resmi Standar SPJ</p>
                     <p className="text-neutral-700 font-medium text-xs mt-0.5">Dokumen reservasi resmi berformat cetak A4 lengkap rincian termin pembayaran untuk instansi/korporat.</p>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               <div className="p-2.5 bg-neutral-100 border-2 border-black text-center text-xs font-bold">
                 Melayani Produksi Acara Skala 100 s.d. 10.000 Audiens
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </section>
