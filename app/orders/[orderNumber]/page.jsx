@@ -134,7 +134,7 @@ export default function OrderDetailPage() {
             onClick={handlePrint}
             className="nb-btn nb-btn-yellow px-4 py-1.5 text-xs flex items-center gap-2 font-bold"
           >
-            <Printer className="w-4 h-4 stroke-[2.5]" /> Cetak PDF
+            <Printer className="w-4 h-4 stroke-[2.5]" /> Cetak Faktur Resmi (PDF)
           </button>
         </div>
       </div>

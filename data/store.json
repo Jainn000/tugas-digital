@@ -57,7 +57,7 @@
       "description": "Manajemen acara perusahaan hingga 100 pax: fasilitator outbound bersertifikat, perlengkapan fun games, sound system 3000W, dokumentasi video cinematic, dan koordinasi lokasi.",
       "price": 7500000,
       "cost_price": 4200000,
-      "stock": 11,
+      "stock": 10,
       "image_url": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80"
     },
     {
@@ -258,6 +258,26 @@
       "paid_at": "2026-11-02 18:12:44",
       "id": 6,
       "created_at": "2026-11-02 18:11:54"
+    },
+    {
+      "order_number": "INV-20261102-9542",
+      "user_id": null,
+      "customer_name": "Testing User",
+      "customer_email": "test@user.com",
+      "customer_phone": "081234567890",
+      "customer_address": "Jakarta",
+      "subtotal": 7500000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 7500000,
+      "total_cost": 4200000,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "NMD-QRIS-20261102-9542",
+      "paid_at": "2026-11-02 19:28:31",
+      "id": 7,
+      "created_at": "2026-11-02 19:28:26"
     }
   ],
   "order_items": [
@@ -324,6 +344,16 @@
     {
       "id": 7,
       "order_id": 6,
+      "product_id": 1,
+      "product_name": "Paket Corporate Gathering & Outbound",
+      "price": 7500000,
+      "cost_price": 4200000,
+      "quantity": 1,
+      "subtotal": 7500000
+    },
+    {
+      "id": 8,
+      "order_id": 7,
       "product_id": 1,
       "product_name": "Paket Corporate Gathering & Outbound",
       "price": 7500000,

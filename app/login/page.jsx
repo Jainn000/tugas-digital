@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ShieldAlert, User, LogIn, AlertCircle, CheckCircle2 } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,13 +36,15 @@ export default function LoginPage() {
 
       setSuccess(`Selamat datang kembali, ${data.user.name}!`);
       setTimeout(() => {
-        if (data.user.role === 'admin') {
+        if (redirectUrl) {
+          router.push(redirectUrl);
+        } else if (data.user.role === 'admin') {
           router.push('/admin');
         } else {
           router.push('/');
         }
         router.refresh();
-      }, 600);
+      }, 500);
     } catch (err) {
       setError(err.message || 'Terjadi kesalahan saat masuk.');
     } finally {
@@ -155,11 +160,26 @@ export default function LoginPage() {
 
         <div className="pt-4 border-t-2 border-black text-center text-xs font-bold text-neutral-600">
           Belum punya akun?{' '}
-          <Link href="/register" className="text-black underline font-bold hover:text-[#FF5C00]">
+          <Link 
+            href={redirectUrl ? `/register?redirect=${encodeURIComponent(redirectUrl)}` : '/register'} 
+            className="text-black underline font-bold hover:text-[#FF5C00]"
+          >
             Daftar Akun Baru
           </Link>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="p-12 text-center nb-card bg-white max-w-md mx-auto my-12">
+        <p className="font-bold text-sm">Memuat formulir login...</p>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }

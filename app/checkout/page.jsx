@@ -7,7 +7,8 @@ import Link from 'next/link';
 import { formatRupiah } from '@/lib/format';
 import { 
   CreditCard, QrCode, Building2, Smartphone, ArrowRight, 
-  ShieldCheck, AlertCircle, Ticket, Calendar, MapPin, Check 
+  ShieldCheck, AlertCircle, Ticket, Calendar, MapPin, Check,
+  Lock, LogIn, UserPlus, Zap, User
 } from 'lucide-react';
 
 function CheckoutContent() {
@@ -19,6 +20,9 @@ function CheckoutContent() {
   const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(queryProductId ? Number(queryProductId) : null);
   const [quantity, setQuantity] = useState(queryQty > 0 ? queryQty : 1);
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authChecking, setAuthChecking] = useState(true);
 
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -46,20 +50,55 @@ function CheckoutContent() {
       .catch(() => {});
   }, [queryProductId]);
 
-  // Prefill if logged in
+  // Check login status and prefill client details
   useEffect(() => {
     fetch('/api/auth/me')
       .then(res => res.json())
       .then(data => {
         if (data.user) {
+          setCurrentUser(data.user);
           setCustomerName(data.user.name || '');
           setCustomerEmail(data.user.email || '');
-          setCustomerPhone(data.user.phone || '');
-          setCustomerAddress(data.user.address || '');
+          setCustomerPhone(data.user.phone || '081234567890');
+          setCustomerAddress(data.user.address || 'Jakarta Selatan');
+        } else {
+          setCurrentUser(null);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        setCurrentUser(null);
+      })
+      .finally(() => {
+        setAuthChecking(false);
+      });
   }, []);
+
+  const handleQuickDemoLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: 'user@entrepreneur.id', password: 'user123' }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Gagal login demo.');
+      }
+      if (data.user) {
+        setCurrentUser(data.user);
+        setCustomerName(data.user.name || 'Budi Pratama (PT Maju Event)');
+        setCustomerEmail(data.user.email || 'user@entrepreneur.id');
+        setCustomerPhone(data.user.phone || '085712349988');
+        setCustomerAddress(data.user.address || 'Gedung Pertemuan Jakarta');
+      }
+    } catch (err) {
+      setError(err.message || 'Gagal masuk akun demo.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const selectedProduct = products.find(p => p.id === selectedProductId) || products[0];
   const itemPrice = selectedProduct ? selectedProduct.price : 0;
@@ -109,8 +148,102 @@ function CheckoutContent() {
     }
   };
 
+  if (authChecking) {
+    return (
+      <div className="max-w-md mx-auto my-16 p-8 text-center nb-card bg-white space-y-3">
+        <p className="font-bold text-sm">Memverifikasi status sesi masuk...</p>
+      </div>
+    );
+  }
+
+  if (!currentUser) {
+    return (
+      <div className="max-w-xl mx-auto my-12 px-4">
+        <div className="nb-card bg-white p-6 sm:p-8 space-y-6">
+          <div className="border-b-2 border-black pb-4 text-center space-y-2">
+            <div className="inline-flex p-3 bg-[#FFE600] border-2 border-black">
+              <Lock className="w-8 h-8 text-black" />
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight">
+              Masuk Akun Sebelum Checkout
+            </h1>
+            <p className="text-xs sm:text-sm font-bold text-neutral-700 leading-relaxed">
+              Untuk menerbitkan faktur resmi, pass e-ticket, dan pencatatan reservasi acara ke akun Anda, silakan masuk terlebih dahulu.
+            </p>
+          </div>
+
+          {selectedProduct && (
+            <div className="p-4 bg-[#FFFDF0] border-2 border-black flex items-center justify-between gap-4">
+              <div>
+                <span className="nb-tag bg-white text-xs font-bold mb-1">Paket Reservasi</span>
+                <p className="font-bold text-sm sm:text-base">{selectedProduct.name}</p>
+                <p className="text-xs font-medium text-neutral-700 mt-0.5">Kuantitas: {quantity} unit</p>
+              </div>
+              <div className="text-right">
+                <span className="text-xs font-bold text-neutral-600 block">Total</span>
+                <span className="text-base sm:text-lg font-black text-[#FF5C00]">{formatRupiah(grandTotal)}</span>
+              </div>
+            </div>
+          )}
+
+          {error && (
+            <div className="p-3 bg-red-100 border-2 border-black flex items-center gap-2 text-xs font-bold text-red-900">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <div className="space-y-3 pt-1">
+            <Link
+              href={`/login?redirect=${encodeURIComponent(`/checkout?product_id=${selectedProductId || ''}&qty=${quantity}`)}`}
+              className="nb-btn nb-btn-orange w-full py-3.5 text-sm sm:text-base font-bold flex items-center justify-center gap-2"
+            >
+              <LogIn className="w-5 h-5 stroke-[2.5]" />
+              Masuk ke Akun Klien (Login)
+            </Link>
+
+            <Link
+              href={`/register?redirect=${encodeURIComponent(`/checkout?product_id=${selectedProductId || ''}&qty=${quantity}`)}`}
+              className="nb-btn nb-btn-white w-full py-3 text-sm font-bold flex items-center justify-center gap-2"
+            >
+              <UserPlus className="w-4 h-4" />
+              Daftar Akun Baru
+            </Link>
+
+            <div className="pt-2 border-t-2 border-black text-center">
+              <button
+                type="button"
+                onClick={handleQuickDemoLogin}
+                disabled={loading}
+                className="nb-btn nb-btn-yellow w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2"
+              >
+                <Zap className="w-4 h-4 text-black" />
+                {loading ? 'Menghubungkan Akun Demo...' : 'Masuk Cepat Akun Demo Klien (1-Klik)'}
+              </button>
+            </div>
+          </div>
+
+          <div className="text-center pt-2">
+            <Link href="/" className="text-xs font-bold underline hover:text-[#FF5C00]">
+              ← Kembali ke Katalog Layanan & Tiket
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto my-10 px-4">
+      {/* Active User Session Banner */}
+      <div className="p-3.5 mb-6 bg-[#A3E635] border-2 border-black flex flex-wrap items-center justify-between gap-3 font-bold text-xs">
+        <div className="flex items-center gap-2">
+          <User className="w-4 h-4 text-black" />
+          <span>Masuk sebagai: <strong>{currentUser.name}</strong> ({currentUser.email})</span>
+        </div>
+        <span className="nb-tag bg-black text-white text-[11px]">Akun Terverifikasi</span>
+      </div>
+
       <div className="mb-8 border-b-2 border-black pb-4">
         <div className="flex items-center gap-2 mb-1">
           <span className="nb-tag bg-[#FFE600] text-black text-xs font-bold">Direct Booking Portal</span>

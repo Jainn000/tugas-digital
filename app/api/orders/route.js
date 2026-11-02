@@ -25,6 +25,12 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const session = await getCurrentUser();
+    if (!session) {
+      return NextResponse.json({ 
+        error: 'Silakan masuk / login akun terlebih dahulu sebelum melakukan pemesanan.' 
+      }, { status: 401 });
+    }
+
     const body = await req.json();
     const {
       customer_name,
