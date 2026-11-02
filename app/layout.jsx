@@ -1,6 +1,8 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ScrollProgress from '@/components/ScrollProgress';
+import BackToTop from '@/components/BackToTop';
 
 export const metadata = {
   title: 'KINETIK Event Production & Organizer — Platform Manajemen Acara & Tiket',
@@ -11,11 +13,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id">
       <body className="min-h-[100dvh] flex flex-col bg-[#FFFDF9] text-[#121212]">
+        <ScrollProgress />
         <Navbar />
         <main className="flex-1">
           {children}
         </main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );

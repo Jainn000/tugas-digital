@@ -7,6 +7,30 @@
   --text-color: #121212;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Neubrutalist Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f0ea;
+  border-left: 2px solid #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFE600;
+  border: 2px solid #121212;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5C00;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -32,12 +56,31 @@ body {
 
 .nb-interactive {
   transition-property: transform;
-  transition-duration: 120ms;
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nb-interactive:hover {
-  transform: translate(-2px, -2px);
+  transform: translate(-3px, -3px);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 .nb-btn {
