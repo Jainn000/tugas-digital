@@ -4,7 +4,7 @@ import { hashPassword, createSessionToken, TOKEN_NAME } from '@/lib/auth';
 
 export async function POST(req) {
   try {
-    const { name, email, password, phone, address } = await req.json();
+    const { name, email, password, phone, address, role } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json({ error: 'Nama, email, dan password wajib diisi.' }, { status: 400 });
@@ -15,12 +15,14 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email sudah terdaftar. Silakan login.' }, { status: 400 });
     }
 
+    const assignedRole = role === 'admin' ? 'admin' : 'user';
+
     const hashedPassword = await hashPassword(password);
     const newUser = await createUser({
       name,
       email,
       password: hashedPassword,
-      role: 'user',
+      role: assignedRole,
       phone: phone || '',
       address: address || '',
     });
