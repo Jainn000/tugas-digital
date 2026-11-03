@@ -7,35 +7,69 @@ import { motion } from 'framer-motion';
 import { formatRupiah } from '@/lib/format';
 import { 
   ArrowDown, 
+  ArrowRight,
   Filter, 
-  PackageCheck, 
-  Zap, 
-  ShieldCheck, 
   Ticket, 
   Sparkles, 
   Music, 
-  Radio, 
+  Calendar,
+  MapPin,
+  CalendarCheck,
+  Speaker,
+  Users,
+  ShieldCheck,
   CheckCircle2,
   FileText
 } from 'lucide-react';
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05
-    }
+const EVENT_DETAILS = {
+  1: {
+    venue: 'Jabodetabek & Puncak',
+    schedule: 'Jadwal Fleksibel',
+    badge: 'All-In Service',
+    action: 'Booking Paket'
+  },
+  2: {
+    venue: 'Indoor / Garden Venue',
+    schedule: 'Jadwal Fleksibel',
+    badge: 'Full Coordination',
+    action: 'Booking Paket'
+  },
+  3: {
+    venue: 'Hotel Ballroom & Auditorium',
+    schedule: 'Jadwal Fleksibel',
+    badge: 'Broadcast 4K',
+    action: 'Booking Paket'
+  },
+  4: {
+    venue: 'Balai Kartini Convention, Jakarta',
+    schedule: '28 Nov 2026 • 09:00 WIB',
+    badge: 'VIP Pass & Lounge',
+    action: 'Beli Tiket VIP'
+  },
+  5: {
+    venue: 'Balai Kartini Convention, Jakarta',
+    schedule: '28 Nov 2026 • 09:00 WIB',
+    badge: 'General Admission',
+    action: 'Beli Tiket'
+  },
+  6: {
+    venue: 'Istora Senayan Park, Jakarta',
+    schedule: '05 Des 2026 • 15:00 WIB',
+    badge: 'Presale Phase 1',
+    action: 'Beli Tiket Presale'
+  },
+  7: {
+    venue: 'Layanan Antar & Setup Jabodetabek',
+    schedule: 'Sewa Harian / Shift',
+    badge: 'Line-Array 5000W',
+    action: 'Sewa Sound'
+  },
+  8: {
+    venue: 'Layanan Antar & Setup Jabodetabek',
+    schedule: 'Sewa Harian / Shift',
+    badge: 'Moving Beam DMX',
+    action: 'Sewa Lighting'
   }
 };
 
@@ -64,92 +98,140 @@ export default function HomePage() {
     }
   };
 
+  const getEventMeta = (productId) => {
+    return EVENT_DETAILS[productId] || {
+      venue: 'Jakarta & Sekitarnya',
+      schedule: 'Sesuai Reservasi',
+      badge: 'Layanan Resmi',
+      action: 'Booking Sekarang'
+    };
+  };
+
   return (
-    <div className="space-y-16 overflow-hidden">
-      {/* Hero Section — Asymmetric Neubrutalism with Fluid Motion */}
-      <section className="border-b-2 border-black bg-[#FFE600] py-14 md:py-24 px-4 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+    <div className="space-y-20 md:space-y-28 overflow-hidden">
+      
+      {/* 1. Hero Section — Dominant Event Photography with Editorial Balance */}
+      <section className="border-b-2 border-black bg-white py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          {/* Hero Left Column */}
+          {/* Hero Left: Assertive Typography & Clear Value Proposition */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border-2 border-black font-black text-xs uppercase">
-              <Sparkles className="w-4 h-4 text-[#FF5C00]" />
-              <span>KINETIK Event Production House & Creative Organizer</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FFFDF0] border-2 border-black font-bold text-xs text-black">
+              <Sparkles className="w-3.5 h-3.5 text-[#FF5C00]" />
+              <span>Promoter Konser & Production House Jakarta</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-black leading-none">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-black leading-[1.05]">
               Eksekusi Panggung. <br />
-              <span className="bg-white px-2 py-0.5 border-2 border-black inline-block my-1">
+              Festival Musik. <br />
+              <span className="text-[#FF5C00] underline decoration-4 decoration-black underline-offset-4">
                 Produksi Acara.
-              </span><br />
-              Tiket Konser.
+              </span>
             </h1>
 
-            <p className="text-base sm:text-lg font-bold text-neutral-900 max-w-xl leading-relaxed">
-              Event organizer dan creative production house untuk acara korporat, gathering komunitas, festival musik, dan intimate wedding. Layanan terpadu mencakup produksi panggung, sistem tiket konser ber-barcode, faktur resmi institusi, serta laporan rekonsiliasi keuangan lengkap.
+            <p className="text-base sm:text-lg font-bold text-neutral-800 max-w-xl leading-relaxed">
+              Platform terpadu untuk pemesanan tiket konser festival, pengorganisasian acara korporat, dan penyewaan rigging panggung bersertifikasi. Seluruh pemesanan menerbitkan pass e-ticket barcode dan faktur resmi standar SPJ.
             </p>
 
+            {/* Primary Action Buttons */}
             <div className="flex flex-wrap gap-4 pt-2">
               <motion.a
                 href="#katalog"
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 className="nb-btn nb-btn-orange px-6 py-3.5 text-base sm:text-lg flex items-center gap-2"
               >
                 <Ticket className="w-5 h-5 stroke-[2.5]" />
-                Lihat Paket & Tiket
+                Buka Katalog & Tiket
                 <ArrowDown className="w-5 h-5 stroke-[2.5]" />
               </motion.a>
-              <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}>
+
+              <motion.div whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="/login"
+                  href="/checkout"
                   className="nb-btn nb-btn-white px-6 py-3.5 text-base sm:text-lg flex items-center gap-2 font-bold"
                 >
-                  Masuk Akun Demo
+                  <CalendarCheck className="w-5 h-5" />
+                  Reservasi Paket Acara
                 </Link>
               </motion.div>
             </div>
+
+            {/* Trust Indicator Metrics */}
+            <div className="pt-4 border-t-2 border-black grid grid-cols-3 gap-4 text-xs font-bold">
+              <div>
+                <p className="text-xl sm:text-2xl font-black text-black">250+</p>
+                <p className="text-neutral-600 mt-0.5">Produksi Acara Sukses</p>
+              </div>
+              <div>
+                <p className="text-xl sm:text-2xl font-black text-black">100%</p>
+                <p className="text-neutral-600 mt-0.5">Faktur Resmi Standar SPJ</p>
+              </div>
+              <div>
+                <p className="text-xl sm:text-2xl font-black text-black">Instant</p>
+                <p className="text-neutral-600 mt-0.5">Gate E-Ticket QR Code</p>
+              </div>
+            </div>
           </div>
 
-          {/* Hero Right Column: Event Capabilities Card */}
+          {/* Hero Right: Dominant High-Impact Event Showcase Photo */}
           <div className="lg:col-span-5">
-            <div 
-              className="nb-card bg-white p-6 space-y-4" 
-              data-ui="hero-spec"
-            >
-              <div className="border-b-2 border-black pb-3 flex justify-between items-center">
-                <span className="font-bold text-sm">Standar Produksi & Layanan</span>
-                <span className="nb-tag bg-[#A3E635] text-black">Siap Acara 2026</span>
-              </div>
-
-              <div className="space-y-3 text-xs sm:text-sm font-bold">
-                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
-                  <Music className="w-5 h-5 text-emerald-800 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold">Audio Line-Array & Rigging Panggung</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Tata suara 5.000W s/d 20.000W, lighting DMX beam bergerak, dan konstruksi rigging panggung aman.</p>
-                  </div>
+            <div className="nb-card bg-white overflow-hidden border-2 border-black group">
+              {/* Event Cover Image */}
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-900 border-b-2 border-black">
+                <Image
+                  src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&auto=format&fit=crop&q=85"
+                  alt="Live Concert Production KINETIK"
+                  fill
+                  priority
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3">
+                  <span className="nb-tag bg-[#FFE600] text-black text-xs font-bold uppercase">
+                    Stage Spotlight 2026
+                  </span>
                 </div>
-
-                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
-                  <Ticket className="w-5 h-5 text-blue-800 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold">E-Ticket Barcode & Gate Scanner</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Penerbitan pass masuk digital dengan QR unik anti-duplikasi untuk verifikasi gerbang cepat.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2.5 p-3 bg-[#FFFDF0] border-2 border-black">
-                  <FileText className="w-5 h-5 text-orange-700 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold">Faktur & Kwitansi Resmi Standar SPJ</p>
-                    <p className="text-neutral-700 font-medium text-xs mt-0.5">Dokumen reservasi resmi berformat cetak A4 lengkap rincian termin pembayaran untuk instansi/korporat.</p>
-                  </div>
+                <div className="absolute top-3 right-3">
+                  <span className="nb-tag bg-white text-black text-xs font-bold">
+                    Official Promoter
+                  </span>
                 </div>
               </div>
 
-              <div className="p-2.5 bg-neutral-100 border-2 border-black text-center text-xs font-bold">
-                Melayani Produksi Acara Skala 100 s.d. 10.000 Audiens
+              {/* Event Caption & Direct Action */}
+              <div className="p-5 space-y-3 bg-[#FFFDF0]">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-neutral-600 flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-[#FF5C00]" /> 05 Desember 2026
+                  </span>
+                  <span className="nb-tag bg-[#A3E635] text-black text-xs font-bold">
+                    Presale Aktif
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="font-black text-lg text-black leading-snug">
+                    Indie Wave Music Festival 2026
+                  </h3>
+                  <p className="text-xs font-medium text-neutral-700 flex items-center gap-1.5 mt-1">
+                    <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-neutral-500" />
+                    Istora Senayan Park, Jakarta Pusat
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t-2 border-black flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[11px] font-bold text-neutral-600 block">Tiket Mulai Dari</span>
+                    <span className="text-lg font-black text-black">Rp 125.000</span>
+                  </div>
+
+                  <Link
+                    href="/checkout?product_id=6&qty=1"
+                    className="nb-btn nb-btn-orange px-4 py-2 text-xs font-bold flex items-center gap-1.5"
+                  >
+                    Beli Tiket <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -157,290 +239,331 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Infinite Live Production Marquee Ticker */}
-      <div className="border-y-2 border-black bg-black text-white py-3 overflow-hidden select-none">
-        <div className="animate-marquee font-black uppercase text-sm tracking-wider flex items-center gap-8">
-          <span className="flex items-center gap-2 text-[#FFE600]"><Sparkles className="w-4 h-4" /> FESTIVAL TIKET LIVE</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2"><Music className="w-4 h-4" /> RIGGING SOUND 5000W</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#38BDF8]"><Radio className="w-4 h-4" /> LIGHTING DMX 512</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#A3E635]"><CheckCircle2 className="w-4 h-4" /> MULTICAM 4K BROADCAST</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#FF5C00]"><Zap className="w-4 h-4" /> SETTLEMENT QRIS INSTAN</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span>INVOICE RESMI STANDAR SPJ</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#FFE600]"><Sparkles className="w-4 h-4" /> FESTIVAL TIKET LIVE</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2"><Music className="w-4 h-4" /> RIGGING SOUND 5000W</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#38BDF8]"><Radio className="w-4 h-4" /> LIGHTING DMX 512</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#A3E635]"><CheckCircle2 className="w-4 h-4" /> MULTICAM 4K BROADCAST</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span className="flex items-center gap-2 text-[#FF5C00]"><Zap className="w-4 h-4" /> SETTLEMENT QRIS INSTAN</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
-          <span>INVOICE RESMI STANDAR SPJ</span>
-          <span className="w-1.5 h-1.5 bg-neutral-400 inline-block rotate-45" />
+      {/* 2. Core Focus: Tiga Pilar Layanan Utama KINETIK */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="border-b-2 border-black pb-4 mb-8">
+          <span className="nb-tag bg-[#FFE600] text-black font-bold text-xs uppercase mb-2">
+            Fokus Layanan
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">
+            Tiga Layanan Utama Produksi Acara
+          </h2>
+          <p className="text-sm font-bold text-neutral-600 mt-1 max-w-2xl leading-relaxed">
+            Menyatukan alur pemesanan tiket penonton, paket pengorganisasian acara perusahaan, dan rental perlengkapan panggung dalam satu platform terintegrasi.
+          </p>
         </div>
-      </div>
 
-      {/* Catalog Section with Scroll Reveal */}
-      <section id="katalog" className="max-w-7xl mx-auto px-4 scroll-mt-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Pilar 1: Tiket Event & Festival */}
+          <div className="nb-card bg-white flex flex-col justify-between overflow-hidden border-2 border-black group">
+            <div>
+              <div className="relative aspect-[16/9] w-full border-b-2 border-black overflow-hidden bg-neutral-100">
+                <Image
+                  src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&auto=format&fit=crop&q=80"
+                  alt="Tiket Event dan Festival Musik"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 left-2">
+                  <span className="nb-tag bg-[#FFE600] text-black text-xs font-bold">Pilar 1</span>
+                </div>
+              </div>
+
+              <div className="p-5 space-y-2">
+                <h3 className="text-xl font-black uppercase text-black flex items-center gap-2">
+                  <Ticket className="w-5 h-5 text-[#FF5C00]" />
+                  Tiket Event & Festival
+                </h3>
+                <p className="text-xs font-medium text-neutral-700 leading-relaxed">
+                  Pemesanan tiket konser musik, festival indie, dan creator summit. Setiap tiket menerbitkan QR barcode unik untuk scanning cepat di gerbang venue.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(2)}
+                className="nb-btn nb-btn-white w-full py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
+              >
+                Buka Kategori Tiket <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Pilar 2: Paket All-in Event Organizer */}
+          <div className="nb-card bg-white flex flex-col justify-between overflow-hidden border-2 border-black group">
+            <div>
+              <div className="relative aspect-[16/9] w-full border-b-2 border-black overflow-hidden bg-neutral-100">
+                <Image
+                  src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80"
+                  alt="Paket All-in Event Organizer"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 left-2">
+                  <span className="nb-tag bg-[#FFE600] text-black text-xs font-bold">Pilar 2</span>
+                </div>
+              </div>
+
+              <div className="p-5 space-y-2">
+                <h3 className="text-xl font-black uppercase text-black flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-700" />
+                  Paket All-In Organizer
+                </h3>
+                <p className="text-xs font-medium text-neutral-700 leading-relaxed">
+                  Penyelenggaraan menyeluruh untuk corporate gathering, outbound instansi, intimate wedding, dan seminar hybrid lengkap perizinan dan rundown tim director.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(1)}
+                className="nb-btn nb-btn-white w-full py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
+              >
+                Pilih Paket Organizer <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Pilar 3: Rental Alat & Produksi Panggung */}
+          <div className="nb-card bg-white flex flex-col justify-between overflow-hidden border-2 border-black group">
+            <div>
+              <div className="relative aspect-[16/9] w-full border-b-2 border-black overflow-hidden bg-neutral-100">
+                <Image
+                  src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&auto=format&fit=crop&q=80"
+                  alt="Rental Alat dan Sound System Panggung"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 left-2">
+                  <span className="nb-tag bg-[#FFE600] text-black text-xs font-bold">Pilar 3</span>
+                </div>
+              </div>
+
+              <div className="p-5 space-y-2">
+                <h3 className="text-xl font-black uppercase text-black flex items-center gap-2">
+                  <Speaker className="w-5 h-5 text-emerald-700" />
+                  Rental Sound & Rigging
+                </h3>
+                <p className="text-xs font-medium text-neutral-700 leading-relaxed">
+                  Penyewaan sound system line-array 5000W s/d 20000W, lighting DMX moving head, dan genset siap pakai dengan operator sound engineer bersertifikat.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(3)}
+                className="nb-btn nb-btn-white w-full py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
+              >
+                Lihat Peralatan Panggung <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Catalog Section — Premier Event Poster Cards with Schedule & Venue */}
+      <section id="katalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 border-b-2 border-black pb-4">
           <div>
-            <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight">
-              Katalog Layanan & Tiket Event
+            <span className="nb-tag bg-black text-white font-bold text-xs uppercase mb-2">
+              Katalog Resmi
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight mt-1">
+              Katalog Tiket & Paket Acara
             </h2>
-            <p className="text-sm font-bold text-neutral-700 mt-1">
-              Pilihan paket all-in event organizer, tiket festival musik, dan sewa sound lighting profesional.
+            <p className="text-sm font-bold text-neutral-600 mt-1">
+              Pilih tiket festival atau paket layanan acara untuk langsung menerbitkan faktur reservasi.
             </p>
           </div>
 
           {/* Category Filter Pills */}
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-xs font-bold flex items-center gap-1 mr-1">
-              <Filter className="w-3.5 h-3.5" /> Kategori:
+            <span className="text-xs font-bold flex items-center gap-1 mr-1 text-neutral-700">
+              <Filter className="w-3.5 h-3.5" /> Filter:
             </span>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setSelectedCategory(null)}
               className={`px-3 py-1.5 text-xs font-bold border-2 border-black transition-colors duration-150 ${
                 selectedCategory === null
                   ? 'bg-black text-white'
-                  : 'bg-white hover:bg-neutral-100'
+                  : 'bg-white hover:bg-neutral-100 text-black'
               }`}
             >
-              Semua ({products.length})
-            </motion.button>
+              Semua Item ({products.length})
+            </button>
             {categories.map(cat => (
-              <motion.button
+              <button
                 key={cat.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-3 py-1.5 text-xs font-bold border-2 border-black transition-colors duration-150 ${
                   selectedCategory === cat.id
-                    ? 'bg-[#FFE600] text-black'
-                    : 'bg-white hover:bg-neutral-100'
+                    ? 'bg-[#FFE600] text-black font-black'
+                    : 'bg-white hover:bg-neutral-100 text-black'
                 }`}
               >
                 {cat.name}
-              </motion.button>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Product Cards Grid with Staggered Scroll Entrance */}
+        {/* Product Cards Grid */}
         {loading ? (
           <div className="py-20 text-center border-2 border-black bg-white">
-            <p className="font-bold text-lg">Memuat data paket acara dari database...</p>
+            <p className="font-bold text-lg">Memuat data paket acara dan tiket dari server...</p>
           </div>
         ) : products.length === 0 ? (
           <div className="py-20 text-center border-2 border-black bg-white">
             <p className="font-bold text-lg">Tidak ada item dalam kategori ini.</p>
           </div>
         ) : (
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {products.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
-                whileHover={{ y: -6 }}
-                className="nb-card flex flex-col justify-between overflow-hidden group transition-transform duration-200"
-                data-ui="product-card"
-              >
-                {/* Product Image */}
-                <div className="relative aspect-square w-full border-b-2 border-black bg-neutral-100 overflow-hidden">
-                  {product.image_url ? (
-                    <Image
-                      src={product.image_url}
-                      alt={product.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center font-bold text-neutral-400">
-                      No Image
-                    </div>
-                  )}
-                  <div className="absolute top-2 left-2">
-                    <span className="nb-tag bg-white text-black text-xs font-bold">
-                      {product.category_name || 'Event Service'}
-                    </span>
-                  </div>
-                  <div className="absolute top-2 right-2">
-                    <span className={`nb-tag text-xs font-bold ${product.stock > 5 ? 'bg-[#A3E635] text-black' : 'bg-red-300 text-black'}`}>
-                      Slot: {product.stock}
-                    </span>
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => {
+              const meta = getEventMeta(product.id);
+              const isTicket = product.category_id === 2;
 
-                {/* Details */}
-                <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+              return (
+                <div
+                  key={product.id}
+                  className="nb-card bg-white flex flex-col justify-between overflow-hidden group border-2 border-black transition-transform duration-200 hover:-translate-y-1.5"
+                  data-ui="product-card"
+                >
+                  {/* Poster Image */}
                   <div>
-                    <h3 className="font-bold text-lg leading-snug line-clamp-1 group-hover:text-[#FF5C00] transition-colors duration-150">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-neutral-700 mt-1 line-clamp-2 leading-relaxed font-medium">
-                      {product.description}
-                    </p>
+                    <div className="relative aspect-[4/3] w-full border-b-2 border-black bg-neutral-100 overflow-hidden">
+                      {product.image_url ? (
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-bold text-neutral-400">
+                          Foto Belum Tersedia
+                        </div>
+                      )}
+                      <div className="absolute top-2 left-2">
+                        <span className="nb-tag bg-white text-black text-xs font-bold">
+                          {product.category_name || 'Event'}
+                        </span>
+                      </div>
+                      <div className="absolute top-2 right-2">
+                        <span className={`nb-tag text-xs font-bold ${product.stock > 5 ? 'bg-[#A3E635] text-black' : 'bg-red-200 text-black'}`}>
+                          Slot: {product.stock}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Event Schedule & Venue Information Bar */}
+                    <div className="p-4 pb-2 space-y-2 bg-[#FFFDF0]">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800">
+                        <Calendar className="w-3.5 h-3.5 text-[#FF5C00] flex-shrink-0" />
+                        <span className="truncate">{meta.schedule}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-600">
+                        <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-neutral-500" />
+                        <span className="truncate">{meta.venue}</span>
+                      </div>
+                    </div>
+
+                    {/* Title & Short Description */}
+                    <div className="p-4 space-y-2">
+                      <h3 className="font-bold text-base leading-snug line-clamp-2 text-black group-hover:text-[#FF5C00] transition-colors duration-150">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed font-medium">
+                        {product.description}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="pt-3 border-t-2 border-black flex items-center justify-between gap-2">
+                  {/* Price & Direct Booking CTA */}
+                  <div className="p-4 pt-2 border-t-2 border-black bg-white flex items-center justify-between gap-2">
                     <div>
-                      <span className="text-xs font-bold text-neutral-600 block">Investasi / Tiket</span>
-                      <span className="text-lg font-black text-black">
+                      <span className="text-[11px] font-bold text-neutral-500 block">
+                        {isTicket ? 'Harga Tiket' : 'Mulai Dari'}
+                      </span>
+                      <span className="text-base font-black text-black">
                         {formatRupiah(product.price)}
                       </span>
                     </div>
 
                     {product.stock <= 0 ? (
-                      <span className="nb-btn px-3 py-2 text-xs font-bold bg-neutral-300 text-neutral-500 cursor-not-allowed border-neutral-400">
+                      <span className="nb-btn px-3 py-2 text-xs font-bold bg-neutral-200 text-neutral-500 cursor-not-allowed border-neutral-400">
                         Slot Penuh
                       </span>
                     ) : (
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Link
-                          href={`/checkout?product_id=${product.id}&qty=1`}
-                          className="nb-btn nb-btn-yellow px-3 py-2 text-xs flex items-center gap-1.5 font-bold"
-                        >
-                          <Ticket className="w-3.5 h-3.5 stroke-[2.5]" /> Booking Sekarang
-                        </Link>
-                      </motion.div>
+                      <Link
+                        href={`/checkout?product_id=${product.id}&qty=1`}
+                        className="nb-btn nb-btn-orange px-3.5 py-2 text-xs flex items-center gap-1 font-bold"
+                      >
+                        {isTicket ? (
+                          <Ticket className="w-3.5 h-3.5 stroke-[2.5]" />
+                        ) : (
+                          <CalendarCheck className="w-3.5 h-3.5 stroke-[2.5]" />
+                        )}
+                        <span>{meta.action}</span>
+                      </Link>
                     )}
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              );
+            })}
+          </div>
         )}
       </section>
 
-      {/* Production Workflow Pipeline Steps */}
-      <section className="max-w-7xl mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="border-b-2 border-black pb-4 mb-8"
-        >
-          <span className="nb-tag bg-[#FF5C00] text-white font-bold text-xs uppercase mb-2">
-            SOP Pelaksanaan
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">
-            Alur Eksekusi Acara Terstandarisasi
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              step: 'Tahap 1',
-              title: 'Booking & Rundown',
-              desc: 'Klien memilih paket atau tiket konser, menetapkan tanggal acara, dan rundown dikonfirmasi tim director.',
-              bg: 'bg-white'
-            },
-            {
-              step: 'Tahap 2',
-              title: 'Instalasi Teknis',
-              desc: 'Pemasangan rigging panggung, soundcheck speaker line array, dan sinkronisasi sistem pencahayaan DMX.',
-              bg: 'bg-[#FFFDF0]'
-            },
-            {
-              step: 'Tahap 3',
-              title: 'Gate Pass & Eksekusi',
-              desc: 'Verifikasi barcode tiket masuk oleh tim usher gate venue, serta live monitoring jalannya penampilan panggung.',
-              bg: 'bg-white'
-            },
-            {
-              step: 'Tahap 4',
-              title: 'Rekonsiliasi & SPJ',
-              desc: 'Pelaporan realisasi biaya operasional, laba kotor acara, dan penyerahan invoice resmi format A4.',
-              bg: 'bg-[#A3E635]'
-            }
-          ].map((item, i) => (
-            <motion.div
-              key={item.step}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className={`nb-card ${item.bg} p-6 space-y-3`}
-            >
-              <div className="flex items-center justify-between border-b-2 border-black pb-2">
-                <span className="text-lg font-black text-neutral-900">{item.step}</span>
-                <span className="nb-tag bg-black text-white text-xs font-bold">Fase {i + 1}</span>
-              </div>
-              <h3 className="text-lg font-bold uppercase">{item.title}</h3>
-              <p className="text-xs font-medium text-neutral-800 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Asymmetric Split Showcase with Scroll Animation */}
-      <section className="max-w-7xl mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-7 nb-card bg-[#38BDF8] p-8 md:p-10 space-y-4"
-          >
-            <h3 className="text-3xl font-black uppercase tracking-tight">Produksi Panggung & Manajemen Lapangan</h3>
-            <p className="text-sm font-bold text-neutral-900 leading-relaxed max-w-xl">
-              Dari perizinan keramaian, instalasi rigging sound system 5000 watt, koordinasi rundown panggung, hingga live streaming multicam 4K. Seluruh pengeluaran operasional tercatat akurat dalam standar pembukuan SAK EMKM.
+      {/* 4. Production Reliability & Official Compliance Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="nb-card bg-white p-8 md:p-12 border-2 border-black grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8 space-y-4">
+            <span className="nb-tag bg-[#A3E635] text-black font-bold text-xs uppercase">
+              Standar Operasional Industri
+            </span>
+            <h3 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black">
+              Eksekusi Panggung Terstandarisasi & SPJ Finansial Lengkap
+            </h3>
+            <p className="text-sm font-bold text-neutral-700 leading-relaxed max-w-2xl">
+              Setiap produksi panggung didukung kru berpengalaman, sertifikasi keselamatan kerja, dan sistem verifikasi gate tiket digital. Seluruh pengeluaran dan omzet tersaji dalam laporan laba rugi resmi standar SAK EMKM.
             </p>
-            <div className="pt-2">
-              <span className="nb-tag bg-white font-bold">Kru Bersertifikat & Alat Terkalibrasi</span>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <span className="nb-tag bg-neutral-100 text-neutral-800 font-bold text-xs">
+                Perizinan Keramaian & Keamanan
+              </span>
+              <span className="nb-tag bg-neutral-100 text-neutral-800 font-bold text-xs">
+                E-Ticket Thermal 80mm & Faktur A4
+              </span>
+              <span className="nb-tag bg-neutral-100 text-neutral-800 font-bold text-xs">
+                Rekonsiliasi Laba Rugi Acara
+              </span>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-5 nb-card bg-[#A3E635] p-8 md:p-10 space-y-4 flex flex-col justify-between"
-          >
-            <div className="space-y-2">
-              <h3 className="text-2xl font-black uppercase tracking-tight">E-Ticket Barcode & Faktur Booking A4</h3>
-              <p className="text-sm font-bold text-neutral-900 leading-relaxed">
-                Setiap reservasi paket dan pembelian tiket festival menerbitkan dua format cetak: e-ticket thermal 80mm untuk pass masuk gate venue dan invoice resmi A4 untuk SPJ korporat.
-              </p>
-            </div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="self-start mt-2">
-              <Link
-                href="/login"
-                className="nb-btn nb-btn-white py-2.5 px-4 text-xs font-bold"
-              >
-                Uji Coba Panel Pengelola
-              </Link>
-            </motion.div>
-          </motion.div>
+          <div className="lg:col-span-4 flex flex-col gap-3">
+            <Link
+              href="/checkout"
+              className="nb-btn nb-btn-orange py-3.5 px-6 text-sm font-bold text-center flex items-center justify-center gap-2"
+            >
+              <CalendarCheck className="w-4 h-4 stroke-[2.5]" />
+              Buat Reservasi Acara Sekarang
+            </Link>
+            <Link
+              href="/login"
+              className="nb-btn nb-btn-white py-2.5 px-4 text-xs font-bold text-center"
+            >
+              Uji Coba Panel Pengelola (Admin)
+            </Link>
+          </div>
         </div>
       </section>
+
     </div>
   );
 }
