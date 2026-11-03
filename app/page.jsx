@@ -3,19 +3,27 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { formatRupiah } from '@/lib/format';
 import { 
   ArrowUpRight, 
   ArrowDown, 
   Check, 
-  Calendar, 
-  MapPin, 
-  AudioLines, 
-  Ticket, 
-  Sparkles,
-  Filter,
-  Speaker
+  AudioLines 
 } from 'lucide-react';
+
+const fadeUpVariant = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  })
+};
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
@@ -53,65 +61,97 @@ export default function HomePage() {
             alt="Kinetik Concert Photography"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-center scale-100 transition-transform duration-1000"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#171717]/95 via-[#171717]/70 to-[#171717]/20" /> {/* taste-skill-ignore: neutral scrim over photo */}
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-[790px] flex flex-col gap-[24px]">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.12 }
+            }
+          }}
+          className="relative z-10 max-w-[790px] flex flex-col gap-[24px]"
+        >
           {/* Section label */}
-          <div className="flex items-center gap-[12px]">
+          <motion.div variants={fadeUpVariant} custom={0} className="flex items-center gap-[12px]">
             <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
             <span className="font-inter font-semibold text-[#bdbdbd] text-[11px] tracking-[1.54px]">
               EVENT PRODUCTION & ORGANIZER
             </span>
-          </div>
+          </motion.div>
 
           {/* Headline */}
-          <h1 className="font-poppins font-semibold text-[42px] sm:text-[54px] md:text-[64px] tracking-[-1.92px] leading-[1.14] text-white">
+          <motion.h1 
+            variants={fadeUpVariant}
+            custom={1}
+            className="font-poppins font-semibold text-[42px] sm:text-[54px] md:text-[64px] tracking-[-1.92px] leading-[1.14] text-white"
+          >
             Hidupkan setiap<br />
             momen bersama<br />
             <span className="text-[#ff6b35]">KINETIK.</span>
-          </h1>
+          </motion.h1>
 
           {/* Subtitle */}
-          <p className="font-inter text-[#bdbdbd] text-[15px] md:text-[16px] leading-[1.75] max-w-[520px]">
+          <motion.p 
+            variants={fadeUpVariant}
+            custom={2}
+            className="font-inter text-[#bdbdbd] text-[15px] md:text-[16px] leading-[1.75] max-w-[520px]"
+          >
             Dari ide pertama hingga tepuk tangan terakhir. Kami merangkai kreativitas, perencanaan, dan produksi dalam satu pengalaman berkesan.
-          </p>
+          </motion.p>
 
           {/* Hero Actions */}
-          <div className="flex flex-wrap items-center gap-[16px] pt-[8px]">
-            <Link
-              href="#layanan"
-              className="bg-[#ff6b35] text-[#171717] font-inter font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center gap-[14px] hover:bg-[#e5531e] transition-colors"
-            >
-              <span>Jelajahi Layanan</span>
-              <ArrowUpRight className="w-[18px] h-[18px]" />
-            </Link>
+          <motion.div 
+            variants={fadeUpVariant}
+            custom={3}
+            className="flex flex-wrap items-center gap-[16px] pt-[8px]"
+          >
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="#layanan"
+                className="bg-[#ff6b35] text-[#171717] font-inter font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center gap-[14px] hover:bg-[#e5531e] transition-colors"
+              >
+                <span>Jelajahi Layanan</span>
+                <ArrowUpRight className="w-[18px] h-[18px]" />
+              </Link>
+            </motion.div>
 
-            <Link
-              href="/checkout"
-              className="border border-white/40 text-white font-inter font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
-            >
-              Rencanakan Acara
-            </Link>
-          </div>
-        </div>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/checkout"
+                className="border border-white/40 text-white font-inter font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                Rencanakan Acara
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Hero Baseline */}
-        <div className="relative z-10 w-full pt-[24px] border-t border-white/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[#bdbdbd]">
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="relative z-10 w-full pt-[24px] border-t border-white/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[#bdbdbd]"
+        >
           <p className="text-[10px] tracking-[1.2px] font-medium">
             VISI ANDA. PRODUKSI KAMI. PENGALAMAN TAK TERLUPAKAN.
           </p>
           <a
             href="#tentang"
-            className="flex items-center gap-[10px] text-[11px] hover:text-white transition-colors"
+            className="flex items-center gap-[10px] text-[11px] hover:text-white transition-colors group"
           >
             <span>Kenali KINETIK</span>
-            <ArrowDown className="w-3.5 h-3.5 text-[#ff6b35]" />
+            <ArrowDown className="w-3.5 h-3.5 text-[#ff6b35] group-hover:translate-y-1 transition-transform" />
           </a>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. EXPERIENCE AT A GLANCE / METRICS BAR (Figma Node 46:3308) */}
@@ -119,36 +159,60 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto flex flex-col gap-[22px]">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-[32px]">
             {/* Metric 1 */}
-            <div className="flex flex-col gap-[6px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col gap-[6px]"
+            >
               <p className="font-poppins font-medium text-[34px] md:text-[38px] text-white leading-none">
                 8<span className="text-[#ff6b35]">+</span>
               </p>
               <p className="font-inter text-[13px] text-[#bdbdbd]">Tahun pengalaman</p>
-            </div>
+            </motion.div>
 
             {/* Metric 2 */}
-            <div className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]"
+            >
               <p className="font-poppins font-medium text-[34px] md:text-[38px] text-white leading-none">
                 150<span className="text-[#ff6b35]">+</span>
               </p>
               <p className="font-inter text-[13px] text-[#bdbdbd]">Acara ditangani</p>
-            </div>
+            </motion.div>
 
             {/* Metric 3 */}
-            <div className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]"
+            >
               <p className="font-poppins font-medium text-[34px] md:text-[38px] text-white leading-none">
                 85<span className="text-[#ff6b35]">+</span>
               </p>
               <p className="font-inter text-[13px] text-[#bdbdbd]">Klien berkolaborasi</p>
-            </div>
+            </motion.div>
 
             {/* Metric 4 */}
-            <div className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="flex flex-col gap-[6px] lg:border-l lg:border-[#383838] lg:pl-[28px]"
+            >
               <p className="font-poppins font-medium text-[34px] md:text-[38px] text-white leading-none">
                 40<span className="text-[#ff6b35]">+</span>
               </p>
               <p className="font-inter text-[13px] text-[#bdbdbd]">Profesional produksi</p>
-            </div>
+            </motion.div>
           </div>
           <p className="text-[10px] text-[#8d8d8d]">
             Rekam jejak terverifikasi dari rangkaian produksi konser musik, gathering korporat, dan eksibisi.
@@ -160,7 +224,13 @@ export default function HomePage() {
       <section id="layanan" className="px-5 sm:px-8 md:px-[72px] py-[88px] max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-[40px]">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
             <div className="flex flex-col gap-[16px] max-w-[760px]">
               <div className="flex items-center gap-[12px]">
                 <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -175,13 +245,20 @@ export default function HomePage() {
             <p className="text-[14px] text-[#bdbdbd] max-w-[350px] leading-[1.7]">
               Setiap acara punya cerita. Kami menyiapkan setiap detail agar cerita Anda terasa hidup.
             </p>
-          </div>
+          </motion.div>
 
           {/* 4 Service Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[24px]">
             {/* Service 1 */}
-            <div className="flex flex-col gap-[20px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[20px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/corporate-event.png"
                   alt="Acara Korporat"
@@ -197,17 +274,24 @@ export default function HomePage() {
                   <h3 className="font-poppins font-medium text-[20px] text-white tracking-[-0.42px]">
                     Acara Korporat
                   </h3>
-                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
                 <p className="text-[13px] text-[#bdbdbd] leading-[1.65]">
                   Konferensi, peluncuran produk, dan aktivasi merek yang tepat sasaran.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Service 2 */}
-            <div className="flex flex-col gap-[20px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[20px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/festival-event.png"
                   alt="Konser & Festival"
@@ -223,17 +307,24 @@ export default function HomePage() {
                   <h3 className="font-poppins font-medium text-[20px] text-white tracking-[-0.42px]">
                     Konser & Festival
                   </h3>
-                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
                 <p className="text-[13px] text-[#bdbdbd] leading-[1.65]">
                   Panggung, tata suara, dan cahaya yang menyatukan seluruh penonton.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Service 3 */}
-            <div className="flex flex-col gap-[20px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[20px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/wedding-event.png"
                   alt="Pernikahan"
@@ -249,17 +340,24 @@ export default function HomePage() {
                   <h3 className="font-poppins font-medium text-[20px] text-white tracking-[-0.42px]">
                     Pernikahan
                   </h3>
-                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
                 <p className="text-[13px] text-[#bdbdbd] leading-[1.65]">
                   Perayaan yang dirancang penuh makna untuk hari istimewa Anda.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Service 4 */}
-            <div className="flex flex-col gap-[20px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[20px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[10px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/private-event.png"
                   alt="Acara Privat"
@@ -275,13 +373,13 @@ export default function HomePage() {
                   <h3 className="font-poppins font-medium text-[20px] text-white tracking-[-0.42px]">
                     Acara Privat
                   </h3>
-                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                  <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
                 <p className="text-[13px] text-[#bdbdbd] leading-[1.65]">
                   Pertemuan intim dan perayaan personal dengan sentuhan istimewa.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -290,12 +388,18 @@ export default function HomePage() {
       <section id="tentang" className="bg-[#242424] border-y border-[#383838] px-5 sm:px-8 md:px-[72px] py-[88px]">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-[48px] lg:gap-[72px] items-center">
           {/* Left: Production BTS Photo Card */}
-          <div className="lg:col-span-6 relative h-[380px] md:h-[450px] rounded-[12px] overflow-hidden border border-[#383838]">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 relative h-[380px] md:h-[450px] rounded-[12px] overflow-hidden border border-[#383838] group"
+          >
             <Image
               src="/figma/bts-production.png"
               alt="KINETIK Production Story"
               fill
-              className="object-cover"
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
             />
             {/* Photo Caption floating box */}
             <div className="absolute bottom-[24px] left-[24px] right-[24px] bg-[#171717] rounded-[6px] p-[20px] flex items-center justify-between border border-[#383838]">
@@ -309,10 +413,16 @@ export default function HomePage() {
               </div>
               <AudioLines className="w-6 h-6 text-[#ff6b35] shrink-0" />
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Company Introduction */}
-          <div className="lg:col-span-6 flex flex-col gap-[22px]">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 flex flex-col gap-[22px]"
+          >
             <div className="flex items-center gap-[12px]">
               <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
               <span className="font-semibold text-[#bdbdbd] text-[11px] tracking-[1.54px]">
@@ -356,22 +466,30 @@ export default function HomePage() {
             </div>
 
             <div className="pt-2">
-              <Link
-                href="/checkout"
-                className="inline-flex items-center justify-center gap-[14px] bg-[#ff6b35] text-[#171717] font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] hover:bg-[#e5531e] transition-colors"
-              >
-                <span>Kenali Tim Kami</span>
-                <ArrowUpRight className="w-[18px] h-[18px]" />
-              </Link>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
+                <Link
+                  href="/checkout"
+                  className="inline-flex items-center justify-center gap-[14px] bg-[#ff6b35] text-[#171717] font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] hover:bg-[#e5531e] transition-colors"
+                >
+                  <span>Kenali Tim Kami</span>
+                  <ArrowUpRight className="w-[18px] h-[18px]" />
+                </Link>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* 5. PORTOFOLIO PILIHAN (Figma Node 46:3402) */}
       <section id="portofolio" className="px-5 sm:px-8 md:px-[72px] py-[88px] max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-[36px]">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+          >
             <div className="flex flex-col gap-[16px] max-w-[760px]">
               <div className="flex items-center gap-[12px]">
                 <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -385,17 +503,24 @@ export default function HomePage() {
             </div>
             <Link
               href="#paket"
-              className="flex items-center gap-[8px] text-[13px] text-white hover:text-[#ff6b35] transition-colors"
+              className="flex items-center gap-[8px] text-[13px] text-white hover:text-[#ff6b35] transition-colors group"
             >
               <span>Jelajahi portofolio</span>
-              <ArrowUpRight className="w-4 h-4 text-[#ff6b35]" />
+              <ArrowUpRight className="w-4 h-4 text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[24px]">
             {/* Project 1 */}
-            <div className="flex flex-col gap-[16px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[16px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/corporate-event.png"
                   alt="Ruang untuk gagasan baru"
@@ -410,16 +535,23 @@ export default function HomePage() {
                 <h3 className="font-poppins font-medium text-[20px] text-white">
                   Ruang untuk gagasan baru
                 </h3>
-                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
               <p className="text-[12px] text-[#bdbdbd]">
                 Konsep · Tata panggung · Audio visual
               </p>
-            </div>
+            </motion.div>
 
             {/* Project 2 */}
-            <div className="flex flex-col gap-[16px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[16px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/festival-event.png"
                   alt="Satu panggung, ribuan energi"
@@ -434,16 +566,23 @@ export default function HomePage() {
                 <h3 className="font-poppins font-medium text-[20px] text-white">
                   Satu panggung, ribuan energi
                 </h3>
-                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
               <p className="text-[12px] text-[#bdbdbd]">
                 Stage design · Lighting · Show management
               </p>
-            </div>
+            </motion.div>
 
             {/* Project 3 */}
-            <div className="flex flex-col gap-[16px] group">
-              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ y: -6 }}
+              className="flex flex-col gap-[16px] group cursor-pointer"
+            >
+              <div className="relative h-[280px] md:h-[300px] rounded-[12px] overflow-hidden bg-[#242424] border border-[#383838] group-hover:border-[#ff6b35]/60 transition-colors">
                 <Image
                   src="/figma/wedding-event.png"
                   alt="Perayaan di bawah bintang"
@@ -458,12 +597,12 @@ export default function HomePage() {
                 <h3 className="font-poppins font-medium text-[20px] text-white">
                   Perayaan di bawah bintang
                 </h3>
-                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] transition-colors" />
+                <ArrowUpRight className="w-5 h-5 text-[#bdbdbd] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
               <p className="text-[12px] text-[#bdbdbd]">
                 Perencanaan · Dekorasi · Koordinasi hari-H
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -472,7 +611,13 @@ export default function HomePage() {
       <section id="paket" className="bg-[#242424] border-y border-[#383838] px-5 sm:px-8 md:px-[72px] py-[88px]">
         <div className="max-w-[1440px] mx-auto flex flex-col gap-[36px]">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
             <div className="flex flex-col gap-[16px] max-w-[760px]">
               <div className="flex items-center gap-[12px]">
                 <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -487,12 +632,19 @@ export default function HomePage() {
             <p className="text-[14px] text-[#bdbdbd] max-w-[350px] leading-[1.7]">
               Pilih titik awal yang sesuai. Kami menyesuaikan lingkup, skala, dan kebutuhan acara Anda.
             </p>
-          </div>
+          </motion.div>
 
           {/* 3 Main Package Cards from Figma */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
             {/* Package 1: Essential */}
-            <div className="bg-[#171717] border border-[#383838] rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#171717] border border-[#383838] hover:border-neutral-600 rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px] transition-colors"
+            >
               <div className="flex flex-col gap-[16px]">
                 <p className="text-[9px] tracking-[0.54px] text-[#bdbdbd] uppercase">
                   Acara Privat & Komunitas
@@ -529,16 +681,25 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <Link
-                href="/checkout?product_id=1"
-                className="w-full border border-white/40 text-white font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                Diskusikan Paket
-              </Link>
-            </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/checkout?product_id=1"
+                  className="w-full border border-white/40 text-white font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
+                >
+                  Diskusikan Paket
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Package 2: Corporate Signature (Featured in Figma with #ff6b35 border) */}
-            <div className="bg-[#171717] border-2 border-[#ff6b35] rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px] relative">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#171717] border-2 border-[#ff6b35] rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px] relative"
+            >
               <div className="flex flex-col gap-[16px]">
                 <div className="flex items-center justify-between text-[9px] uppercase tracking-[0.54px]">
                   <span className="text-[#bdbdbd]">Korporat & Brand Experience</span>
@@ -578,16 +739,25 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <Link
-                href="/checkout?product_id=2"
-                className="w-full bg-[#ff6b35] text-[#171717] font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-[#e5531e] transition-colors"
-              >
-                Diskusikan Paket
-              </Link>
-            </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/checkout?product_id=2"
+                  className="w-full bg-[#ff6b35] text-[#171717] font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-[#e5531e] transition-colors"
+                >
+                  Diskusikan Paket
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Package 3: Live Experience */}
-            <div className="bg-[#171717] border border-[#383838] rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#171717] border border-[#383838] hover:border-neutral-600 rounded-[12px] p-[28px] flex flex-col justify-between gap-[22px] transition-colors"
+            >
               <div className="flex flex-col gap-[16px]">
                 <p className="text-[9px] tracking-[0.54px] text-[#bdbdbd] uppercase">
                   Konser & Festival
@@ -624,13 +794,15 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <Link
-                href="/checkout?product_id=3"
-                className="w-full border border-white/40 text-white font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                Diskusikan Paket
-              </Link>
-            </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="/checkout?product_id=3"
+                  className="w-full border border-white/40 text-white font-semibold text-[13px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
+                >
+                  Diskusikan Paket
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Database Live Event & Equipment Catalog */}
@@ -684,9 +856,14 @@ export default function HomePage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {products.map((item) => (
-                  <div
+                {products.map((item, idx) => (
+                  <motion.div
                     key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{ duration: 0.4, delay: (idx % 4) * 0.08 }}
+                    whileHover={{ y: -4 }}
                     className="bg-[#171717] border border-[#383838] rounded-[10px] overflow-hidden flex flex-col justify-between hover:border-[#ff6b35]/60 transition-colors group"
                   >
                     <div>
@@ -728,7 +905,7 @@ export default function HomePage() {
                         Pesan
                       </Link>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}
@@ -739,7 +916,13 @@ export default function HomePage() {
       {/* 7. PROSES KAMI (Figma Node 46:3514) */}
       <section className="px-5 sm:px-8 md:px-[72px] py-[80px] max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-[36px]">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4"
+          >
             <div className="flex flex-col gap-[16px] max-w-[750px]">
               <div className="flex items-center gap-[12px]">
                 <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -754,44 +937,68 @@ export default function HomePage() {
             <p className="text-[13px] text-[#bdbdbd]">
               Terbuka sejak brief, tenang saat hari-H.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[32px]">
             {/* Stage 1 */}
-            <div className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]"
+            >
               <span className="font-inter text-[#ff6b35] text-[12px] font-semibold">Tahap 1</span>
               <h3 className="font-poppins text-[21px] text-white">Dengarkan</h3>
               <p className="text-[13px] text-[#bdbdbd] leading-[1.7]">
                 Ceritakan tujuan, audiens, dan anggaran. Kami menyusun brief bersama.
               </p>
-            </div>
+            </motion.div>
 
             {/* Stage 2 */}
-            <div className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]"
+            >
               <span className="font-inter text-[#ff6b35] text-[12px] font-semibold">Tahap 2</span>
               <h3 className="font-poppins text-[21px] text-white">Rancang</h3>
               <p className="text-[13px] text-[#bdbdbd] leading-[1.7]">
                 Konsep kreatif, lingkup produksi, dan penawaran yang transparan.
               </p>
-            </div>
+            </motion.div>
 
             {/* Stage 3 */}
-            <div className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]"
+            >
               <span className="font-inter text-[#ff6b35] text-[12px] font-semibold">Tahap 3</span>
               <h3 className="font-poppins text-[21px] text-white">Wujudkan</h3>
               <p className="text-[13px] text-[#bdbdbd] leading-[1.7]">
                 Tim teknis dan operasional menghidupkan setiap detail acara.
               </p>
-            </div>
+            </motion.div>
 
             {/* Stage 4 */}
-            <div className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="border-t border-[#383838] pt-[22px] flex flex-col gap-[14px]"
+            >
               <span className="font-inter text-[#ff6b35] text-[12px] font-semibold">Tahap 4</span>
               <h3 className="font-poppins text-[21px] text-white">Evaluasi</h3>
               <p className="text-[13px] text-[#bdbdbd] leading-[1.7]">
                 Dokumentasi dan evaluasi bersama untuk langkah berikutnya.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -799,7 +1006,13 @@ export default function HomePage() {
       {/* 8. ACARA KAMI / AGENDA (Figma Node 46:3539) */}
       <section id="acara" className="bg-[#242424] border-y border-[#383838] px-5 sm:px-8 md:px-[72px] py-[64px]">
         <div className="max-w-[1440px] mx-auto flex flex-col gap-[30px]">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+          >
             <div className="flex flex-col gap-[14px] max-w-[800px]">
               <div className="flex items-center gap-[12px]">
                 <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -812,11 +1025,18 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="text-[11px] text-[#8d8d8d]">Agenda terdekat</p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
             {/* Card 1 */}
-            <div className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -4 }}
+              className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
+            >
               <div className="w-[76px] flex flex-col items-center justify-center shrink-0 border-r border-[#383838] pr-4">
                 <span className="font-poppins text-[36px] text-white leading-none">14</span>
                 <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">NOV 2026</span>
@@ -828,11 +1048,18 @@ export default function HomePage() {
                   Percakapan tentang ide, panggung, dan kolaborasi.
                 </p>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] shrink-0" />
-            </div>
+              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ y: -4 }}
+              className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
+            >
               <div className="w-[76px] flex flex-col items-center justify-center shrink-0 border-r border-[#383838] pr-4">
                 <span className="font-poppins text-[36px] text-white leading-none">4</span>
                 <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">DES 2026</span>
@@ -844,15 +1071,21 @@ export default function HomePage() {
                   Temui tim dan eksplorasi kemungkinan acara Anda.
                 </p>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] shrink-0" />
-            </div>
+              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* 9. CONSULTATION INVITATION / CTA (Figma Node 46:3566) */}
       <section className="px-5 sm:px-8 md:px-[72px] py-[80px] max-w-[1440px] mx-auto">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8"
+        >
           <div className="flex flex-col gap-[20px] max-w-[850px]">
             <div className="flex items-center gap-[12px]">
               <div className="w-[24px] h-[2px] bg-[#ff6b35]" />
@@ -870,18 +1103,20 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col items-start sm:items-center gap-[16px] shrink-0">
-            <Link
-              href="/checkout"
-              className="bg-[#ff6b35] text-[#171717] font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center gap-[14px] hover:bg-[#e5531e] transition-colors whitespace-nowrap"
-            >
-              <span>Konsultasi Sekarang</span>
-              <ArrowUpRight className="w-[18px] h-[18px]" />
-            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/checkout"
+                className="bg-[#ff6b35] text-[#171717] font-semibold text-[14px] h-[56px] px-[26px] rounded-[6px] flex items-center justify-center gap-[14px] hover:bg-[#e5531e] transition-colors whitespace-nowrap"
+              >
+                <span>Konsultasi Sekarang</span>
+                <ArrowUpRight className="w-[18px] h-[18px]" />
+              </Link>
+            </motion.div>
             <span className="text-[11px] text-[#8d8d8d]">
               Tanpa komitmen pemesanan.
             </span>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
