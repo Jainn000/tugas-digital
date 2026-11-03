@@ -47,17 +47,17 @@ export function ToastProvider({ children }) {
             const isSuccess = toast.type === 'success';
 
             const bgClass = isError 
-              ? 'bg-[#FFF0F0] border-l-8 border-l-red-600' 
+              ? 'bg-[#242424] border-red-800/80 border-l-4 border-l-red-500 text-white' 
               : isSuccess 
-              ? 'bg-[#F0FFF4] border-l-8 border-l-emerald-600' 
-              : 'bg-[#FFFDF0] border-l-8 border-l-[#FFE600]';
+              ? 'bg-[#242424] border-[#8cd6b0]/50 border-l-4 border-l-[#8cd6b0] text-white' 
+              : 'bg-[#242424] border-[#383838] border-l-4 border-l-[#ff6b35] text-white';
 
             const icon = isError ? (
-              <AlertCircle className="w-5 h-5 text-red-700 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
             ) : isSuccess ? (
-              <CheckCircle2 className="w-5 h-5 text-emerald-800 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-[#8cd6b0] shrink-0 mt-0.5" />
             ) : (
-              <AlertTriangle className="w-5 h-5 text-yellow-800 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="w-4 h-4 text-[#ff6b35] shrink-0 mt-0.5" />
             );
 
             return (
@@ -69,17 +69,17 @@ export function ToastProvider({ children }) {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 40, scale: 0.95 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className={`pointer-events-auto nb-card p-3.5 border-2 border-black flex items-start justify-between gap-3 ${bgClass}`}
+                className={`pointer-events-auto p-3.5 border rounded-[8px] flex items-start justify-between gap-3 ${bgClass}`}
               >
                 <div className="flex items-start gap-2.5">
                   {icon}
                   <div className="space-y-0.5 pr-2">
                     {toast.title && (
-                      <p className="font-black text-xs uppercase tracking-tight text-black">
+                      <p className="font-poppins font-semibold text-xs tracking-tight text-white">
                         {toast.title}
                       </p>
                     )}
-                    <p className="text-xs font-bold text-neutral-900 leading-snug">
+                    <p className="text-xs text-[#bdbdbd] leading-snug">
                       {toast.message}
                     </p>
                   </div>
@@ -88,7 +88,7 @@ export function ToastProvider({ children }) {
                 <button
                   type="button"
                   onClick={() => removeToast(toast.id)}
-                  className="p-1 hover:bg-black/10 border border-black/20 text-neutral-800 flex-shrink-0 transition-colors"
+                  className="p-1 hover:text-white text-[#8d8d8d] shrink-0 transition-colors"
                   aria-label="Tutup notifikasi"
                 >
                   <X className="w-3.5 h-3.5" />

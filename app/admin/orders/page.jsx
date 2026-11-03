@@ -58,86 +58,98 @@ export default function AdminOrdersPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black uppercase">Manajemen Reservasi & Booking Acara</h2>
-          <p className="text-xs font-bold text-neutral-600">
-            Daftar booking paket event dan tiket festival dari klien, verifikasi status bayar, serta cetak dokumen invoice resmi.
+          <h2 className="font-poppins font-semibold text-xl sm:text-2xl text-white">
+            Manajemen Reservasi & Booking Acara
+          </h2>
+          <p className="font-inter text-xs text-[#bdbdbd] mt-1">
+            Daftar pesanan paket event dan tiket festival dari klien, verifikasi status pelunasan, dan cetak invoice resmi.
           </p>
         </div>
 
         {/* Filter buttons */}
-        <div className="flex items-center gap-1.5 self-start">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
+            type="button"
             onClick={() => setStatusFilter('all')}
-            className={`px-3 py-1.5 text-xs font-black uppercase border-2 border-black ${
-              statusFilter === 'all' ? 'bg-black text-white' : 'bg-white'
+            className={`px-3 py-1.5 text-xs font-semibold rounded-[6px] transition-colors ${
+              statusFilter === 'all'
+                ? 'bg-[#38271f] text-white border border-[#ff6b35]'
+                : 'bg-[#242424] text-[#bdbdbd] border border-[#383838] hover:text-white'
             }`}
           >
             Semua ({orders.length})
           </button>
           <button
+            type="button"
             onClick={() => setStatusFilter('paid')}
-            className={`px-3 py-1.5 text-xs font-black uppercase border-2 border-black ${
-              statusFilter === 'paid' ? 'bg-[#A3E635] text-black' : 'bg-white'
+            className={`px-3 py-1.5 text-xs font-semibold rounded-[6px] transition-colors ${
+              statusFilter === 'paid'
+                ? 'bg-[#23372d] text-[#8cd6b0] border border-[#8cd6b0]/50'
+                : 'bg-[#242424] text-[#bdbdbd] border border-[#383838] hover:text-white'
             }`}
           >
             Lunas ({orders.filter(o => o.payment_status === 'paid').length})
           </button>
           <button
+            type="button"
             onClick={() => setStatusFilter('unpaid')}
-            className={`px-3 py-1.5 text-xs font-black uppercase border-2 border-black ${
-              statusFilter === 'unpaid' ? 'bg-[#FF5C00] text-white' : 'bg-white'
+            className={`px-3 py-1.5 text-xs font-semibold rounded-[6px] transition-colors ${
+              statusFilter === 'unpaid'
+                ? 'bg-red-950/60 text-red-300 border border-red-800'
+                : 'bg-[#242424] text-[#bdbdbd] border border-[#383838] hover:text-white'
             }`}
           >
-            Belum Lunas ({orders.filter(o => o.payment_status !== 'paid').length})
+            Pending ({orders.filter(o => o.payment_status !== 'paid').length})
           </button>
         </div>
       </div>
 
       {loading ? (
-        <div className="nb-card bg-white p-12 text-center">
-          <p className="font-black text-lg">Memuat daftar pesanan...</p>
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-12 text-center">
+          <div className="w-7 h-7 border-2 border-[#383838] border-t-[#ff6b35] rounded-full animate-spin mx-auto mb-3"></div>
+          <p className="font-inter text-sm text-[#bdbdbd]">Memuat daftar pesanan...</p>
         </div>
       ) : filteredOrders.length === 0 ? (
-        <div className="nb-card bg-white p-12 text-center">
-          <p className="font-black text-base">Tidak ada transaksi ditemukan.</p>
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-12 text-center">
+          <p className="font-inter text-sm text-[#8d8d8d]">Tidak ada transaksi ditemukan untuk filter ini.</p>
         </div>
       ) : (
-        <div className="nb-card bg-white overflow-hidden" data-ui="admin-orders-table">
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] overflow-hidden" data-ui="admin-orders-table">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FFFDF0] border-b-2 border-black uppercase font-black">
+              <thead className="bg-[#1c1c1c] text-[#8d8d8d] border-b border-[#383838] uppercase font-semibold">
                 <tr>
-                  <th className="p-3 border-r-2 border-black">No. Order</th>
-                  <th className="p-3 border-r-2 border-black">Pemesan & Kontak PIC</th>
-                  <th className="p-3 border-r-2 border-black">Layanan / Tiket</th>
-                  <th className="p-3 border-r-2 border-black">Metode Bayar</th>
-                  <th className="p-3 border-r-2 border-black text-right">Total Investasi</th>
-                  <th className="p-3 border-r-2 border-black">Status Pembayaran</th>
-                  <th className="p-3 border-r-2 border-black">Status Pelaksanaan</th>
-                  <th className="p-3 text-center">Aksi / Cetak</th>
+                  <th className="p-3">No. Order</th>
+                  <th className="p-3">Pemesan & Kontak</th>
+                  <th className="p-3">Layanan / Tiket</th>
+                  <th className="p-3">Metode Bayar</th>
+                  <th className="p-3 text-right">Total</th>
+                  <th className="p-3">Status Bayar</th>
+                  <th className="p-3">Pelaksanaan</th>
+                  <th className="p-3 text-center">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="font-medium">
+              <tbody className="divide-y divide-[#2e2e2e]">
                 {filteredOrders.map(o => {
                   const isPaid = o.payment_status === 'paid';
                   const isUpdating = updatingId === o.order_number;
                   return (
-                    <tr key={o.id} className="hover:bg-neutral-50 border-b-2 border-black">
-                      <td className="p-3 border-r-2 border-black font-bold">
+                    <tr key={o.id} className="hover:bg-[#2a2a2a] transition-colors">
+                      <td className="p-3 font-semibold text-white">
                         {o.order_number}
-                        <span className="block text-[10px] text-neutral-500 font-sans">
+                        <span className="block text-[10px] text-[#8d8d8d] font-normal">
                           {o.created_at.slice(0, 16)}
                         </span>
                       </td>
 
-                      <td className="p-3 border-r-2 border-black font-bold">
-                        {o.customer_name}
-                        <span className="block text-[10px] text-neutral-500 font-normal">
+                      <td className="p-3 text-white">
+                        <span className="font-semibold">{o.customer_name}</span>
+                        <span className="block text-[11px] text-[#8d8d8d]">
                           {o.customer_email} • {o.customer_phone}
                         </span>
                       </td>
 
-                      <td className="p-3 border-r-2 border-black max-w-[180px]">
+                      <td className="p-3 max-w-[200px] text-[#bdbdbd]">
                         <div className="space-y-0.5">
                           {o.items?.map(it => (
                             <p key={it.id} className="truncate text-[11px]">
@@ -147,41 +159,43 @@ export default function AdminOrdersPage() {
                         </div>
                       </td>
 
-                      <td className="p-3 border-r-2 border-black font-bold">
-                        {o.payment_method}
+                      <td className="p-3 text-white">
+                        <span className="font-medium">{o.payment_method}</span>
                         {o.payment_reference && (
-                          <span className="block text-[9px] text-neutral-500 truncate max-w-[100px]">
+                          <span className="block text-[10px] text-[#8d8d8d] truncate max-w-[120px]">
                             {o.payment_reference}
                           </span>
                         )}
                       </td>
 
-                      <td className="p-3 border-r-2 border-black text-right font-black">
+                      <td className="p-3 text-right font-semibold text-white">
                         {formatRupiah(o.total_amount)}
                       </td>
 
-                      <td className="p-3 border-r-2 border-black">
+                      <td className="p-3">
                         <select
                           value={o.payment_status}
                           disabled={isUpdating}
                           onChange={e => handleUpdateStatus(o.order_number, e.target.value, o.order_status)}
-                          className={`border-2 border-black p-1 text-[11px] font-black uppercase ${
-                            isPaid ? 'bg-[#A3E635]' : 'bg-red-200'
+                          className={`border rounded-[4px] px-2 py-1 text-[11px] font-semibold uppercase focus:outline-none focus:border-[#ff6b35] ${
+                            isPaid
+                              ? 'bg-[#23372d] border-[#8cd6b0]/40 text-[#8cd6b0]'
+                              : 'bg-red-950/60 border-red-800 text-red-300'
                           }`}
                         >
-                          <option value="unpaid">UNPAID (Belum Bayar)</option>
+                          <option value="unpaid">UNPAID (Pending)</option>
                           <option value="paid">PAID (Lunas)</option>
                           <option value="failed">FAILED (Gagal)</option>
                           <option value="expired">EXPIRED (Kedaluwarsa)</option>
                         </select>
                       </td>
 
-                      <td className="p-3 border-r-2 border-black">
+                      <td className="p-3">
                         <select
                           value={o.order_status}
                           disabled={isUpdating}
                           onChange={e => handleUpdateStatus(o.order_number, o.payment_status, e.target.value)}
-                          className="border-2 border-black p-1 text-[11px] font-bold uppercase bg-white"
+                          className="bg-[#171717] border border-[#383838] text-white rounded-[4px] px-2 py-1 text-[11px] font-medium uppercase focus:outline-none focus:border-[#ff6b35]"
                         >
                           <option value="pending">PENDING</option>
                           <option value="processing">PROCESSING</option>
@@ -193,10 +207,11 @@ export default function AdminOrdersPage() {
                       <td className="p-3 text-center">
                         <Link
                           href={`/orders/${o.order_number}`}
-                          className="nb-btn nb-btn-yellow p-1.5 text-xs inline-flex items-center gap-1 font-bold"
-                          title="Buka Faktur & Struk"
+                          className="p-1.5 rounded-[4px] bg-[#171717] border border-[#383838] text-white hover:border-[#ff6b35] hover:text-[#ff6b35] inline-flex items-center gap-1 text-[11px] font-medium transition-colors"
+                          title="Buka / Cetak Faktur"
                         >
-                          <Printer className="w-3.5 h-3.5" /> Cetak
+                          <Printer className="w-3.5 h-3.5" />
+                          <span>Cetak</span>
                         </Link>
                       </td>
                     </tr>

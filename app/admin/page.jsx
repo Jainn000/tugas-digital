@@ -89,7 +89,6 @@ export default function AdminOverviewPage() {
     setWebhookTesting(true);
     setWebhookResult(null);
 
-    // Pick a pending order or the latest order
     const targetOrder = pendingOrders[0] || orders[0];
     const orderNum = targetOrder ? targetOrder.order_number : 'INV-20261102-005';
 
@@ -98,13 +97,16 @@ export default function AdminOverviewPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': 'kinetik_sec_live_99a82bc1f832',
+          'X-Webhook-Signature': 'mock-dev-signature',
         },
         body: JSON.stringify({
+          event: 'payment.settled',
           order_id: orderNum,
-          transaction_status: 'settlement',
+          gross_amount: targetOrder ? targetOrder.total_amount : 5600000,
           payment_type: 'qris',
-          gross_amount: targetOrder ? targetOrder.total_amount : 15000000,
+          transaction_status: 'settlement',
+          settlement_time: new Date().toISOString(),
+          reference_id: 'QRIS-SIM-' + Math.floor(100000 + Math.random() * 900000),
         }),
       });
 
@@ -115,9 +117,11 @@ export default function AdminOverviewPage() {
         data,
       });
 
-      // Refresh orders list
-      const updated = await fetch('/api/orders').then(r => r.json());
-      if (updated.orders) setOrders(updated.orders);
+      if (res.ok) {
+        const refetch = await fetch('/api/orders');
+        const d = await refetch.json();
+        if (d.orders) setOrders(d.orders);
+      }
     } catch (err) {
       setWebhookResult({
         ok: false,
@@ -131,177 +135,205 @@ export default function AdminOverviewPage() {
 
   if (loading) {
     return (
-      <div className="p-12 text-center nb-card bg-white">
-        <p className="font-bold text-lg">Memuat ringkasan bisnis...</p>
+      <div className="p-12 text-center bg-[#242424] border border-[#383838] rounded-[10px]">
+        <div className="w-7 h-7 border-2 border-[#383838] border-t-[#ff6b35] rounded-full animate-spin mx-auto mb-3"></div>
+        <p className="font-inter text-sm text-[#bdbdbd]">Memuat ringkasan bisnis KINETIK...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* KPI Cards Grid */}
+    <div className="space-y-6">
+      {/* 1. KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-ui="kpi-grid">
         {/* Total Omzet */}
-        <div className="nb-card bg-[#FFE600] p-5 space-y-2">
-          <div className="flex justify-between items-center text-xs font-bold text-neutral-800">
-            <span>Total Omzet Reservasi & Tiket</span>
-            <DollarSign className="w-4 h-4" />
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-5 flex flex-col justify-between gap-3">
+          <div className="flex justify-between items-center text-xs text-[#8d8d8d]">
+            <span className="font-medium">Total Omzet Reservasi</span>
+            <div className="w-7 h-7 rounded-[6px] bg-[#8cd6b0]/15 flex items-center justify-center text-[#8cd6b0]">
+              <DollarSign className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-black">{formatRupiah(totalOmzet)}</p>
-          <p className="text-xs font-bold text-neutral-800">Dari {paidOrders.length} transaksi berstatus Lunas</p>
+          <div>
+            <p className="text-2xl font-bold font-poppins text-[#8cd6b0]">{formatRupiah(totalOmzet)}</p>
+            <p className="text-[11px] text-[#8d8d8d] mt-1">{paidOrders.length} transaksi berstatus Lunas</p>
+          </div>
         </div>
 
         {/* Laba Kotor */}
-        <div className="nb-card bg-[#A3E635] p-5 space-y-2">
-          <div className="flex justify-between items-center text-xs font-bold text-neutral-800">
-            <span>Estimasi Laba Kotor</span>
-            <TrendingUp className="w-4 h-4" />
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-5 flex flex-col justify-between gap-3">
+          <div className="flex justify-between items-center text-xs text-[#8d8d8d]">
+            <span className="font-medium">Estimasi Laba Kotor</span>
+            <div className="w-7 h-7 rounded-[6px] bg-[#ff6b35]/15 flex items-center justify-center text-[#ff6b35]">
+              <TrendingUp className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-black">{formatRupiah(labaKotor)}</p>
-          <p className="text-xs font-bold text-neutral-800">Omzet dikurangi HPP ({formatRupiah(totalHPP)})</p>
+          <div>
+            <p className="text-2xl font-bold font-poppins text-white">{formatRupiah(labaKotor)}</p>
+            <p className="text-[11px] text-[#8d8d8d] mt-1">HPP: {formatRupiah(totalHPP)}</p>
+          </div>
         </div>
 
         {/* Total Pesanan */}
-        <div className="nb-card bg-[#38BDF8] p-5 space-y-2">
-          <div className="flex justify-between items-center text-xs font-bold text-neutral-800">
-            <span>Total Reservasi & Booking</span>
-            <ShoppingCart className="w-4 h-4" />
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-5 flex flex-col justify-between gap-3">
+          <div className="flex justify-between items-center text-xs text-[#8d8d8d]">
+            <span className="font-medium">Total Booking</span>
+            <div className="w-7 h-7 rounded-[6px] bg-[#38bdf8]/15 flex items-center justify-center text-[#38bdf8]">
+              <ShoppingCart className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-black">{orders.length} Transaksi</p>
-          <p className="text-xs font-bold text-neutral-800">{pendingOrders.length} transaksi belum lunas</p>
+          <div>
+            <p className="text-2xl font-bold font-poppins text-white">{orders.length} Transaksi</p>
+            <p className="text-[11px] text-[#8d8d8d] mt-1">{pendingOrders.length} transaksi pending bayar</p>
+          </div>
         </div>
 
         {/* Total Produk */}
-        <div className="nb-card bg-white p-5 space-y-2">
-          <div className="flex justify-between items-center text-xs font-bold text-neutral-800">
-            <span>Katalog Layanan & Tiket</span>
-            <Package className="w-4 h-4" />
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-5 flex flex-col justify-between gap-3">
+          <div className="flex justify-between items-center text-xs text-[#8d8d8d]">
+            <span className="font-medium">Katalog Layanan & Tiket</span>
+            <div className="w-7 h-7 rounded-[6px] bg-white/10 flex items-center justify-center text-white">
+              <Package className="w-4 h-4" />
+            </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-black">{products.length} Paket & Tiket Aktif</p>
-          <p className="text-xs font-bold text-neutral-800">Total item katalog tersedia</p>
+          <div>
+            <p className="text-2xl font-bold font-poppins text-white">{products.length} Item Aktif</p>
+            <p className="text-[11px] text-[#8d8d8d] mt-1">Paket acara, festival & sewa alat</p>
+          </div>
         </div>
       </div>
 
-      {/* Payment Gateway & Webhook URL Configuration Card */}
-      <div className="nb-card bg-[#FFFDF0] p-6 space-y-4 border-l-8 border-l-[#38BDF8]" data-ui="webhook-config">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-black pb-3">
-          <div className="flex items-center gap-2">
-            <Key className="w-5 h-5 stroke-[2.5]" />
-            <h3 className="text-lg font-bold">Integrasi Payment Gateway: Webhook URL & API Key</h3>
+      {/* 2. Payment Gateway & Webhook URL Configuration Card */}
+      <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 space-y-4 border-l-4 border-l-[#ff6b35]" data-ui="webhook-config">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#383838] pb-3">
+          <div className="flex items-center gap-2.5">
+            <Key className="w-5 h-5 text-[#ff6b35]" />
+            <h3 className="font-poppins font-medium text-base text-white">
+              Integrasi Payment Gateway: Webhook URL & Kunci API
+            </h3>
           </div>
-          <span className="nb-tag bg-black text-white text-xs font-bold">Endpoint Aktif</span>
+          <span className="px-2.5 py-0.5 rounded-full bg-[#8cd6b0]/15 text-[#8cd6b0] text-[11px] font-semibold border border-[#8cd6b0]/30 self-start sm:self-auto">
+            Endpoint Aktif
+          </span>
         </div>
 
-        <p className="text-xs text-neutral-800 font-medium leading-relaxed">
-          Masukkan Webhook URL ini ke dashboard payment gateway Anda (Midtrans / Xendit / Tripay). Sistem otomatis memverifikasi signature atau API Key, mengupdate status order menjadi <strong>paid</strong>, mencatat waktu pelunasan, dan menerbitkan e-ticket secara instan.
+        <p className="text-xs text-[#bdbdbd] font-normal leading-relaxed">
+          Gunakan Webhook URL ini di dashboard payment gateway (AkuQRIS / Midtrans / Xendit). Sistem KINETIK memvalidasi signature secara instan, mengubah status transaksi menjadi lunas, dan menerbitkan e-ticket.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
           {/* Webhook URL */}
-          <div className="p-3 bg-white border-2 border-black space-y-1">
-            <span className="text-xs font-bold text-neutral-600 block">Webhook Callback URL:</span>
-            <div className="flex items-center justify-between gap-2 bg-neutral-100 p-2 border-2 border-black">
-              <span className="text-xs font-bold text-neutral-900 select-all truncate">
-                http://localhost:3000/api/payment/webhook
-              </span>
+          <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[8px] space-y-1.5">
+            <span className="text-[11px] font-medium text-[#8d8d8d] block">Webhook Callback URL:</span>
+            <div className="flex items-center justify-between gap-2 bg-[#171717] px-2.5 py-2 rounded-[6px] border border-[#383838]">
+              <code className="text-xs text-white select-all truncate">
+                /api/payment/webhook
+              </code>
               <button
-                onClick={() => copyToClipboard('http://localhost:3000/api/payment/webhook', 'url')}
-                className="p-1 border-2 border-black bg-white hover:bg-[#FFE600] flex-shrink-0"
+                type="button"
+                onClick={() => copyToClipboard('https://digital-entrepreneurship-five.vercel.app/api/payment/webhook', 'url')}
+                className="p-1 hover:text-[#ff6b35] text-[#8d8d8d] transition-colors shrink-0"
                 title="Salin Webhook URL"
                 aria-label="Salin Webhook URL"
               >
-                {copiedUrl ? <Check className="w-3.5 h-3.5 text-green-700" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedUrl ? <Check className="w-3.5 h-3.5 text-[#8cd6b0]" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
-            <p className="text-[11px] text-neutral-600 font-medium">
-              *Di dashboard AkuQRIS/Autoko, gunakan URL ngrok jika ingin di-ping dari server luar.
+            <p className="text-[10px] text-[#666666]">
+              *Dapat diakses langsung via HTTPS domain Vercel.
             </p>
           </div>
 
           {/* AkuQRIS API Key */}
-          <div className="p-3 bg-white border-2 border-black space-y-1">
-            <span className="text-xs font-bold text-neutral-600 block">AkuQRIS API Key (Sandbox):</span>
-            <div className="flex items-center justify-between gap-2 bg-neutral-100 p-2 border-2 border-black">
-              <span className="text-xs font-bold text-neutral-900 select-all truncate">
-                pk_test_2c11cd6b9862c2074f9a39a1f7i5b95e
-              </span>
+          <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[8px] space-y-1.5">
+            <span className="text-[11px] font-medium text-[#8d8d8d] block">API Key (Sandbox):</span>
+            <div className="flex items-center justify-between gap-2 bg-[#171717] px-2.5 py-2 rounded-[6px] border border-[#383838]">
+              <code className="text-xs text-white select-all truncate">
+                pk_test_2c11cd6b98...5e
+              </code>
               <button
+                type="button"
                 onClick={() => copyToClipboard('pk_test_2c11cd6b9862c2074f9a39a1f7i5b95e', 'key')}
-                className="p-1 border-2 border-black bg-white hover:bg-[#FFE600] flex-shrink-0"
+                className="p-1 hover:text-[#ff6b35] text-[#8d8d8d] transition-colors shrink-0"
                 title="Salin API Key"
                 aria-label="Salin API Key"
               >
-                {copiedKey ? <Check className="w-3.5 h-3.5 text-green-700" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedKey ? <Check className="w-3.5 h-3.5 text-[#8cd6b0]" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
-            <p className="text-[11px] text-neutral-600 font-medium">
-              Digunakan pada header <code className="bg-neutral-200 px-1 font-bold">x-api-key</code> saat membuat invoice.
+            <p className="text-[10px] text-[#666666]">
+              Header: <span className="text-[#bdbdbd]">x-api-key</span>
             </p>
           </div>
 
           {/* AkuQRIS Webhook Secret */}
-          <div className="p-3 bg-white border-2 border-black space-y-1">
-            <span className="text-xs font-bold text-neutral-600 block">AkuQRIS Webhook Secret:</span>
-            <div className="flex items-center justify-between gap-2 bg-neutral-100 p-2 border-2 border-black">
-              <span className="text-xs font-bold text-neutral-900 select-all truncate">
-                bd9dd1b1699672c82c5c246c742d47cc95c33389cffb0f502ac95c44c86740cc
-              </span>
+          <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[8px] space-y-1.5">
+            <span className="text-[11px] font-medium text-[#8d8d8d] block">Webhook Secret:</span>
+            <div className="flex items-center justify-between gap-2 bg-[#171717] px-2.5 py-2 rounded-[6px] border border-[#383838]">
+              <code className="text-xs text-white select-all truncate">
+                bd9dd1b16996...0cc
+              </code>
               <button
+                type="button"
                 onClick={() => copyToClipboard('bd9dd1b1699672c82c5c246c742d47cc95c33389cffb0f502ac95c44c86740cc', 'secret')}
-                className="p-1 border-2 border-black bg-white hover:bg-[#FFE600] flex-shrink-0"
+                className="p-1 hover:text-[#ff6b35] text-[#8d8d8d] transition-colors shrink-0"
                 title="Salin Secret Key"
                 aria-label="Salin Secret Key"
               >
-                {copiedSecret ? <Check className="w-3.5 h-3.5 text-green-700" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedSecret ? <Check className="w-3.5 h-3.5 text-[#8cd6b0]" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
-            <p className="text-[11px] text-neutral-600 font-medium">
-              Digunakan untuk verifikasi <code className="bg-neutral-200 px-1 font-bold">X-Webhook-Signature</code> HMAC-SHA256.
+            <p className="text-[10px] text-[#666666]">
+              HMAC-SHA256 signature verification.
             </p>
           </div>
         </div>
 
         {/* Webhook Local Simulator Buttons */}
-        <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t-2 border-black">
-          <div className="text-xs font-medium text-neutral-700">
-            Pilihan simulasi webhook pengujian:
-          </div>
+        <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-[#383838]">
+          <span className="text-xs text-[#8d8d8d]">
+            Simulasi Pengujian Webhook Gateway:
+          </span>
           <div className="flex flex-wrap gap-2">
             <button
+              type="button"
               onClick={handleTestAkuqrisPing}
               disabled={webhookTesting}
-              className="nb-btn nb-btn-yellow px-3.5 py-1.5 text-xs flex items-center gap-1.5 font-bold"
+              className="px-3 py-1.5 rounded-[6px] bg-[#171717] border border-[#383838] text-white hover:border-[#ff6b35] text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
             >
-              <Send className="w-3.5 h-3.5" />
-              {webhookTesting ? 'Menguji...' : 'Uji AkuQRIS Ping (payment.test)'}
+              <Send className="w-3.5 h-3.5 text-[#ff6b35]" />
+              <span>{webhookTesting ? 'Menguji...' : 'Uji Ping Gateway (payment.test)'}</span>
             </button>
             <button
+              type="button"
               onClick={handleTestWebhook}
               disabled={webhookTesting}
-              className="nb-btn nb-btn-cyan px-3.5 py-1.5 text-xs flex items-center gap-1.5 font-bold"
+              className="px-3.5 py-1.5 rounded-[6px] bg-[#ff6b35] text-[#171717] hover:bg-[#e5531e] text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
             >
-              <Send className="w-3.5 h-3.5" />
-              {webhookTesting ? 'Menguji...' : 'Uji Simulasi Lunas (POST Order)'}
+              <Send className="w-3.5 h-3.5 text-[#171717]" />
+              <span>{webhookTesting ? 'Menguji...' : 'Simulasi Pembayaran Lunas'}</span>
             </button>
           </div>
         </div>
 
         {webhookResult && (
           <div
-            className={`p-3 border-2 border-black text-xs font-bold flex items-start gap-2 ${
-              webhookResult.ok ? 'bg-[#A3E635] text-black' : 'bg-red-100 text-red-900'
+            className={`p-3 rounded-[6px] border text-xs flex items-start gap-2.5 ${
+              webhookResult.ok
+                ? 'bg-[#23372d] border-[#8cd6b0]/40 text-[#8cd6b0]'
+                : 'bg-red-950/60 border-red-800 text-red-300'
             }`}
           >
             {webhookResult.ok ? (
-              <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#8cd6b0]" />
             ) : (
-              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-400" />
             )}
             <div>
-              <p>Respon Webhook HTTP {webhookResult.status}: {webhookResult.data.message || JSON.stringify(webhookResult.data)}</p>
+              <p className="font-semibold">Respon HTTP {webhookResult.status}: {webhookResult.data.message || JSON.stringify(webhookResult.data)}</p>
               {webhookResult.data.order && (
-                <p className="text-neutral-800 font-medium mt-0.5">
-                  Order <strong>{webhookResult.data.order.order_number}</strong> status pembayaran kini: <strong>{webhookResult.data.order.payment_status.toUpperCase()}</strong>
+                <p className="text-[#bdbdbd] mt-0.5">
+                  Order <strong>{webhookResult.data.order.order_number}</strong> status pembayaran kini: <strong className="text-[#8cd6b0]">{webhookResult.data.order.payment_status.toUpperCase()}</strong>
                 </p>
               )}
             </div>
@@ -309,79 +341,86 @@ export default function AdminOverviewPage() {
         )}
       </div>
 
-      {/* Quick Action Banner for Reports */}
-      <div className="nb-card bg-[#FFFDF0] p-6 flex flex-col md:flex-row items-center justify-between gap-4 border-l-8 border-l-[#FF5C00]" data-ui="reports-banner">
+      {/* 3. Quick Action Banner for Reports */}
+      <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 flex flex-col md:flex-row items-center justify-between gap-4" data-ui="reports-banner">
         <div>
-          <h3 className="text-lg font-bold">Laporan Periodik Siap Cetak ke PDF</h3>
-          <p className="text-xs font-medium text-neutral-700 mt-0.5">
+          <h3 className="font-poppins font-medium text-base text-white">Laporan Periodik & Cetak PDF</h3>
+          <p className="font-inter text-xs text-[#bdbdbd] mt-1">
             Gunakan filter rentang tanggal untuk mengkaji omzet penjualan dan struktur laba rugi bulanan.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <Link
             href="/admin/reports/sales"
-            className="nb-btn nb-btn-yellow px-3.5 py-2 text-xs flex items-center gap-1.5 font-bold"
+            className="px-4 py-2 rounded-[6px] bg-[#171717] border border-[#383838] text-white hover:border-[#ff6b35] text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            Laporan Penjualan <ArrowUpRight className="w-4 h-4" />
+            <span>Laporan Penjualan</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#ff6b35]" />
           </Link>
           <Link
             href="/admin/reports/financial"
-            className="nb-btn nb-btn-orange px-3.5 py-2 text-xs flex items-center gap-1.5 font-bold"
+            className="px-4 py-2 rounded-[6px] bg-[#ff6b35] text-[#171717] hover:bg-[#e5531e] text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            Laporan Laba Rugi <ArrowUpRight className="w-4 h-4" />
+            <span>Laporan Laba Rugi</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#171717]" />
           </Link>
         </div>
       </div>
 
-      {/* Recent Orders Table */}
-      <div className="nb-card bg-white p-6 space-y-4" data-ui="recent-orders">
-        <div className="flex justify-between items-center border-b-2 border-black pb-3">
-          <h3 className="font-bold text-base">Reservasi Terbaru</h3>
-          <Link href="/admin/orders" className="text-xs font-bold underline hover:text-[#FF5C00]">
+      {/* 4. Recent Orders Table */}
+      <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 space-y-4" data-ui="recent-orders">
+        <div className="flex justify-between items-center border-b border-[#383838] pb-3">
+          <h3 className="font-poppins font-medium text-base text-white">Reservasi Terbaru</h3>
+          <Link href="/admin/orders" className="text-xs font-semibold text-[#ff6b35] hover:underline">
             Lihat Semua Pesanan →
           </Link>
         </div>
 
-        <div className="border-2 border-black overflow-x-auto" data-ui="table-wrapper">
+        <div className="overflow-x-auto rounded-[6px] border border-[#383838]" data-ui="table-wrapper">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#FFFDF0] border-b-2 border-black font-bold">
+            <thead className="bg-[#1c1c1c] text-[#8d8d8d] border-b border-[#383838] uppercase font-semibold">
               <tr>
-                <th className="p-3 border-r-2 border-black">No. Order</th>
-                <th className="p-3 border-r-2 border-black">Pemesan / PIC</th>
-                <th className="p-3 border-r-2 border-black">Tanggal</th>
-                <th className="p-3 border-r-2 border-black">Metode</th>
-                <th className="p-3 border-r-2 border-black">Status Bayar</th>
-                <th className="p-3 border-r-2 border-black text-right">Total</th>
+                <th className="p-3">No. Order</th>
+                <th className="p-3">Pemesan / PIC</th>
+                <th className="p-3">Tanggal</th>
+                <th className="p-3">Metode</th>
+                <th className="p-3">Status Bayar</th>
+                <th className="p-3 text-right">Total</th>
                 <th className="p-3 text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody className="font-medium">
+            <tbody className="divide-y divide-[#2e2e2e]">
               {orders.slice(0, 5).map(o => {
                 const isPaid = o.payment_status === 'paid';
                 return (
-                  <tr key={o.id} className="border-b-2 border-black hover:bg-neutral-50">
-                    <td className="p-3 border-r-2 border-black font-bold">{o.order_number}</td>
-                    <td className="p-3 border-r-2 border-black font-bold">
+                  <tr key={o.id} className="hover:bg-[#2a2a2a] transition-colors">
+                    <td className="p-3 font-semibold text-white">{o.order_number}</td>
+                    <td className="p-3 text-white">
                       {o.customer_name}
-                      <span className="block text-xs text-neutral-500 font-normal">{o.customer_phone}</span>
+                      <span className="block text-[11px] text-[#8d8d8d]">{o.customer_phone}</span>
                     </td>
-                    <td className="p-3 border-r-2 border-black">{formatSimpleDate(o.created_at)}</td>
-                    <td className="p-3 border-r-2 border-black font-bold">{o.payment_method}</td>
-                    <td className="p-3 border-r-2 border-black">
-                      <span className={`nb-tag text-xs ${isPaid ? 'bg-[#A3E635] text-black' : 'bg-red-200 text-black'}`}>
+                    <td className="p-3 text-[#bdbdbd]">{formatSimpleDate(o.created_at)}</td>
+                    <td className="p-3 font-medium text-white">{o.payment_method}</td>
+                    <td className="p-3">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${
+                        isPaid
+                          ? 'bg-[#8cd6b0]/15 text-[#8cd6b0] border-[#8cd6b0]/30'
+                          : 'bg-[#ff6b35]/15 text-[#ff6b35] border-[#ff6b35]/30'
+                      }`}>
                         {isPaid ? 'Lunas' : 'Pending'}
                       </span>
                     </td>
-                    <td className="p-3 border-r-2 border-black text-right font-bold">
+                    <td className="p-3 text-right font-semibold text-white">
                       {formatRupiah(o.total_amount)}
                     </td>
                     <td className="p-3 text-center">
                       <Link
                         href={`/orders/${o.order_number}`}
-                        className="nb-btn nb-btn-yellow p-1.5 text-xs inline-flex items-center gap-1 font-bold"
+                        className="p-1.5 rounded-[4px] bg-[#171717] border border-[#383838] text-white hover:border-[#ff6b35] hover:text-[#ff6b35] inline-flex items-center gap-1 text-[11px] font-medium transition-colors"
                         title="Buka / Cetak Struk"
                       >
-                        <Printer className="w-3.5 h-3.5" /> Cetak
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>Cetak</span>
                       </Link>
                     </td>
                   </tr>
