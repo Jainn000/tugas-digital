@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import BackToTop from '@/components/BackToTop';
+import AudioPlayer from '@/components/AudioPlayer';
 import { ToastProvider } from '@/components/ToastContext';
 
 export const metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
           </main>
           <Footer />
           <BackToTop />
+          <AudioPlayer />
         </ToastProvider>
       </body>
     </html>
