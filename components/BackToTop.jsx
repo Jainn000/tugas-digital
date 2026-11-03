@@ -32,15 +32,15 @@ export default function BackToTop() {
       {visible && (
         <motion.button
           onClick={scrollToTop}
-          initial={{ opacity: 0, y: 20, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.8 }}
-          whileHover={{ scale: 1.08, y: -3 }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 15 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed bottom-6 right-6 z-40 bg-[#FFE600] text-black border-2 border-black p-3.5 flex items-center gap-2 font-black text-xs uppercase"
-          aria-label="Scroll kembali ke atas"
+          className="fixed bottom-6 right-6 z-40 bg-[#242424] text-white border border-[#383838] hover:border-[#ff6b35] hover:text-[#ff6b35] p-3 rounded-[6px] flex items-center gap-2 font-inter text-xs font-semibold transition-colors"
+          aria-label="Scroll ke atas"
         >
-          <ArrowUp className="w-4 h-4 stroke-[3]" />
+          <ArrowUp className="w-4 h-4" />
           <span className="hidden sm:inline">Ke Atas</span>
         </motion.button>
       )}

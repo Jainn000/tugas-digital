@@ -1,173 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-color: #FFFDF9;
-  --text-color: #121212;
+  --bg-color: #171717;
+  --text-color: #ffffff;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #171717;
 }
 
-/* Custom Neubrutalist Scrollbar */
+/* Custom Sleek Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f0ea;
-  border-left: 2px solid #121212;
+  background: #171717;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FFE600;
-  border: 2px solid #121212;
+  background: #383838;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF5C00;
+  background: #ff6b35;
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #171717;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   font-feature-settings: "tnum" 1, "cv05" 1;
 }
 
-/* Neubrutalism Surface & Control Tokens with [data-ui] scope */
-[data-ui] {
-  box-sizing: border-box;
-}
-
-.nb-surface {
-  background-color: #ffffff;
-  border: 2px solid #121212;
-}
-
-.nb-card {
-  background-color: #ffffff;
-  border: 2px solid #121212;
-}
-
-.nb-interactive {
-  transition-property: transform;
-  transition-duration: 160ms;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nb-interactive:hover {
-  transform: translate(-3px, -3px);
-}
-
-@keyframes marquee {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 24s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
-.nb-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  border: 2px solid #121212;
-  cursor: pointer;
-  user-select: none;
-  transition-property: transform, background-color, color;
-  transition-duration: 100ms;
-}
-
-.nb-btn:active {
-  transform: translate(2px, 2px);
-}
-
-.nb-btn-yellow {
-  background-color: #FFE600;
-  color: #121212;
-}
-
-.nb-btn-orange {
-  background-color: #FF5C00;
-  color: #ffffff;
-}
-
-.nb-btn-green {
-  background-color: #A3E635;
-  color: #121212;
-}
-
-.nb-btn-cyan {
-  background-color: #38BDF8;
-  color: #121212;
-}
-
-.nb-btn-white {
-  background-color: #ffffff;
-  color: #121212;
-}
-
-.nb-input {
-  border: 2px solid #121212;
-  background-color: #ffffff;
-  padding: 0.625rem 0.875rem;
-  font-weight: 600;
-  color: #121212;
-  outline: none;
-  transition-property: background-color;
-  transition-duration: 150ms;
-}
-
-.nb-input:focus {
-  background-color: #FFFDF0;
-}
-
-.nb-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  border: 2px solid #121212;
-}
-
-/* Print Rules */
-@media print {
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  .print-only {
-    display: block !important;
-  }
-
-  .print-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 2px solid #000000 !important;
-  }
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }

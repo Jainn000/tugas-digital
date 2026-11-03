@@ -6,14 +6,14 @@ import BackToTop from '@/components/BackToTop';
 import { ToastProvider } from '@/components/ToastContext';
 
 export const metadata = {
-  title: 'KINETIK Event Production & Organizer — Platform Manajemen Acara & Tiket',
-  description: 'Aplikasi website Event Organizer kewirausahaan digital terintegrasi MySQL, multi-aktor login, payment gateway sandbox, dan laporan keuangan PDF.',
+  title: 'KINETIK — Event Production & Organizer',
+  description: 'Hidupkan setiap momen bersama KINETIK. Partner kreatif produksi acara, sound & lighting, dan festival.',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <body className="min-h-[100dvh] flex flex-col bg-[#FFFDF9] text-[#121212]">
+      <body className="min-h-[100dvh] flex flex-col bg-[#171717] text-[#ffffff] selection:bg-[#ff6b35] selection:text-[#171717]">
         <ToastProvider>
           <ScrollProgress />
           <Navbar />

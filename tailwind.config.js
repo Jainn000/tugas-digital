@@ -8,33 +8,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brutal: {
-          bg: "#FFFDF9",
-          canvas: "#F4EFE6",
-          black: "#121212",
-          yellow: "#FFE600",
-          orange: "#FF5C00",
-          green: "#22C55E",
-          lime: "#A3E635",
-          cyan: "#38BDF8",
-          purple: "#D946EF",
-          pink: "#FF66C4",
-          card: "#FFFFFF",
-          muted: "#71717A",
-          border: "#121212",
+        kinetik: {
+          bg: "#171717",
+          surface: "#242424",
+          card: "#1F1F1F",
+          border: "#383838",
+          orange: "#FF6B35",
+          "orange-dark": "#E5531E",
+          gold: "#E9C47D",
+          green: "#8CD6B0",
+          emerald: "#23372D",
+          body: "#BDBDBD",
+          muted: "#8D8D8D",
         },
       },
-      boxShadow: {
-        brutal: "4px 4px 0px 0px #121212",
-        "brutal-sm": "2px 2px 0px 0px #121212",
-        "brutal-lg": "6px 6px 0px 0px #121212",
-        "brutal-xl": "8px 8px 0px 0px #121212",
-        "brutal-pressed": "1px 1px 0px 0px #121212",
-      },
-      borderWidth: {
-        '2': '2px',
-        '3': '3px',
-        '4': '4px',
+      fontFamily: {
+        poppins: ["Poppins", "system-ui", "-apple-system", "sans-serif"],
+        inter: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },

@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import Logo from './Logo';
-import { User as UserIcon, ShieldAlert, LogOut, Menu, X, Ticket, CalendarCheck, PhoneCall } from 'lucide-react';
+import { Menu, X, LogOut, ShieldAlert, FileText, User } from 'lucide-react';
 
 export default function Navbar() {
   const router = useRouter();
@@ -14,8 +14,8 @@ export default function Navbar() {
 
   useEffect(() => {
     fetch('/api/auth/me')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.user) setUser(data.user);
       })
       .catch(() => {});
@@ -28,192 +28,211 @@ export default function Navbar() {
     router.refresh();
   };
 
-  // Jangan tampilkan navbar klien di dalam portal admin
+  // Jangan tampilkan navbar publik di portal admin
   if (pathname.startsWith('/admin')) {
     return null;
   }
 
-  return (
-    <header className="sticky top-0 z-40 bg-[#FFFDF9] border-b-2 border-black no-print">
-      {/* Top Utility Bar */}
-      <div className="bg-black text-white px-4 py-1.5 text-xs flex justify-between items-center font-bold">
-        <div className="flex items-center gap-2">
-          <span>KINETIK Event Production & Creative Organizer</span>
-          <span className="hidden sm:inline text-neutral-400">•</span>
-          <span className="hidden sm:inline text-neutral-300">Jakarta & Bandung Production Hub</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-neutral-300 hidden sm:inline">Hotline Reservasi:</span>
-          <span className="text-[#FFE600] font-black">+62 812-8899-0011</span>
-        </div>
-      </div>
+  const navLinks = [
+    { label: 'Beranda', href: '/' },
+    { label: 'Layanan', href: '/#layanan' },
+    { label: 'Portofolio', href: '/#portofolio' },
+    { label: 'Paket', href: '/#paket' },
+    { label: 'Acara Kami', href: '/#acara' },
+  ];
 
-      {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <Logo variant="full" />
+  return (
+    <header className="sticky top-0 z-50 bg-[#171717] border-b border-[#383838] no-print">
+      <div className="max-w-[1440px] mx-auto h-[84px] md:h-[96px] px-5 sm:px-8 md:px-[72px] flex items-center justify-between">
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-[10px] group">
+          <div className="relative w-[30px] h-[34px] shrink-0">
+            <Image
+              src="/figma/kinetik-symbol.svg"
+              alt="KINETIK Symbol"
+              width={30}
+              height={34}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="font-poppins font-bold text-[22px] md:text-[25px] text-white tracking-[1.25px]">
+              KINETIK
+            </span>
+            <span className="font-inter text-[#bdbdbd] text-[6.5px] tracking-[0.65px] mt-[3px]">
+              EVENT PRODUCTION & ORGANIZER
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-3">
-          <Link
-            href="/"
-            className={`font-bold px-3 py-1.5 border-2 border-black transition-colors duration-150 ${
-              pathname === '/'
-                ? 'bg-black text-white'
-                : 'bg-white text-black hover:bg-neutral-100'
-            }`}
-          >
-            Katalog Layanan & Tiket
-          </Link>
-
-          <Link
-            href="/checkout"
-            className={`font-bold px-3 py-1.5 border-2 border-black transition-colors duration-150 flex items-center gap-1.5 ${
-              pathname === '/checkout'
-                ? 'bg-black text-white'
-                : 'bg-white text-black hover:bg-neutral-100'
-            }`}
-          >
-            <CalendarCheck className="w-4 h-4 stroke-[2.5]" />
-            <span>Reservasi Langsung</span>
-          </Link>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-[28px]">
+          {navLinks.map((item) => {
+            const isActive = pathname === item.href || (item.href === '/' && pathname === '/');
+            return (
+              <div key={item.label} className="flex flex-col items-center gap-[8px] pt-[10px]">
+                <Link
+                  href={item.href}
+                  className={`font-inter text-[13px] transition-colors ${
+                    isActive ? 'font-semibold text-white' : 'font-normal text-[#bdbdbd] hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+                <div
+                  className={`h-[2px] w-[16px] rounded-full transition-opacity ${
+                    isActive ? 'bg-[#ff6b35]' : 'bg-transparent'
+                  }`}
+                />
+              </div>
+            );
+          })}
 
           {user && (
-            <Link
-              href="/my-orders"
-              className={`font-bold px-3 py-1.5 border-2 border-black transition-colors duration-150 ${
-                pathname === '/my-orders'
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black hover:bg-neutral-100'
-              }`}
-            >
-              Faktur & Tiket Saya
-            </Link>
-          )}
-
-          {user?.role === 'admin' && (
-            <Link
-              href="/admin"
-              className={`font-black px-3 py-1.5 border-2 border-black bg-[#A3E635] text-black transition-colors duration-150 flex items-center gap-1.5 ${
-                pathname.startsWith('/admin') ? 'ring-2 ring-black' : ''
-              }`}
-            >
-              <ShieldAlert className="w-4 h-4 stroke-[2.5]" />
-              Console Admin
-            </Link>
+            <div className="flex flex-col items-center gap-[8px] pt-[10px]">
+              <Link
+                href="/my-orders"
+                className={`font-inter text-[13px] flex items-center gap-1.5 transition-colors ${
+                  pathname === '/my-orders'
+                    ? 'font-semibold text-white'
+                    : 'font-normal text-[#bdbdbd] hover:text-white'
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5 text-[#ff6b35]" />
+                <span>Booking Saya</span>
+              </Link>
+              <div
+                className={`h-[2px] w-[16px] rounded-full transition-opacity ${
+                  pathname === '/my-orders' ? 'bg-[#ff6b35]' : 'bg-transparent'
+                }`}
+              />
+            </div>
           )}
         </nav>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-3">
-          {/* Quick Direct Booking Button */}
-          <Link
-            href="/checkout"
-            className="nb-btn nb-btn-orange px-3.5 py-1.5 text-xs font-black uppercase flex items-center gap-1.5"
-          >
-            <Ticket className="w-4 h-4 stroke-[2.5]" />
-            <span>Pesan Sekarang</span>
-          </Link>
-
-          {/* User Auth Info */}
+        {/* Right CTA / Account */}
+        <div className="hidden sm:flex items-center gap-[12px]">
           {user ? (
-            <div className="hidden sm:flex items-center gap-2">
-              <div className="border-2 border-black bg-white px-3 py-1 text-xs font-bold flex items-center gap-2">
-                <UserIcon className="w-3.5 h-3.5" />
-                <span className="truncate max-w-[120px]">{user.name}</span>
-                <span className="px-1.5 py-0.5 bg-black text-white text-[11px] font-bold uppercase">
-                  {user.role}
+            <div className="flex items-center gap-3">
+              {user.role === 'admin' && (
+                <Link
+                  href="/admin"
+                  className="bg-[#242424] border border-[#ff6b35] text-[#ff6b35] font-inter text-[12px] font-semibold px-3.5 py-2 rounded-[6px] hover:bg-[#ff6b35] hover:text-[#171717] transition-colors flex items-center gap-1.5"
+                >
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>Panel Admin</span>
+                </Link>
+              )}
+              <div className="bg-[#242424] border border-[#383838] px-3.5 py-2 rounded-[6px] flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-[#ff6b35] text-[#171717] font-bold text-xs flex items-center justify-center">
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <span className="font-inter text-[12px] text-[#bdbdbd] max-w-[120px] truncate">
+                  {user.name || user.email}
                 </span>
+                <button
+                  onClick={handleLogout}
+                  title="Logout"
+                  className="text-[#8d8d8d] hover:text-red-400 ml-1 transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
               </div>
-              <button
-                onClick={handleLogout}
-                className="p-1.5 border-2 border-black bg-white hover:bg-red-500 hover:text-white transition-colors duration-150"
-                title="Keluar"
-                aria-label="Keluar"
+              <Link
+                href="/checkout"
+                className="bg-[#ff6b35] text-[#171717] font-inter font-semibold text-[13px] px-[22px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-[#e5531e] transition-colors"
               >
-                <LogOut className="w-4 h-4" />
-              </button>
+                Pesan Sekarang
+              </Link>
             </div>
           ) : (
-            <Link
-              href="/login"
-              className="nb-btn nb-btn-white px-3 py-1.5 text-xs font-bold flex items-center gap-1.5"
-            >
-              <UserIcon className="w-4 h-4" />
-              <span>Masuk Portal</span>
-            </Link>
+            <div className="flex items-center gap-[12px]">
+              <Link
+                href="/login"
+                className="border border-white/40 text-white font-inter font-semibold text-[13px] px-[22px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                Masuk
+              </Link>
+              <Link
+                href="/checkout"
+                className="bg-[#ff6b35] text-[#171717] font-inter font-semibold text-[13px] px-[22px] h-[44px] rounded-[6px] flex items-center justify-center hover:bg-[#e5531e] transition-colors"
+              >
+                Pesan Sekarang
+              </Link>
+            </div>
           )}
-
-          {/* Mobile menu trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 border-2 border-black bg-white"
-            aria-label="Menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </div>
+
+        {/* Mobile Menu Trigger */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden p-2 text-white hover:text-[#ff6b35] transition-colors"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t-2 border-black bg-white p-4 space-y-3">
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block font-bold p-2 border-2 border-black bg-neutral-100"
-          >
-            Katalog Layanan & Tiket
-          </Link>
-          <Link
-            href="/checkout"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block font-bold p-2 border-2 border-black bg-neutral-100"
-          >
-            Reservasi Langsung
-          </Link>
+        <div className="lg:hidden bg-[#242424] border-t border-[#383838] px-6 py-6 flex flex-col gap-4 animate-in slide-in-from-top-2">
+          {navLinks.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="font-inter text-[15px] text-[#bdbdbd] hover:text-white py-1"
+            >
+              {item.label}
+            </Link>
+          ))}
           {user && (
             <Link
               href="/my-orders"
               onClick={() => setMobileMenuOpen(false)}
-              className="block font-bold p-2 border-2 border-black bg-neutral-100"
+              className="font-inter text-[15px] text-[#ff6b35] py-1 flex items-center gap-2"
             >
-              Faktur & Tiket Saya
+              <FileText className="w-4 h-4" />
+              <span>Booking & Faktur Saya</span>
             </Link>
           )}
-          {user?.role === 'admin' && (
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block font-black p-2 border-2 border-black bg-[#A3E635]"
-            >
-              Console Admin & Laporan
-            </Link>
-          )}
-          {user ? (
-            <div className="pt-2 border-t-2 border-black flex justify-between items-center">
-              <div>
-                <p className="font-bold text-sm">{user.name}</p>
-                <p className="text-xs text-neutral-600">{user.email} ({user.role})</p>
+          <div className="pt-4 border-t border-[#383838] flex flex-col gap-3">
+            {user ? (
+              <>
+                <div className="text-xs text-[#8d8d8d]">
+                  Masuk sebagai: <span className="text-white font-medium">{user.name}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full bg-[#171717] border border-[#383838] text-red-400 font-inter text-[13px] font-semibold py-2.5 rounded-[6px] flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Keluar Akun</span>
+                </button>
+              </>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="border border-white/40 text-white font-inter font-semibold text-[13px] py-2.5 rounded-[6px] text-center"
+                >
+                  Masuk
+                </Link>
+                <Link
+                  href="/checkout"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="bg-[#ff6b35] text-[#171717] font-inter font-semibold text-[13px] py-2.5 rounded-[6px] text-center"
+                >
+                  Pesan Sekarang
+                </Link>
               </div>
-              <button
-                onClick={handleLogout}
-                className="nb-btn bg-red-400 text-black px-3 py-1 text-xs font-bold"
-              >
-                Keluar
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block nb-btn nb-btn-yellow text-center py-2 text-sm font-bold"
-            >
-              Masuk / Login Akun
-            </Link>
-          )}
+            )}
+          </div>
         </div>
       )}
     </header>
