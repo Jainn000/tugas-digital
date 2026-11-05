@@ -53,7 +53,7 @@ export default function HomePage() {
   return (
     <div data-ui="kinetik-landing" className="bg-[#171717] text-white font-inter selection:bg-[#ff6b35] selection:text-[#171717]">
       {/* 1. HERO SECTION (Figma Node 46:3287) */}
-      <section className="relative w-full h-[640px] md:h-[720px] flex flex-col justify-between px-5 sm:px-8 md:px-[72px] pt-[76px] pb-[30px] overflow-hidden">
+      <section className="relative w-full min-h-[580px] sm:min-h-[640px] md:h-[720px] flex flex-col justify-between px-5 sm:px-8 md:px-[72px] pt-[64px] sm:pt-[76px] pb-[30px] overflow-hidden">
         {/* Concert Photography Background with Scrim */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -77,7 +77,7 @@ export default function HomePage() {
               transition: { staggerChildren: 0.12 }
             }
           }}
-          className="relative z-10 max-w-[790px] flex flex-col gap-[24px]"
+          className="relative z-10 max-w-[790px] flex flex-col gap-[20px] sm:gap-[24px]"
         >
           {/* Section label */}
           <motion.div variants={fadeUpVariant} custom={0} className="flex items-center gap-[12px]">
@@ -91,7 +91,7 @@ export default function HomePage() {
           <motion.h1 
             variants={fadeUpVariant}
             custom={1}
-            className="font-poppins font-semibold text-[42px] sm:text-[54px] md:text-[64px] tracking-[-1.92px] leading-[1.14] text-white"
+            className="font-poppins font-semibold text-[34px] xs:text-[40px] sm:text-[54px] md:text-[64px] tracking-[-1px] sm:tracking-[-1.92px] leading-[1.14] text-white"
           >
             Hidupkan setiap<br />
             momen bersama<br />
@@ -1035,20 +1035,23 @@ export default function HomePage() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5 }}
               whileHover={{ y: -4 }}
-              className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
+              className="bg-[#171717] rounded-[12px] p-[20px] sm:p-[24px] flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
             >
-              <div className="w-[76px] flex flex-col items-center justify-center shrink-0 border-r border-[#383838] pr-4">
-                <span className="font-poppins text-[36px] text-white leading-none">14</span>
-                <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">NOV 2026</span>
+              <div className="flex sm:flex-col items-center justify-between sm:justify-center shrink-0 border-b sm:border-b-0 sm:border-r border-[#383838] pb-3 sm:pb-0 sm:pr-4 sm:w-[76px]">
+                <div className="flex sm:flex-col items-baseline sm:items-center gap-2 sm:gap-0">
+                  <span className="font-poppins text-[32px] sm:text-[36px] text-white leading-none">14</span>
+                  <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">NOV 2026</span>
+                </div>
+                <ArrowUpRight className="sm:hidden w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] transition-colors" />
               </div>
               <div className="flex-1 flex flex-col gap-[6px]">
                 <span className="text-[10px] text-[#ff6b35] font-medium">Sesi berbagi · Studio KINETIK</span>
-                <h3 className="font-poppins text-[20px] text-white">Di Balik Produksi</h3>
+                <h3 className="font-poppins text-[18px] sm:text-[20px] text-white">Di Balik Produksi</h3>
                 <p className="text-[12px] text-[#bdbdbd] leading-[1.6]">
                   Percakapan tentang ide, panggung, dan kolaborasi.
                 </p>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+              <ArrowUpRight className="hidden sm:block w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
             </motion.div>
 
             {/* Card 2 */}
@@ -1058,20 +1061,23 @@ export default function HomePage() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
               whileHover={{ y: -4 }}
-              className="bg-[#171717] rounded-[12px] p-[24px] flex items-center gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
+              className="bg-[#171717] rounded-[12px] p-[20px] sm:p-[24px] flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-[24px] border border-[#383838] hover:border-[#ff6b35]/60 transition-colors cursor-pointer group"
             >
-              <div className="w-[76px] flex flex-col items-center justify-center shrink-0 border-r border-[#383838] pr-4">
-                <span className="font-poppins text-[36px] text-white leading-none">4</span>
-                <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">DES 2026</span>
+              <div className="flex sm:flex-col items-center justify-between sm:justify-center shrink-0 border-b sm:border-b-0 sm:border-r border-[#383838] pb-3 sm:pb-0 sm:pr-4 sm:w-[76px]">
+                <div className="flex sm:flex-col items-baseline sm:items-center gap-2 sm:gap-0">
+                  <span className="font-poppins text-[32px] sm:text-[36px] text-white leading-none">4</span>
+                  <span className="text-[9px] text-[#8d8d8d] tracking-[0.54px] mt-1 font-semibold">DES 2026</span>
+                </div>
+                <ArrowUpRight className="sm:hidden w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] transition-colors" />
               </div>
               <div className="flex-1 flex flex-col gap-[6px]">
                 <span className="text-[10px] text-[#ff6b35] font-medium">Showcase produksi · Jakarta</span>
-                <h3 className="font-poppins text-[20px] text-white">KINETIK Creative Session</h3>
+                <h3 className="font-poppins text-[18px] sm:text-[20px] text-white">KINETIK Creative Session</h3>
                 <p className="text-[12px] text-[#bdbdbd] leading-[1.6]">
                   Temui tim dan eksplorasi kemungkinan acara Anda.
                 </p>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+              <ArrowUpRight className="hidden sm:block w-5 h-5 text-[#8d8d8d] group-hover:text-[#ff6b35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
             </motion.div>
           </div>
         </div>

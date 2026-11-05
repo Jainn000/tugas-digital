@@ -273,8 +273,25 @@ export default function Navbar() {
               {user ? (
                 <>
                   <div className="text-xs text-[#8d8d8d]">
-                    Masuk sebagai: <span className="text-white font-medium">{user.name}</span>
+                    Masuk sebagai: <span className="text-white font-medium">{user.name}</span> ({user.role === 'admin' ? 'Admin EO' : 'Klien'})
                   </div>
+                  {user.role === 'admin' && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full bg-[#38271f] border border-[#ff6b35]/60 text-[#ff6b35] font-inter text-[13px] font-semibold py-2.5 rounded-[6px] flex items-center justify-center gap-2"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Panel Admin EO</span>
+                    </Link>
+                  )}
+                  <Link
+                    href="/checkout"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full bg-[#ff6b35] text-[#171717] font-inter text-[13px] font-semibold py-2.5 rounded-[6px] text-center"
+                  >
+                    Pesan Tiket & Konsultasi
+                  </Link>
                   <button
                     onClick={() => {
                       handleLogout();

@@ -108,16 +108,16 @@ export default function OrderDetailPage({ params }) {
   return (
     <div className="max-w-4xl mx-auto my-8 px-4 space-y-8 text-white">
       {/* Top Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 no-print border-b border-[#383838] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print border-b border-[#383838] pb-4">
         <Link
           href="/"
-          className="px-3 py-1.5 rounded-[6px] bg-[#171717] border border-[#383838] text-[#bdbdbd] hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
+          className="w-fit px-3 py-1.5 rounded-[6px] bg-[#171717] border border-[#383838] text-[#bdbdbd] hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Beranda</span>
         </Link>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {/* Format selector */}
           <div className="flex rounded-[6px] border border-[#383838] bg-[#171717] p-0.5 text-xs">
             <button

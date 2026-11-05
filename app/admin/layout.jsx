@@ -169,8 +169,8 @@ export default function AdminLayout({ children }) {
 
       {/* 2. SUB-NAVIGATION TABS */}
       <div className="bg-[#1c1c1c] border-b border-[#383838] no-print">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
-          <nav className="flex flex-wrap items-center gap-1.5" data-ui="admin-nav-tabs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+          <nav className="flex items-center gap-1.5 whitespace-nowrap min-w-max sm:min-w-0 sm:flex-wrap" data-ui="admin-nav-tabs">
             {navLinks.map(link => {
               const Icon = link.icon;
               const isActive = pathname === link.href;

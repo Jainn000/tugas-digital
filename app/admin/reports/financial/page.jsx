@@ -239,12 +239,12 @@ export default function AdminFinancialReportPage() {
             </div>
 
             {/* 4. LABA BERSIH OPERASIONAL */}
-            <div className="p-4 rounded-[8px] bg-[#38271f] border border-[#ff6b35] flex justify-between items-center">
+            <div className="p-4 rounded-[8px] bg-[#38271f] border border-[#ff6b35] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <span className="font-poppins font-semibold text-sm uppercase block text-white">IV. LABA BERSIH USAHA (NET OPERATING PROFIT)</span>
                 <span className="text-[11px] text-[#bdbdbd]">Laba Kotor dikurangi Total Beban Operasional</span>
               </div>
-              <span className="text-2xl font-bold font-poppins text-[#8cd6b0]">
+              <span className="text-xl sm:text-2xl font-bold font-poppins text-[#8cd6b0]">
                 {formatRupiah(statement.labaBersihOperasional)}
               </span>
             </div>
@@ -252,7 +252,7 @@ export default function AdminFinancialReportPage() {
         )}
 
         {/* Verification Footer */}
-        <div className="pt-8 border-t border-[#383838] flex justify-between items-end text-xs text-[#8d8d8d]">
+        <div className="pt-8 border-t border-[#383838] flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-xs text-[#8d8d8d]">
           <div>
             <p className="font-semibold text-white">Pernyataan Validitas:</p>
             <p className="text-[10px] text-[#666666]">

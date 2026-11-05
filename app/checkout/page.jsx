@@ -193,11 +193,11 @@ function CheckoutContent() {
       }
 
       toast.success(
-        `Faktur ${data.order?.payment_reference || 'resmi'} berhasil dibuat. Mengalihkan ke pembayaran...`,
+        `Faktur ${data.order?.order_number || 'resmi'} berhasil dibuat. Mengalihkan ke pembayaran...`,
         'Faktur Diterbitkan'
       );
 
-      router.push(`/payment/${data.order.id}`);
+      router.push(`/orders/${data.order.order_number}`);
     } catch (err) {
       const msg = err.message || 'Terjadi kesalahan saat memproses booking.';
       setError(msg);
@@ -402,7 +402,7 @@ function CheckoutContent() {
                   <label className="text-[11px] text-[#8d8d8d]">
                     Email & telepon
                   </label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <input
                       type="email"
                       value={customerEmail}
