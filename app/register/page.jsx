@@ -4,7 +4,7 @@ import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserPlus, ShieldAlert, User, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { UserPlus, ShieldAlert, User, Wrench, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/components/ToastContext';
 
 function RegisterContent() {
@@ -144,16 +144,16 @@ function RegisterContent() {
           </p>
         </div>
 
-        {/* Role Selector: Klien vs Admin EO */}
+        {/* Role Selector: Klien vs Vendor vs Admin EO */}
         <div className="flex flex-col gap-2">
           <span className="text-[11px] text-[#8d8d8d] font-medium">
             Pilih Peran Akun (Role):
           </span>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => setRole('user')}
-              className={`p-3 rounded-[6px] border text-left flex flex-col gap-1 transition-colors ${
+              className={`p-2.5 rounded-[6px] border text-left flex flex-col gap-1 transition-colors ${
                 role === 'user'
                   ? 'bg-[#38271f] border-[#ff6b35] text-white'
                   : 'bg-[#171717] border-[#383838] text-[#bdbdbd] hover:text-white hover:border-[#ff6b35]/60'
@@ -164,14 +164,32 @@ function RegisterContent() {
                 <span>Klien / User</span>
               </div>
               <p className="text-[10px] text-[#8d8d8d] leading-tight">
-                Pesan tiket festival & request proposal acara
+                Pesan tiket festival & paket acara
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setRole('vendor')}
+              className={`p-2.5 rounded-[6px] border text-left flex flex-col gap-1 transition-colors ${
+                role === 'vendor'
+                  ? 'bg-[#393224] border-[#e9c47d] text-white'
+                  : 'bg-[#171717] border-[#383838] text-[#bdbdbd] hover:text-white hover:border-[#e9c47d]/60'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 font-semibold text-xs">
+                <Wrench className="w-4 h-4 text-[#e9c47d]" />
+                <span>Mitra Vendor</span>
+              </div>
+              <p className="text-[10px] text-[#8d8d8d] leading-tight">
+                SPK panggung, sound, lighting & PO
               </p>
             </button>
 
             <button
               type="button"
               onClick={() => setRole('admin')}
-              className={`p-3 rounded-[6px] border text-left flex flex-col gap-1 transition-colors ${
+              className={`p-2.5 rounded-[6px] border text-left flex flex-col gap-1 transition-colors ${
                 role === 'admin'
                   ? 'bg-[#38271f] border-[#ff6b35] text-white'
                   : 'bg-[#171717] border-[#383838] text-[#bdbdbd] hover:text-white hover:border-[#ff6b35]/60'
@@ -182,7 +200,7 @@ function RegisterContent() {
                 <span>Admin EO</span>
               </div>
               <p className="text-[10px] text-[#8d8d8d] leading-tight">
-                Kelola pesanan, verifikasi tiket & laporan finansial
+                Kelola pesanan & kontrol finansial
               </p>
             </button>
           </div>

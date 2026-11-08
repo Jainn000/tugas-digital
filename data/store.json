@@ -26,6 +26,15 @@
       "role": "user",
       "phone": "081900112233",
       "address": "Jl. Bintaro Sektor 9 Blok H2 No. 11, Tangerang Selatan"
+    },
+    {
+      "id": 4,
+      "name": "PT Mahakarya Sound & Stage Rigging",
+      "email": "vendor@entrepreneur.id",
+      "password": "$2a$10$n4AzH7gI1creZgP6n7GzQetObVrk8tpAKDY8uhuJqJ6tF7.tee5Ie",
+      "role": "vendor",
+      "phone": "081399887766",
+      "address": "Kawasan Industri Pulogadung Blok III No. 8, Jakarta Timur"
     }
   ],
   "categories": [
@@ -68,7 +77,7 @@
       "description": "Koordinasi pernikahan sakral 100-200 pax: tim rundown 8 personil profesional, koordinasi vendor dekorasi/katering/MUA, panduan gladi resik, dan pendampingan keluarga.",
       "price": 12800000,
       "cost_price": 7500000,
-      "stock": 6,
+      "stock": 5,
       "image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=80"
     },
     {
@@ -338,6 +347,26 @@
       "paid_at": "2026-11-05 16:35:50",
       "id": 10,
       "created_at": "2026-11-05 16:35:49"
+    },
+    {
+      "order_number": "INV-20261107-3660",
+      "user_id": 2,
+      "customer_name": "Budi Pratama (PT Sinar Mandiri)",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "0812 0000 0018",
+      "customer_address": "Grand Ballroom · Hotel Cakrawala, Jakarta",
+      "subtotal": 12800000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 12800000,
+      "total_cost": 7500000,
+      "payment_method": "Virtual Account - BCA",
+      "payment_status": "unpaid",
+      "order_status": "pending",
+      "payment_reference": "EWL-20261107-3660",
+      "paid_at": null,
+      "id": 11,
+      "created_at": "2026-11-07 01:00:43"
     }
   ],
   "order_items": [
@@ -450,6 +479,16 @@
       "cost_price": 4200000,
       "quantity": 1,
       "subtotal": 7500000
+    },
+    {
+      "id": 12,
+      "order_id": 11,
+      "product_id": 2,
+      "product_name": "Paket Intimate Wedding Organizer",
+      "price": 12800000,
+      "cost_price": 7500000,
+      "quantity": 1,
+      "subtotal": 12800000
     }
   ],
   "expenses": [
@@ -509,6 +548,66 @@
       "notes": "Testing audit",
       "id": 7,
       "created_at": "2026-11-05 16:35:50"
+    },
+    {
+      "expense_title": "[Vendor Claim] Kabel Multicore 30m Tambahan (SPK-VND-2026-001)",
+      "category": "Biaya Produksi & Vendor",
+      "amount": 350000,
+      "expense_date": "2026-11-08",
+      "notes": "Klaim operasional vendor untuk Synchronize Indie Music Festival 2026: Extra snake cable stage B",
+      "id": 8,
+      "created_at": "2026-11-08 05:10:01"
+    }
+  ],
+  "vendor_jobs": [
+    {
+      "id": 1,
+      "spk_number": "SPK-VND-2026-001",
+      "event_name": "Synchronize Indie Music Festival 2026",
+      "client_name": "KINETIK Festival Production",
+      "venue": "Tribrata Grand Ballroom & Outdoor Stage, Jakarta",
+      "load_in_date": "2026-11-18 08:00",
+      "show_date": "2026-11-20 16:00",
+      "scope_work": "Sewa Sound System Line Array 20.000W, Rigging Stage 14x10m, dan Lighting Moving Head Beam 230",
+      "crew_assigned": "6 Teknisi Rigging & 2 Sound Engineers",
+      "po_amount": 18500000,
+      "paid_amount": 9250000,
+      "payment_status": "DP 50% Lunas",
+      "job_status": "ready_soundcheck",
+      "notes": "Genset 80 kVA standby H-1 pukul 14.00 WIB untuk soundcheck artis utama.",
+      "updated_at": "2026-11-08T05:09:56.398Z"
+    },
+    {
+      "id": 2,
+      "spk_number": "SPK-VND-2026-002",
+      "event_name": "Corporate Signature Gathering PT Sinar Mandiri",
+      "client_name": "PT Sinar Mandiri",
+      "venue": "Grand Ballroom Hotel Mulia Senayan, Jakarta",
+      "load_in_date": "2026-11-24 22:00",
+      "show_date": "2026-11-25 09:00",
+      "scope_work": "LED Videotron P3.9 Indoor 6x3.5m, Audio Conference 4.000W, Wireless Mic Shure 8 Channel",
+      "crew_assigned": "3 Teknisi LED Broadcast & 1 Operator Mixer",
+      "po_amount": 12000000,
+      "paid_amount": 12000000,
+      "payment_status": "Lunas 100%",
+      "job_status": "persiapan_alat",
+      "notes": "Loading in malam hari setelah ballroom selesai dibersihkan oleh pihak hotel."
+    },
+    {
+      "id": 3,
+      "spk_number": "SPK-VND-2026-003",
+      "event_name": "Wedding Gathering & Intimate Showcase",
+      "client_name": "Nabila Anindita",
+      "venue": "Plataran Dharmawangsa, Jakarta Selatan",
+      "load_in_date": "2026-12-04 06:00",
+      "show_date": "2026-12-04 18:00",
+      "scope_work": "Acoustic Sound System FOH 5000W, Warm White Fairy Lighting & Ambient Pinspot",
+      "crew_assigned": "4 Kru Audio Visual & Dekorasi Rigging",
+      "po_amount": 8500000,
+      "paid_amount": 4250000,
+      "payment_status": "DP 50% Lunas",
+      "job_status": "menunggu_konfirmasi",
+      "notes": "Kabel instalasi wajib ditutup carpet tape hitam rapi sesuai standar venue Plataran."
     }
   ]
 }

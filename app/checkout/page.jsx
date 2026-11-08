@@ -296,19 +296,11 @@ function CheckoutContent() {
               </div>
             </div>
             <div className="flex items-center gap-3 w-full md:w-auto">
-              <button
-                type="button"
-                onClick={handleQuickDemoLogin}
-                disabled={loading}
-                className="flex-1 md:flex-initial bg-[#ff6b35] text-[#171717] font-semibold text-xs px-4 py-2.5 rounded-[6px] hover:bg-[#e5531e] transition-colors whitespace-nowrap"
-              >
-                1-Klik Masuk Demo
-              </button>
               <Link
-                href="/login"
-                className="flex-1 md:flex-initial border border-white/40 text-white font-semibold text-xs px-4 py-2.5 rounded-[6px] hover:bg-white/10 transition-colors text-center whitespace-nowrap"
+                href="/login?redirect=/checkout"
+                className="w-full md:w-auto bg-[#ff6b35] text-[#171717] font-semibold text-xs px-5 py-2.5 rounded-[6px] hover:bg-[#e5531e] transition-colors text-center whitespace-nowrap"
               >
-                Login Mandiri
+                Masuk Akun
               </Link>
             </div>
           </div>

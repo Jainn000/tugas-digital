@@ -15,7 +15,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email sudah terdaftar. Silakan login.' }, { status: 400 });
     }
 
-    const assignedRole = role === 'admin' ? 'admin' : 'user';
+    const assignedRole = role === 'admin' ? 'admin' : role === 'vendor' ? 'vendor' : 'user';
 
     const hashedPassword = await hashPassword(password);
     const newUser = await createUser({

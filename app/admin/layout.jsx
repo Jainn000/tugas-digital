@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, Package, ShoppingCart, BarChart3, 
-  TrendingUp, ShieldAlert, ExternalLink, LogOut, Database, UserCheck, ChevronRight
+  TrendingUp, ShieldAlert, ExternalLink, LogOut, Database, UserCheck, ChevronRight, Wrench
 } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
@@ -142,6 +142,16 @@ export default function AdminLayout({ children }) {
                 ADMIN
               </span>
             </div>
+
+            {/* Portal Vendor Link */}
+            <Link
+              href="/vendor"
+              className="px-2.5 py-1.5 bg-[#393224] text-[#e9c47d] border border-[#e9c47d]/60 rounded-[6px] flex items-center gap-1.5 transition-colors font-medium text-xs"
+              title="Akses Portal Mitra Vendor"
+            >
+              <Wrench className="w-3 h-3" />
+              <span className="hidden sm:inline">Portal Vendor</span>
+            </Link>
 
             {/* Web Klien Link */}
             <Link

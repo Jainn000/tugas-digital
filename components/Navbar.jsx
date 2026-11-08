@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, LogOut, ShieldAlert, FileText } from 'lucide-react';
+import { Menu, X, LogOut, ShieldAlert, FileText, Wrench, LayoutDashboard } from 'lucide-react';
 
 export default function Navbar() {
   const router = useRouter();
@@ -176,6 +176,15 @@ export default function Navbar() {
                   <span>Panel Admin</span>
                 </Link>
               )}
+              {user.role === 'vendor' && (
+                <Link
+                  href="/vendor"
+                  className="bg-[#242424] border border-[#e9c47d] text-[#e9c47d] font-inter text-[12px] font-semibold px-3.5 py-2 rounded-[6px] hover:bg-[#e9c47d] hover:text-[#171717] transition-colors flex items-center gap-1.5"
+                >
+                  <Wrench className="w-3.5 h-3.5" />
+                  <span>Portal Vendor</span>
+                </Link>
+              )}
               <div className="bg-[#242424] border border-[#383838] px-3.5 py-2 rounded-[6px] flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-[#ff6b35] text-[#171717] font-bold text-xs flex items-center justify-center">
                   {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -273,7 +282,7 @@ export default function Navbar() {
               {user ? (
                 <>
                   <div className="text-xs text-[#8d8d8d]">
-                    Masuk sebagai: <span className="text-white font-medium">{user.name}</span> ({user.role === 'admin' ? 'Admin EO' : 'Klien'})
+                    Masuk sebagai: <span className="text-white font-medium">{user.name}</span> ({user.role === 'admin' ? 'Admin EO' : user.role === 'vendor' ? 'Mitra Vendor' : 'Klien'})
                   </div>
                   {user.role === 'admin' && (
                     <Link
@@ -283,6 +292,16 @@ export default function Navbar() {
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       <span>Panel Admin EO</span>
+                    </Link>
+                  )}
+                  {user.role === 'vendor' && (
+                    <Link
+                      href="/vendor"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full bg-[#393224] border border-[#e9c47d]/60 text-[#e9c47d] font-inter text-[13px] font-semibold py-2.5 rounded-[6px] flex items-center justify-center gap-2"
+                    >
+                      <Wrench className="w-4 h-4" />
+                      <span>Portal Mitra Vendor</span>
                     </Link>
                   )}
                   <Link

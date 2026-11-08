@@ -4,7 +4,7 @@ import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShieldAlert, User, LogIn, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { LogIn, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/components/ToastContext';
 
 function LoginContent() {
@@ -59,8 +59,10 @@ function LoginContent() {
           router.push(redirectUrl);
         } else if (data.user.role === 'admin') {
           router.push('/admin');
+        } else if (data.user.role === 'vendor') {
+          router.push('/vendor');
         } else {
-          router.push('/');
+          router.push('/my-orders');
         }
         router.refresh();
       }, 500);
@@ -71,17 +73,6 @@ function LoginContent() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const fillCredentials = (role) => {
-    if (role === 'admin') {
-      setEmail('admin@entrepreneur.id');
-      setPassword('admin123');
-    } else {
-      setEmail('user@entrepreneur.id');
-      setPassword('user123');
-    }
-    setError('');
   };
 
   return (
@@ -102,41 +93,8 @@ function LoginContent() {
             Masuk ke KINETIK
           </h1>
           <p className="font-inter text-[12px] text-[#bdbdbd] max-w-xs leading-relaxed">
-            Akses panel pengelolaan acara dan sistem reservasi tiket resmi.
+            Akses sistem manajemen acara, portal mitra produksi, dan tiket resmi.
           </p>
-        </div>
-
-        {/* 1-Click Preset Demo Accounts */}
-        <div className="flex flex-col gap-2">
-          <span className="text-[11px] text-[#8d8d8d] text-center font-medium">
-            Pilihan Akun Uji Coba Cepat:
-          </span>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              type="button"
-              onClick={() => fillCredentials('admin')}
-              className={`p-2.5 rounded-[6px] border text-xs font-semibold flex items-center justify-center gap-2 transition-colors ${
-                email === 'admin@entrepreneur.id'
-                  ? 'bg-[#38271f] border-[#ff6b35] text-white'
-                  : 'bg-[#171717] border-[#383838] text-[#bdbdbd] hover:text-white hover:border-[#ff6b35]/60'
-              }`}
-            >
-              <ShieldAlert className="w-4 h-4 text-[#ff6b35]" />
-              <span>Admin EO</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => fillCredentials('user')}
-              className={`p-2.5 rounded-[6px] border text-xs font-semibold flex items-center justify-center gap-2 transition-colors ${
-                email === 'user@entrepreneur.id'
-                  ? 'bg-[#38271f] border-[#ff6b35] text-white'
-                  : 'bg-[#171717] border-[#383838] text-[#bdbdbd] hover:text-white hover:border-[#ff6b35]/60'
-              }`}
-            >
-              <User className="w-4 h-4 text-[#8cd6b0]" />
-              <span>Klien / User</span>
-            </button>
-          </div>
         </div>
 
         {/* Status Alerts */}
