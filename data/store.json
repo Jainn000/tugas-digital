@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "name": "PT Mahakarya Sound & Stage Rigging",
+      "name": "Raya Event Supply",
       "email": "vendor@entrepreneur.id",
       "password": "$2a$10$n4AzH7gI1creZgP6n7GzQetObVrk8tpAKDY8uhuJqJ6tF7.tee5Ie",
       "role": "vendor",
@@ -608,6 +608,236 @@
       "payment_status": "DP 50% Lunas",
       "job_status": "menunggu_konfirmasi",
       "notes": "Kabel instalasi wajib ditutup carpet tape hitam rapi sesuai standar venue Plataran."
+    }
+  ],
+  "vendor_stock": [
+    {
+      "id": 1,
+      "name": "LED Moving Head 350W Beam",
+      "category": "Lighting",
+      "total_qty": 24,
+      "available_qty": 2,
+      "status": "low_stock",
+      "daily_rate": 350000,
+      "image": "/figma/stage-lighting.png",
+      "notes": "Stock is running low (2 left)",
+      "updated_at": "2h ago"
+    },
+    {
+      "id": 2,
+      "name": "Wireless Microphone Shure Axient (Pair)",
+      "category": "Audio",
+      "total_qty": 16,
+      "available_qty": 3,
+      "status": "low_stock",
+      "daily_rate": 450000,
+      "image": "/figma/audio-equipment.png",
+      "notes": "Stock is running low (3 left)",
+      "updated_at": "3h ago"
+    },
+    {
+      "id": 3,
+      "name": "Stage Truss 2m Box Aluminium",
+      "category": "Rigging",
+      "total_qty": 18,
+      "available_qty": 0,
+      "status": "out_of_stock",
+      "daily_rate": 150000,
+      "image": "/figma/stage-rigging.png",
+      "notes": "Out of stock (Tersewa di Tribrata)",
+      "updated_at": "5h ago"
+    },
+    {
+      "id": 4,
+      "name": "L-Acoustics K2 Line Array Speaker",
+      "category": "Audio",
+      "total_qty": 26,
+      "available_qty": 24,
+      "status": "available",
+      "daily_rate": 1500000,
+      "image": "/figma/audio-equipment.png",
+      "notes": "Available siap sewa",
+      "updated_at": "1d ago"
+    },
+    {
+      "id": 5,
+      "name": "Videotron LED P3.9 Indoor Cabinet",
+      "category": "Visual",
+      "total_qty": 28,
+      "available_qty": 24,
+      "status": "available",
+      "daily_rate": 250000,
+      "image": "/figma/visual-led.png",
+      "notes": "Available siap sewa",
+      "updated_at": "2d ago"
+    },
+    {
+      "id": 6,
+      "name": "Genset Silent Perkins 80 kVA",
+      "category": "Power",
+      "total_qty": 8,
+      "available_qty": 6,
+      "status": "available",
+      "daily_rate": 2500000,
+      "image": "/figma/power-genset.png",
+      "notes": "Available siap kirim",
+      "updated_at": "3d ago"
+    }
+  ],
+  "rental_orders": [
+    {
+      "id": 1,
+      "order_id": "#RNT-20261107",
+      "event_name": "KINETIK Music Festival",
+      "eo_name": "KINETIK Festival Production",
+      "eo_contact": "Reza (Director EO) • 081234567890",
+      "rental_date": "Nov 15, 2026",
+      "duration": "3 Hari",
+      "status": "Pending",
+      "total_amount": 18500000,
+      "items": "Line Array 20kW, Moving Head 16x, Stage Rigging 14x10m",
+      "venue": "Tribrata Grand Ballroom & Outdoor Stage, Jakarta",
+      "notes": "Loading tgl 14 Nov pukul 21.00 WIB"
+    },
+    {
+      "id": 2,
+      "order_id": "#RNT-20261106",
+      "event_name": "Tech Summit 2025",
+      "eo_name": "Nusantara Creative EO",
+      "eo_contact": "Dimas Pratama • 081388776655",
+      "rental_date": "Nov 14, 2026",
+      "duration": "2 Hari",
+      "status": "Confirmed",
+      "total_amount": 14000000,
+      "items": "LED Videotron 6x3.5m, Audio Conference 4000W, Mic Wireless 8 Unit",
+      "venue": "Grand Ballroom Hotel Mulia Senayan, Jakarta",
+      "notes": "Rigging LED screen center stage"
+    },
+    {
+      "id": 3,
+      "order_id": "#RNT-20261105",
+      "event_name": "Wedding Expo",
+      "eo_name": "Royal Wedding Planner",
+      "eo_contact": "Clara Wijaya • 081922334411",
+      "rental_date": "Nov 13, 2026",
+      "duration": "4 Hari",
+      "status": "Processing",
+      "total_amount": 9500000,
+      "items": "Warm White Fairy Lighting & Ambient Pinspot, FOH Acoustic Audio",
+      "venue": "Jakarta Convention Center (JCC) Hall B",
+      "notes": "Pemasangan kabel rapih lantai"
+    },
+    {
+      "id": 4,
+      "order_id": "#RNT-20261104",
+      "event_name": "Corporate Gathering",
+      "eo_name": "Sinar Mandiri Enterprise",
+      "eo_contact": "Budi Santoso • 085712349988",
+      "rental_date": "Nov 12, 2026",
+      "duration": "1 Hari",
+      "status": "Confirmed",
+      "total_amount": 11200000,
+      "items": "Sound System 5000W, Lighting Par LED 12x, Genset 60kVA",
+      "venue": "Pullman Ballroom Thamrin, Jakarta Pusat",
+      "notes": "Soundcheck H-4 jam sebelum gala dinner"
+    },
+    {
+      "id": 5,
+      "order_id": "#RNT-20261103",
+      "event_name": "Charity Concert",
+      "eo_name": "Yayasan Harmoni Nusantara",
+      "eo_contact": "Indah Kusuma • 081199882233",
+      "rental_date": "Nov 11, 2026",
+      "duration": "1 Hari",
+      "status": "Completed",
+      "total_amount": 7800000,
+      "items": "Line Array Mini, Mixer Digital 32Ch, Microphone Set",
+      "venue": "Teater Besar Taman Ismail Marzuki, Jakarta",
+      "notes": "Bongkaran selesai tgl 12 Nov dini hari"
+    }
+  ],
+  "vendor_messages": [
+    {
+      "id": 1,
+      "thread_id": "thread-kinetik-fest",
+      "eo_name": "KINETIK Festival Production",
+      "event_name": "KINETIK Music Festival",
+      "last_message": "Mantap, terima kasih konfirmasinya. SPK dan PO DP 50% sudah ditransfer finance.",
+      "last_time": "10:30 WIB",
+      "unread_count": 1,
+      "messages": [
+        {
+          "id": 1,
+          "sender": "admin",
+          "sender_name": "Director Kinetik EO",
+          "message": "Halo Raya Event Supply, untuk jadwal loading-in panggung utama festival kita majukan jadi tanggal 14 Nov malam jam 21.00 ya, apakah tim rigging siap?",
+          "time": "10:15 WIB"
+        },
+        {
+          "id": 2,
+          "sender": "vendor",
+          "sender_name": "Raya Event Supply",
+          "message": "Siap Pak! Armada logistik truk dan kru rigging standby di lokasi Tribrata mulai pukul 20.30 WIB. Genset 80kVA juga sudah terkalibrasi siap jalan.",
+          "time": "10:22 WIB"
+        },
+        {
+          "id": 3,
+          "sender": "admin",
+          "sender_name": "Director Kinetik EO",
+          "message": "Mantap, terima kasih konfirmasinya. SPK dan PO DP 50% sudah ditransfer finance.",
+          "time": "10:30 WIB"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "thread_id": "thread-tech-summit",
+      "eo_name": "Nusantara Creative EO",
+      "event_name": "Tech Summit 2025",
+      "last_message": "Sudah masuk checklist tim broadcast kami pak. Unit backup siap.",
+      "last_time": "09:05 WIB",
+      "unread_count": 0,
+      "messages": [
+        {
+          "id": 1,
+          "sender": "admin",
+          "sender_name": "Dimas (Nusantara Creative)",
+          "message": "Pagi tim Raya, mohon kabel HDMI fiber optik 50m dan switcher video disiapkan 1 unit cadangan di Hotel Mulia ya.",
+          "time": "08:45 WIB"
+        },
+        {
+          "id": 2,
+          "sender": "vendor",
+          "sender_name": "Raya Event Supply",
+          "message": "Sudah masuk checklist tim broadcast kami pak. Unit backup siap.",
+          "time": "09:05 WIB"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "thread_id": "thread-wedding-expo",
+      "eo_name": "Royal Wedding Planner",
+      "event_name": "Wedding Expo",
+      "last_message": "Sudah dites di workshop, 10 roll lampu nyala sempurna dengan dimmer.",
+      "last_time": "Kemarin",
+      "unread_count": 0,
+      "messages": [
+        {
+          "id": 1,
+          "sender": "admin",
+          "sender_name": "Clara Wijaya (Royal Wedding)",
+          "message": "Mohon update apakah fairy ambient lighting warm white sudah selesai uji coba?",
+          "time": "Kemarin 16:30"
+        },
+        {
+          "id": 2,
+          "sender": "vendor",
+          "sender_name": "Raya Event Supply",
+          "message": "Sudah dites di workshop, 10 roll lampu nyala sempurna dengan dimmer.",
+          "time": "Kemarin 17:10"
+        }
+      ]
     }
   ]
 }
