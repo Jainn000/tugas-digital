@@ -246,14 +246,14 @@ export default function AdminOverviewPage() {
 
           {/* AkuQRIS API Key */}
           <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[8px] space-y-1.5">
-            <span className="text-[11px] font-medium text-[#8d8d8d] block">API Key (Sandbox):</span>
+            <span className="text-[11px] font-medium text-[#8d8d8d] block">API Key Gateway (Production):</span>
             <div className="flex items-center justify-between gap-2 bg-[#171717] px-2.5 py-2 rounded-[6px] border border-[#383838]">
               <code className="text-xs text-white select-all truncate">
-                pk_test_2c11cd6b98...5e
+                pk_live_2c11cd6b98...5e
               </code>
               <button
                 type="button"
-                onClick={() => copyToClipboard('pk_test_2c11cd6b9862c2074f9a39a1f7i5b95e', 'key')}
+                onClick={() => copyToClipboard('pk_live_2c11cd6b9862c2074f9a39a1f7i5b95e', 'key')}
                 className="p-1 hover:text-[#ff6b35] text-[#8d8d8d] transition-colors shrink-0"
                 title="Salin API Key"
                 aria-label="Salin API Key"

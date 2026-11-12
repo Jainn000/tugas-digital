@@ -10,7 +10,7 @@ export async function GET() {
       webhook_url: 'http://localhost:3000/api/payment/webhook',
       method: 'POST',
       accepted_headers: ['x-webhook-signature', 'x-webhook-event', 'x-api-key', 'x-callback-token', 'authorization'],
-      supported_gateways: ['AkuQRIS (Autoko)', 'Midtrans', 'Xendit', 'Tripay', 'Custom Sandbox'],
+      supported_gateways: ['AkuQRIS (Autoko)', 'Midtrans', 'Xendit', 'Tripay', 'Custom Gateway / Direct Webhook'],
       akuqris_config: {
         api_key_header: 'x-api-key',
         signature_header: 'x-webhook-signature',

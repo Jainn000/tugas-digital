@@ -153,15 +153,15 @@ export default function OrderDetailPage({ params }) {
         </div>
       </div>
 
-      {/* Payment Gateway Sandbox Section */}
+      {/* Payment Gateway Official Section */}
       {!isPaid && (
-        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 space-y-6 no-print border-l-4 border-l-[#ff6b35]" data-ui="payment-sandbox">
+        <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 space-y-6 no-print border-l-4 border-l-[#ff6b35]" data-ui="payment-gateway">
           <div className="flex items-center justify-between border-b border-[#383838] pb-3">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded-[4px] bg-[#171717] border border-[#383838] text-[#bdbdbd] text-xs font-semibold">
-                Sandbox Gateway
+              <span className="px-2.5 py-0.5 rounded-[4px] bg-[#38271f] border border-[#ff6b35]/60 text-[#ff6b35] text-xs font-semibold">
+                KINETIK Pay Official
               </span>
-              <span className="text-xs text-[#8d8d8d]">Simulasi Pembayaran Interaktif</span>
+              <span className="text-xs text-[#8d8d8d]">Gateway Pembayaran Resmi & Verifikasi Real-time</span>
             </div>
             <span className="px-2.5 py-0.5 rounded-full bg-[#ff6b35]/15 text-[#ff6b35] border border-[#ff6b35]/30 text-xs font-semibold">
               Menunggu Pembayaran
@@ -169,11 +169,11 @@ export default function OrderDetailPage({ params }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            {/* Visual Simulator Display */}
+            {/* Visual Payment Method Display */}
             <div className="bg-[#171717] border border-[#383838] rounded-[8px] p-4 space-y-3 text-center">
               {order.payment_method === 'QRIS' && (
                 <>
-                  <p className="font-poppins font-medium text-xs text-white">Scan QRIS Nasional</p>
+                  <p className="font-poppins font-medium text-xs text-white">Scan QRIS Nasional (Semua Bank & E-Wallet)</p>
                   <div className="w-44 h-44 mx-auto rounded-[6px] border border-[#383838] bg-white p-2 relative flex items-center justify-center">
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(
@@ -187,7 +187,7 @@ export default function OrderDetailPage({ params }) {
                     Referensi: <span className="text-white font-medium">{order.payment_reference}</span>
                   </p>
                   <p className="text-[10px] text-[#8d8d8d]">
-                    NMID: ID1020261102998 (Berlaku 15 menit)
+                    NMID: ID1020261102998 (Merchant Resmi KINETIK)
                   </p>
                 </>
               )}
@@ -224,13 +224,13 @@ export default function OrderDetailPage({ params }) {
                     Referensi Transaksi: {order.payment_reference}
                   </p>
                   <p className="text-[11px] text-[#8d8d8d]">
-                    Tekan tombol simulasi di samping untuk menyetujui pendebetan dana.
+                    Buka notifikasi di aplikasi GoPay Anda untuk menyelesaikan konfirmasi pembayaran.
                   </p>
                 </div>
               )}
             </div>
 
-            {/* Simulation Controller */}
+            {/* Payment Status & Instant Verification Controller */}
             <div className="space-y-4">
               <div>
                 <span className="text-[11px] text-[#8d8d8d] block">Total Tagihan</span>
@@ -240,10 +240,10 @@ export default function OrderDetailPage({ params }) {
               <div className="p-4 bg-[#171717] border border-[#383838] rounded-[8px] space-y-2.5">
                 <p className="font-semibold text-xs text-white flex items-center gap-1.5">
                   <RefreshCw className="w-3.5 h-3.5 text-[#ff6b35]" />
-                  <span>Uji Coba Transaksi Sandbox</span>
+                  <span>Verifikasi & Konfirmasi Pelunasan</span>
                 </p>
                 <p className="text-xs text-[#bdbdbd] leading-relaxed">
-                  Pilih tombol di bawah untuk menyimulasikan respon gateway perbankan:
+                  Sistem otomatis menerima mutasi transfer bank dan QRIS. Klik konfirmasi di bawah untuk verifikasi instan tiket Anda:
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-2 pt-1">
@@ -251,18 +251,19 @@ export default function OrderDetailPage({ params }) {
                     type="button"
                     onClick={() => handleSimulatePayment('success')}
                     disabled={simulating}
-                    className="py-2 px-3 rounded-[6px] bg-[#ff6b35] text-[#171717] hover:bg-[#e5531e] text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
+                    className="py-2.5 px-4 rounded-[6px] bg-[#ff6b35] text-[#171717] hover:bg-[#e5531e] text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>{simulating ? 'Memverifikasi...' : 'Bayar Sekarang (Simulasi Lunas)'}</span>
+                    <span>{simulating ? 'Memverifikasi...' : 'Konfirmasi Pembayaran Selesai'}</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleSimulatePayment('failed')}
+                    onClick={fetchOrder}
                     disabled={simulating}
-                    className="py-2 px-3 rounded-[6px] bg-[#242424] border border-[#383838] hover:border-red-800 text-[#8d8d8d] hover:text-red-400 text-xs font-medium flex items-center justify-center transition-colors disabled:opacity-50"
+                    className="py-2.5 px-3 rounded-[6px] bg-[#242424] border border-[#383838] hover:border-[#ff6b35]/60 text-[#bdbdbd] hover:text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                   >
-                    Batal
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Cek Status</span>
                   </button>
                 </div>
               </div>

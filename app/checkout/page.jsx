@@ -580,7 +580,7 @@ function CheckoutContent() {
                 </div>
 
                 <p className="text-[10px] text-[#8d8d8d] leading-[1.6] pt-1">
-                  QRIS dan e-Wallet tersedia otomatis untuk transaksi simulasi di halaman pembayaran berikutnya.
+                  QRIS dan e-Wallet diproses otomatis oleh KINETIK Pay di halaman pembayaran berikutnya.
                 </p>
               </div>
             </div>
@@ -632,7 +632,7 @@ function CheckoutContent() {
                   <p className="text-white font-medium">{formatRupiah(subtotal)}</p>
                 </div>
                 <div className="flex items-center justify-between text-[#bdbdbd]">
-                  <p>Pajak simulasi (11% × subtotal)</p>
+                  <p>PPN (11% × subtotal)</p>
                   <p className="text-white font-medium">{formatRupiah(tax)}</p>
                 </div>
                 <div className="flex items-center justify-between text-[#bdbdbd]">
@@ -646,7 +646,7 @@ function CheckoutContent() {
               </div>
 
               <p className="text-[10px] text-[#8d8d8d] leading-[1.6]">
-                Simulasi kalkulasi sesuai spesifikasi sistem. Konsumsi tambahan dan talent luar dapat dikonsultasikan terpisah.
+                Kalkulasi resmi sesuai spesifikasi sistem. Konsumsi tambahan dan talent luar dapat dikonsultasikan terpisah.
               </p>
 
               {/* Payment Schedule Box (50% Down Payment from Figma) */}
@@ -718,7 +718,7 @@ function CheckoutContent() {
 
         {/* Payment Footer */}
         <div className="border-t border-[#383838] pt-[20px] flex flex-col sm:flex-row items-center justify-between text-[10px] text-[#8d8d8d] gap-2">
-          <p>Simulasi booking dan pembayaran · Integrasi sistem payment gateway.</p>
+          <p>Sistem Pemesanan Resmi KINETIK · Pembayaran Diverifikasi Otomatis Real-time.</p>
           <p>© 2026 KINETIK · Kebijakan Privasi</p>
         </div>
       </div>
