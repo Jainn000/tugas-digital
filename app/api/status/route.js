@@ -3,5 +3,9 @@ import { getDatabaseStatus } from '@/lib/db';
 
 export async function GET() {
   const status = await getDatabaseStatus();
-  return NextResponse.json(status);
+  const paymentMode = (process.env.QRIS_PAYMENT_MODE || process.env.PAYMENT_GATEWAY_MODE || 'production').toLowerCase();
+  return NextResponse.json({
+    ...status,
+    payment_mode: paymentMode === 'sandbox' ? 'sandbox' : 'production',
+  });
 }

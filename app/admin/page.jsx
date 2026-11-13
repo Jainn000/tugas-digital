@@ -17,15 +17,18 @@ export default function AdminOverviewPage() {
   const [copiedSecret, setCopiedSecret] = useState(false);
   const [webhookTesting, setWebhookTesting] = useState(false);
   const [webhookResult, setWebhookResult] = useState(null);
+  const [paymentMode, setPaymentMode] = useState('production');
 
   useEffect(() => {
     Promise.all([
       fetch('/api/orders').then(r => r.json()),
       fetch('/api/products').then(r => r.json()),
+      fetch('/api/status').then(r => r.json()),
     ])
-      .then(([ordersData, productsData]) => {
+      .then(([ordersData, productsData, statusData]) => {
         if (ordersData.orders) setOrders(ordersData.orders);
         if (productsData.products) setProducts(productsData.products);
+        if (statusData?.payment_mode) setPaymentMode(statusData.payment_mode);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -246,14 +249,30 @@ export default function AdminOverviewPage() {
 
           {/* AkuQRIS API Key */}
           <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[8px] space-y-1.5">
-            <span className="text-[11px] font-medium text-[#8d8d8d] block">API Key Gateway (Production):</span>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-medium text-[#8d8d8d]">
+                API Key Gateway ({paymentMode === 'sandbox' ? 'Sandbox' : 'Production'}):
+              </span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded uppercase font-semibold ${
+                paymentMode === 'sandbox' 
+                  ? 'bg-amber-950/60 text-amber-300 border border-amber-500/40' 
+                  : 'bg-[#23372d] text-[#8cd6b0] border border-[#8cd6b0]/40'
+              }`}>
+                {paymentMode}
+              </span>
+            </div>
             <div className="flex items-center justify-between gap-2 bg-[#171717] px-2.5 py-2 rounded-[6px] border border-[#383838]">
               <code className="text-xs text-white select-all truncate">
-                pk_live_2c11cd6b98...5e
+                {paymentMode === 'sandbox' ? 'pk_test_2c11cd6b90...5e' : 'pk_live_2c11cd6b98...5e'}
               </code>
               <button
                 type="button"
-                onClick={() => copyToClipboard('pk_live_2c11cd6b9862c2074f9a39a1f7i5b95e', 'key')}
+                onClick={() => copyToClipboard(
+                  paymentMode === 'sandbox' 
+                    ? 'pk_test_2c11cd6b9062c2074f9a39a1f715b95e' 
+                    : 'pk_live_2c11cd6b9862c2074f9a39a1f7i5b95e', 
+                  'key'
+                )}
                 className="p-1 hover:text-[#ff6b35] text-[#8d8d8d] transition-colors shrink-0"
                 title="Salin API Key"
                 aria-label="Salin API Key"

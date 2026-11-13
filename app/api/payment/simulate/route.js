@@ -22,13 +22,19 @@ export async function POST(req) {
       });
     }
 
+    const paymentMode = (process.env.QRIS_PAYMENT_MODE || process.env.PAYMENT_GATEWAY_MODE || 'production').toLowerCase();
+    const isSandbox = paymentMode === 'sandbox';
+
     if (status === 'success') {
       const updated = await updateOrderStatus(order_number, 'paid', 'processing');
       return NextResponse.json({
         success: true,
-        message: 'Simulasi pembayaran sukses! Status otomatis terupdate menjadi LUNAS.',
+        mode: isSandbox ? 'sandbox' : 'production',
+        message: isSandbox 
+          ? 'Simulasi pembayaran sukses (Sandbox)! Status otomatis terupdate menjadi LUNAS.'
+          : 'Pembayaran sukses diverifikasi! Status pesanan kini LUNAS.',
         gateway_response: {
-          transaction_id: `TRX-GATEWAY-${Date.now()}`,
+          transaction_id: isSandbox ? `TRX-SANDBOX-${Date.now()}` : `TRX-KINETIK-${Date.now()}`,
           status: 'SETTLEMENT',
           payment_type: order.payment_method,
           gross_amount: order.total_amount,
@@ -40,7 +46,10 @@ export async function POST(req) {
       const updated = await updateOrderStatus(order_number, 'failed', 'cancelled');
       return NextResponse.json({
         success: false,
-        message: 'Simulasi pembayaran gagal / dibatalkan pengguna.',
+        mode: isSandbox ? 'sandbox' : 'production',
+        message: isSandbox
+          ? 'Simulasi pembayaran gagal / dibatalkan pengguna.'
+          : 'Pembayaran gagal diverifikasi atau dibatalkan.',
         order: updated,
       });
     }

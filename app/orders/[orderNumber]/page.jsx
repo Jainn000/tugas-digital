@@ -14,6 +14,7 @@ export default function OrderDetailPage({ params }) {
   const { orderNumber } = params;
   const toast = useToast();
   const [order, setOrder] = useState(null);
+  const [paymentMode, setPaymentMode] = useState('production'); // 'production' | 'sandbox'
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [invoiceMode, setInvoiceMode] = useState('A4'); // 'A4' | 'THERMAL'
@@ -26,6 +27,9 @@ export default function OrderDetailPage({ params }) {
       const data = await res.json();
       if (data.order) {
         setOrder(data.order);
+      }
+      if (data.payment_mode) {
+        setPaymentMode(data.payment_mode);
       }
     } catch (err) {
       // ignore
@@ -153,15 +157,23 @@ export default function OrderDetailPage({ params }) {
         </div>
       </div>
 
-      {/* Payment Gateway Official Section */}
+      {/* Payment Gateway Official / Sandbox Section */}
       {!isPaid && (
         <div className="bg-[#242424] border border-[#383838] rounded-[10px] p-6 space-y-6 no-print border-l-4 border-l-[#ff6b35]" data-ui="payment-gateway">
           <div className="flex items-center justify-between border-b border-[#383838] pb-3">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-[4px] bg-[#38271f] border border-[#ff6b35]/60 text-[#ff6b35] text-xs font-semibold">
-                KINETIK Pay Official
+              <span className={`px-2.5 py-0.5 rounded-[4px] border text-xs font-semibold ${
+                paymentMode === 'sandbox'
+                  ? 'bg-amber-950/40 border-amber-500/50 text-amber-300'
+                  : 'bg-[#38271f] border-[#ff6b35]/60 text-[#ff6b35]'
+              }`}>
+                {paymentMode === 'sandbox' ? 'AkuQRIS Sandbox Mode' : 'KINETIK Pay Official'}
               </span>
-              <span className="text-xs text-[#8d8d8d]">Gateway Pembayaran Resmi & Verifikasi Real-time</span>
+              <span className="text-xs text-[#8d8d8d]">
+                {paymentMode === 'sandbox' 
+                  ? 'Simulasi Pembayaran Terintegrasi Gateway' 
+                  : 'Gateway Pembayaran Resmi & Verifikasi Real-time'}
+              </span>
             </div>
             <span className="px-2.5 py-0.5 rounded-full bg-[#ff6b35]/15 text-[#ff6b35] border border-[#ff6b35]/30 text-xs font-semibold">
               Menunggu Pembayaran
@@ -173,7 +185,9 @@ export default function OrderDetailPage({ params }) {
             <div className="bg-[#171717] border border-[#383838] rounded-[8px] p-4 space-y-3 text-center">
               {order.payment_method === 'QRIS' && (
                 <>
-                  <p className="font-poppins font-medium text-xs text-white">Scan QRIS Nasional (Semua Bank & E-Wallet)</p>
+                  <p className="font-poppins font-medium text-xs text-white">
+                    {paymentMode === 'sandbox' ? 'Scan Simulasi QRIS (AkuQRIS / Test)' : 'Scan QRIS Nasional (Semua Bank & E-Wallet)'}
+                  </p>
                   <div className="w-44 h-44 mx-auto rounded-[6px] border border-[#383838] bg-white p-2 relative flex items-center justify-center">
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(
@@ -187,7 +201,9 @@ export default function OrderDetailPage({ params }) {
                     Referensi: <span className="text-white font-medium">{order.payment_reference}</span>
                   </p>
                   <p className="text-[10px] text-[#8d8d8d]">
-                    NMID: ID1020261102998 (Merchant Resmi KINETIK)
+                    {paymentMode === 'sandbox' 
+                      ? 'NMID: TEST-AKUQRIS-001 (Simulasi Sandbox)' 
+                      : 'NMID: ID1020261102998 (Merchant Resmi KINETIK)'}
                   </p>
                 </>
               )}
@@ -240,10 +256,16 @@ export default function OrderDetailPage({ params }) {
               <div className="p-4 bg-[#171717] border border-[#383838] rounded-[8px] space-y-2.5">
                 <p className="font-semibold text-xs text-white flex items-center gap-1.5">
                   <RefreshCw className="w-3.5 h-3.5 text-[#ff6b35]" />
-                  <span>Verifikasi & Konfirmasi Pelunasan</span>
+                  <span>
+                    {paymentMode === 'sandbox' 
+                      ? 'Simulasi Pembayaran (Sandbox Tester)' 
+                      : 'Verifikasi & Konfirmasi Pelunasan'}
+                  </span>
                 </p>
                 <p className="text-xs text-[#bdbdbd] leading-relaxed">
-                  Sistem otomatis menerima mutasi transfer bank dan QRIS. Klik konfirmasi di bawah untuk verifikasi instan tiket Anda:
+                  {paymentMode === 'sandbox'
+                    ? 'Mode Sandbox aktif. Anda dapat memicu pengujian pelunasan otomatis atau menyimulasikan respon gateway.'
+                    : 'Sistem otomatis menerima mutasi transfer bank dan QRIS. Klik konfirmasi di bawah untuk verifikasi instan tiket Anda:'}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-2 pt-1">
@@ -254,7 +276,13 @@ export default function OrderDetailPage({ params }) {
                     className="py-2.5 px-4 rounded-[6px] bg-[#ff6b35] text-[#171717] hover:bg-[#e5531e] text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>{simulating ? 'Memverifikasi...' : 'Konfirmasi Pembayaran Selesai'}</span>
+                    <span>
+                      {simulating 
+                        ? 'Memproses...' 
+                        : paymentMode === 'sandbox' 
+                          ? 'Bayar Sekarang (Simulasi Lunas)' 
+                          : 'Konfirmasi Pembayaran Selesai'}
+                    </span>
                   </button>
                   <button
                     type="button"

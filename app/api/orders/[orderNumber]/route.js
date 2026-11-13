@@ -8,7 +8,11 @@ export async function GET(req, { params }) {
     if (!order) {
       return NextResponse.json({ error: 'Pesanan tidak ditemukan.' }, { status: 404 });
     }
-    return NextResponse.json({ order });
+    const paymentMode = (process.env.QRIS_PAYMENT_MODE || process.env.PAYMENT_GATEWAY_MODE || 'production').toLowerCase();
+    return NextResponse.json({ 
+      order,
+      payment_mode: paymentMode === 'sandbox' ? 'sandbox' : 'production'
+    });
   } catch (err) {
     return NextResponse.json({ error: 'Gagal memuat detail pesanan.' }, { status: 500 });
   }

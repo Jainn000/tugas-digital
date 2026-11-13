@@ -134,6 +134,18 @@ export default function AdminLayout({ children }) {
               </span>
             </div>
 
+            {/* Gateway Mode Indicator */}
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 bg-[#242424] border border-[#383838] rounded-[6px] text-[11px]" title="Dikonfigurasi via QRIS_PAYMENT_MODE di .env.local">
+              <span className="text-[#8d8d8d]">Gateway:</span>
+              <span className={`font-medium uppercase text-[10px] px-1.5 py-0.2 rounded border ${
+                dbStatus?.payment_mode === 'sandbox'
+                  ? 'bg-amber-950/60 text-amber-300 border-amber-500/40'
+                  : 'bg-[#23372d] text-[#8cd6b0] border-[#8cd6b0]/40'
+              }`}>
+                {dbStatus?.payment_mode === 'sandbox' ? 'Sandbox' : 'Official Live'}
+              </span>
+            </div>
+
             {/* Admin User Profile */}
             <div className="flex items-center gap-2 bg-[#242424] px-3 py-1.5 border border-[#383838] rounded-[6px]">
               <UserCheck className="w-3.5 h-3.5 text-[#8cd6b0]" />
