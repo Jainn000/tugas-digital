@@ -12,6 +12,7 @@ import {
   Landmark,
   ArrowLeftRight,
   CreditCard,
+  QrCode,
   ChevronDown,
   ChevronUp,
   Info,
@@ -47,7 +48,7 @@ function CheckoutContent() {
   const [eventDate, setEventDate] = useState('2026-12-20');
   
   // Payment states
-  const [paymentType, setPaymentType] = useState('va'); // 'va' | 'manual' | 'card'
+  const [paymentType, setPaymentType] = useState('qris'); // 'qris' | 'va' | 'manual' | 'card'
   const [selectedBank, setSelectedBank] = useState('BCA');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -183,7 +184,13 @@ function CheckoutContent() {
           customer_email: customerEmail,
           customer_phone: customerPhone,
           customer_address: customerAddress,
-          payment_method: `${paymentType === 'va' ? 'Virtual Account' : paymentType === 'manual' ? 'Transfer Manual' : 'Kartu Kredit'} - ${selectedBank}`,
+          payment_method: paymentType === 'qris' 
+            ? 'QRIS' 
+            : paymentType === 'va' 
+              ? `Virtual Account - ${selectedBank}` 
+              : paymentType === 'manual' 
+                ? `Transfer Manual - ${selectedBank}` 
+                : `Kartu Kredit - ${selectedBank}`,
         }),
       });
 
@@ -447,6 +454,35 @@ function CheckoutContent() {
 
               {/* Options */}
               <div className="flex flex-col gap-[12px]">
+                {/* QRIS Option (Instant QR Code) */}
+                <div
+                  onClick={() => setPaymentType('qris')}
+                  className={`p-[18px] rounded-[8px] flex items-center gap-[16px] cursor-pointer transition-colors border ${
+                    paymentType === 'qris'
+                      ? 'bg-[#38271f] border-[#ff6b35]'
+                      : 'bg-[#242424] border-[#383838] hover:border-neutral-600'
+                  }`}
+                >
+                  <div className="w-[18px] h-[18px] rounded-full border border-[#ff6b35] flex items-center justify-center shrink-0">
+                    {paymentType === 'qris' && <div className="w-[10px] h-[10px] rounded-full bg-[#ff6b35]" />}
+                  </div>
+                  <QrCode className="w-[22px] h-[22px] text-[#ff6b35] shrink-0" />
+                  <div className="flex-1 flex flex-col gap-[2px]">
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-[13px] text-white">QRIS Nasional (Barcode QR)</p>
+                      <span className="px-1.5 py-0.2 bg-[#ff6b35] text-[#171717] text-[10px] font-bold rounded">
+                        INSTAN
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#bdbdbd]">BCA, Mandiri, BRI, BNI, GoPay, OVO, Dana & Semua E-Wallet</p>
+                  </div>
+                  {paymentType === 'qris' ? (
+                    <ChevronUp className="w-4 h-4 text-[#bdbdbd]" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[#bdbdbd]" />
+                  )}
+                </div>
+
                 {/* VA Option */}
                 <div
                   onClick={() => setPaymentType('va')}
@@ -548,7 +584,13 @@ function CheckoutContent() {
               <div className="bg-[#171717] rounded-[8px] p-[20px] flex flex-col gap-[16px] border border-[#383838]">
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-[13px] text-white">
-                    {selectedBank} Virtual Account
+                    {paymentType === 'qris' 
+                      ? 'QRIS Nasional (Barcode Scan)' 
+                      : paymentType === 'va' 
+                        ? `${selectedBank} Virtual Account` 
+                        : paymentType === 'manual' 
+                          ? 'Transfer Rekening Manual' 
+                          : 'Kartu Kredit / Debit'}
                   </p>
                   <p className="text-[11px] text-[#8cd6b0] font-normal">
                     Biaya admin Rp0
@@ -558,19 +600,29 @@ function CheckoutContent() {
                 <div className="flex gap-[12px] items-center text-[12px] text-[#bdbdbd]">
                   <Info className="w-[18px] h-[18px] text-[#bdbdbd] shrink-0" />
                   <p className="leading-[1.6]">
-                    Nomor VA otomatis diterbitkan setelah klik tombol di sebelah kanan.
+                    {paymentType === 'qris'
+                      ? 'Barcode QRIS akan langsung muncul di halaman faktur berikutnya untuk di-scan dengan aplikasi m-Banking atau E-Wallet apa pun.'
+                      : paymentType === 'va'
+                        ? 'Nomor VA otomatis diterbitkan setelah klik tombol di sebelah kanan.'
+                        : 'Instruksi pembayaran resmi akan diterbitkan di halaman faktur.'}
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-[10px] text-[11px] text-[#bdbdbd]">
                   <div className="flex gap-[12px] items-start">
                     <span className="text-[#ff6b35] font-semibold">1.</span>
-                    <p className="leading-[1.6]">Nomor VA akan ditautkan ke nomor invoice resmi.</p>
+                    <p className="leading-[1.6]">
+                      {paymentType === 'qris' 
+                        ? 'Faktur resmi langsung memuat QR Barcode Nasional terverifikasi.' 
+                        : 'Nomor VA akan ditautkan ke nomor invoice resmi.'}
+                    </p>
                   </div>
                   <div className="flex gap-[12px] items-start">
                     <span className="text-[#ff6b35] font-semibold">2.</span>
                     <p className="leading-[1.6]">
-                      Bayar tepat sejumlah nominal DP <span className="text-white font-semibold">{formatRupiah(downPayment)}</span> via ATM atau m-Banking {selectedBank}.
+                      {paymentType === 'qris'
+                        ? `Buka BCA mobile, Livin, BRImo, BNI, GoPay, OVO, atau ShopeePay lalu scan QRIS senilai ${formatRupiah(downPayment)}.`
+                        : `Bayar tepat sejumlah nominal DP ${formatRupiah(downPayment)} via ATM atau m-Banking ${selectedBank}.`}
                     </p>
                   </div>
                   <div className="flex gap-[12px] items-start">

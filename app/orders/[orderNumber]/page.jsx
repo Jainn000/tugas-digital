@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { formatRupiah, formatIndoDate } from '@/lib/format';
 import { 
   Printer, CheckCircle2, Clock, ArrowLeft, 
-  Smartphone, Building2, Copy, Check, FileText, Receipt, RefreshCw, AlertCircle 
+  Smartphone, Building2, Copy, Check, FileText, Receipt, RefreshCw, AlertCircle, QrCode 
 } from 'lucide-react';
 import { useToast } from '@/components/ToastContext';
 
@@ -20,6 +20,19 @@ export default function OrderDetailPage({ params }) {
   const [invoiceMode, setInvoiceMode] = useState('A4'); // 'A4' | 'THERMAL'
   const [simulating, setSimulating] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const [selectedChannel, setSelectedChannel] = useState('AUTO'); // 'AUTO' | 'QRIS' | 'VA'
+
+  const methodUpper = (order?.payment_method || '').toUpperCase();
+  const isQrisMethod = methodUpper.includes('QRIS');
+  const isVaMethod = methodUpper.includes('VA') || methodUpper.includes('VIRTUAL ACCOUNT');
+  const isManualMethod = methodUpper.includes('MANUAL') || methodUpper.includes('TRANSFER');
+  const isCardMethod = methodUpper.includes('KARTU') || methodUpper.includes('CARD');
+  const isGopayMethod = methodUpper.includes('GOPAY') || methodUpper.includes('WALLET');
+
+  const activeChannel = selectedChannel === 'AUTO' 
+    ? (isVaMethod ? 'VA' : isGopayMethod ? 'GOPAY' : 'QRIS')
+    : selectedChannel;
 
   const fetchOrder = async () => {
     try {
@@ -180,10 +193,43 @@ export default function OrderDetailPage({ params }) {
             </span>
           </div>
 
+          {/* Payment Method Switcher Tabs */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#383838] pb-3">
+            <div className="flex items-center gap-1.5 p-1 bg-[#1c1c1c] rounded-[6px] border border-[#383838]">
+              <button
+                type="button"
+                onClick={() => setSelectedChannel('QRIS')}
+                className={`px-3 py-1.5 rounded-[4px] text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                  activeChannel === 'QRIS'
+                    ? 'bg-[#ff6b35] text-[#171717]'
+                    : 'text-[#bdbdbd] hover:text-white'
+                }`}
+              >
+                <QrCode className="w-3.5 h-3.5" />
+                <span>Barcode QRIS</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedChannel('VA')}
+                className={`px-3 py-1.5 rounded-[4px] text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                  activeChannel === 'VA'
+                    ? 'bg-[#ff6b35] text-[#171717]'
+                    : 'text-[#bdbdbd] hover:text-white'
+                }`}
+              >
+                <Building2 className="w-3.5 h-3.5" />
+                <span>Virtual Account</span>
+              </button>
+            </div>
+            <p className="text-[11px] text-[#8d8d8d]">
+              Metode Pesanan: <strong className="text-white">{order.payment_method.replace('_', ' ')}</strong>
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {/* Visual Payment Method Display */}
             <div className="bg-[#171717] border border-[#383838] rounded-[8px] p-4 space-y-3 text-center">
-              {order.payment_method === 'QRIS' && (
+              {activeChannel === 'QRIS' && (
                 <>
                   <p className="font-poppins font-medium text-xs text-white">
                     {paymentMode === 'sandbox' ? 'Scan Simulasi QRIS (AkuQRIS / Test)' : 'Scan QRIS Nasional (Semua Bank & E-Wallet)'}
@@ -198,7 +244,7 @@ export default function OrderDetailPage({ params }) {
                     />
                   </div>
                   <p className="text-[11px] text-[#bdbdbd]">
-                    Referensi: <span className="text-white font-medium">{order.payment_reference}</span>
+                    Referensi: <span className="text-white font-medium">{order.payment_reference || order.order_number}</span>
                   </p>
                   <p className="text-[10px] text-[#8d8d8d]">
                     {paymentMode === 'sandbox' 
@@ -208,10 +254,12 @@ export default function OrderDetailPage({ params }) {
                 </>
               )}
 
-              {order.payment_method.includes('VA') && (
+              {activeChannel === 'VA' && (
                 <div className="space-y-3 py-4">
                   <Building2 className="w-10 h-10 mx-auto text-[#ff6b35]" />
-                  <p className="font-poppins font-medium text-xs text-white">Nomor Virtual Account ({order.payment_method.replace('_', ' ')})</p>
+                  <p className="font-poppins font-medium text-xs text-white">
+                    Nomor Virtual Account ({order.payment_method.replace('_', ' ')})
+                  </p>
                   <div className="p-3 bg-[#1c1c1c] border border-[#383838] rounded-[6px] flex items-center justify-between gap-2">
                     <span className="text-base font-semibold tracking-wider text-white">
                       {order.payment_reference || '8801920261102001'}
@@ -232,7 +280,7 @@ export default function OrderDetailPage({ params }) {
                 </div>
               )}
 
-              {order.payment_method === 'GOPAY' && (
+              {activeChannel === 'GOPAY' && (
                 <div className="space-y-3 py-4">
                   <Smartphone className="w-10 h-10 mx-auto text-[#8cd6b0]" />
                   <p className="font-poppins font-medium text-xs text-white">Dompet Digital GoPay</p>

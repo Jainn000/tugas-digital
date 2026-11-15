@@ -110,7 +110,7 @@
       "description": "Tiket masuk seluruh sesi panel diskusi, sertifikat digital berbobot SKPI, lunch box, dan e-book materi presentasi lengkap.",
       "price": 150000,
       "cost_price": 60000,
-      "stock": 180,
+      "stock": 179,
       "image_url": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80"
     },
     {
@@ -502,11 +502,31 @@
       "total_amount": 5700000,
       "total_cost": 2150000,
       "payment_method": "QRIS",
+      "payment_status": "paid",
+      "order_status": "processing",
+      "payment_reference": "QRIS-PENDING-918",
+      "paid_at": "2026-11-15 05:41:26",
+      "created_at": "2026-11-13 00:10:00"
+    },
+    {
+      "order_number": "INV-20261115-8971",
+      "user_id": 2,
+      "customer_name": "Budi Pratama (PT Sinar Mandiri)",
+      "customer_email": "user@entrepreneur.id",
+      "customer_phone": "085712349988",
+      "customer_address": "Gedung Wisma Nusantara Lt. 8, Jl. MH Thamrin, Jakarta Pusat",
+      "subtotal": 150000,
+      "tax_amount": 0,
+      "shipping_cost": 0,
+      "total_amount": 150000,
+      "total_cost": 60000,
+      "payment_method": "Virtual Account - BCA",
       "payment_status": "unpaid",
       "order_status": "pending",
-      "payment_reference": "QRIS-PENDING-918",
+      "payment_reference": "EWL-20261115-8971",
       "paid_at": null,
-      "created_at": "2026-11-13 00:10:00"
+      "id": 19,
+      "created_at": "2026-11-15 05:41:50"
     }
   ],
   "order_items": [
@@ -749,6 +769,16 @@
       "cost_price": 950000,
       "quantity": 1,
       "subtotal": 2500000
+    },
+    {
+      "id": 25,
+      "order_id": 19,
+      "product_id": 5,
+      "product_name": "Tiket Reguler Youth Creator Summit 2026",
+      "price": 150000,
+      "cost_price": 60000,
+      "quantity": 1,
+      "subtotal": 150000
     }
   ],
   "expenses": [
@@ -1022,8 +1052,8 @@
       "thread_id": "thread-kinetik-fest",
       "eo_name": "KINETIK Festival Production",
       "event_name": "KINETIK Music Festival",
-      "last_message": "Mantap, terima kasih konfirmasinya. SPK dan PO DP 50% sudah ditransfer finance.",
-      "last_time": "10:30 WIB",
+      "last_message": "mantap",
+      "last_time": "08.23 WIB",
       "unread_count": 1,
       "messages": [
         {
@@ -1046,6 +1076,13 @@
           "sender_name": "Director Kinetik EO",
           "message": "Mantap, terima kasih konfirmasinya. SPK dan PO DP 50% sudah ditransfer finance.",
           "time": "10:30 WIB"
+        },
+        {
+          "id": 4,
+          "sender": "vendor",
+          "sender_name": "Raya Event Supply",
+          "message": "mantap",
+          "time": "08.23 WIB"
         }
       ]
     },
@@ -1054,8 +1091,8 @@
       "thread_id": "thread-tech-summit",
       "eo_name": "Nusantara Creative EO",
       "event_name": "Tech Summit 2025",
-      "last_message": "Sudah masuk checklist tim broadcast kami pak. Unit backup siap.",
-      "last_time": "09:05 WIB",
+      "last_message": "mantap",
+      "last_time": "08.23 WIB",
       "unread_count": 0,
       "messages": [
         {
@@ -1071,6 +1108,13 @@
           "sender_name": "Raya Event Supply",
           "message": "Sudah masuk checklist tim broadcast kami pak. Unit backup siap.",
           "time": "09:05 WIB"
+        },
+        {
+          "id": 3,
+          "sender": "vendor",
+          "sender_name": "Raya Event Supply",
+          "message": "mantap",
+          "time": "08.23 WIB"
         }
       ]
     },
